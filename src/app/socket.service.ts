@@ -26,7 +26,7 @@ export class ChatService {
 
     init() {
         console.log('wtf');
-        this.socket.emit('events', { test: 'test' });
+        this.socket.emit('rooms', { room: 'hello allo' });
         // this.socket.on('connect', function() {
         //     console.log('Connected');
         //     this.socket.emit('events', { test: 'test' });
@@ -42,14 +42,23 @@ export class ChatService {
         // });
     }
 
-    sendMessage(msg: string){
-        this.socket.emit('events', { test: 'test' });
+    sendMessage(text) {
+        this.socket.emit('message', {message: text});
+        
     }
-    
+
     getMessage() {
         return this.socket
-            .fromEvent("message")
-            .map( (data:any) => data.msg );
+            .fromEvent('message')
+            .map( (data: any) => data );
+    }
+
+    joinRoom() {
+        this.socket.emit('join', 543);
+    }
+
+    addRoom(room) {
+        this.socket.emit('addroom', room);
     }
 }
 

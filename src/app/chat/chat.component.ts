@@ -14,22 +14,30 @@ interface IMessage {
 export class ChatComponent implements OnInit {
   public text: String;
   public name: String;
+  addroom: String;
   public message: IMessage;
   public messages: IMessage[];
 
   constructor(private chatService: ChatService) {
     this.messages = [
       {name: '123', text: '555'},
-      {name: '123', text: '555'},
-      {name: '123', text: '555'},
-      {name: '123', text: '555'},
-      {name: '123', text: '555'},
     ];
    }
 
   ngOnInit() {
-  } 
+    this.chatService.getMessage()
+      .subscribe(data => {
+        this.messages.push(data);
+      });
+      this.chatService.init();
+  }
+
   send() {
-    this.chatService.init();
+    this.chatService.sendMessage(this.text);
+    this.text = '';
+  }
+
+  addnewroom() {
+    this.chatService.addRoom(this.addroom);
   }
 }
