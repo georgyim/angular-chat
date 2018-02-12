@@ -1,0 +1,22 @@
+.chat-container {
+    height: 500px;
+    display: flex;
+}
+.chat {
+    margin: auto;
+    width: 700px;
+    height: 450px;
+    border: 1px solid #eee;
+    background: rgba(255,255,255,0.7);
+}
+.chat__header {
+    height: 50px;
+    border-bottom: 2px solid #ff9d49;
+}
+.chat__content {
+    height: 350px;
+    border-bottom: 2px solid #ff9d49;
+}
+.chat__footer {
+    height: 50px;
+}

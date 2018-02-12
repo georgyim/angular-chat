@@ -1,0 +1,18 @@
+<div class="chat-container">
+  <div class="chat">
+    <div class="chat__header">
+      <span>hello its header</span>
+    </div>
+    <div class="chat__content">
+      <app-message *ngFor="let message of messages" [name]="message.name" [text]="message.text"></app-message>
+    </div>
+    <div class="chat__footer">
+      <div class="text-message">
+        <input type="text" [(ngModel)]="text">
+      </div>
+      <div class="send-message">
+        <button (click)="send()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
