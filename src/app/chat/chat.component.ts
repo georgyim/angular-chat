@@ -37,7 +37,7 @@ export class ChatComponent implements OnInit {
       this.messages.push(data);
     });
     this.chatService.init();
-    this.getRooms();
+    // this.getRooms();
   }
 
   send() {
@@ -59,6 +59,7 @@ export class ChatComponent implements OnInit {
   login() {
     const { name, password } = this;
     this.apiservice.login(name, password).subscribe(res => {
+      localStorage.setItem('mytoken', 'Bearer ' +  res['access_token']);
       console.log(res);
     });
   }

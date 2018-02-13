@@ -6,7 +6,7 @@ const SALT_WORK_FACTOR = 10;
 
 export const UserSchema = new mongoose.Schema({
     username: { type: String, required: true},
-    password: { type: String, default: null },
+    password: { type: String },
     // socialId: { type: String, default: null },
     // picture:  { type: String, default:  DEFAULT_USER_PICTURE}
 });

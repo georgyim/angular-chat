@@ -1,6 +1,5 @@
 import { error } from 'util';
-import { UserSchema } from "./schemas/user.schema";
-import { RoomSchema } from "./schemas/room.schema";
+
 import {
   Controller,
   Get,
@@ -26,49 +25,30 @@ import { InjectModel } from "@nestjs/mongoose";
 export class CatsController {
   constructor(
     private readonly catsService: CatsService,
-    @InjectModel(UserSchema) private readonly UserModel,
-    @InjectModel(RoomSchema) private readonly RoomModel
+
   ) {}
 
-  @Post()
-  @Roles("admin")
-  async create(@Body() createCatDto: CreateCatDto) {
-    this.catsService.create(createCatDto);
-  }
-
-  @Get()
-  async findAll(): Promise<Cat[]> {
-    console.log("wtf");
-    return this.catsService.findAll();
-  }
-
-  @Get(":id")
-  findOne(
-    @Param("id", new ParseIntPipe())
-    id
-  ) {
-    // logic
-  }
 
   @Post("/register")
   async createUser(@Req() request) {
     console.log(request.body);
-    try {
-      const newUser = await this.UserModel.create(request.body);
+      const isNewUser = await this.catsService.findOneUsers(request.body.username);
+      if (isNewUser) {
+        return 'ALREADY REGISTER';
+      }
+      const newUser = await this.catsService.createUser(request.body);
+      console.log('newuser', newUser);
       return newUser;
-    } catch (err) {
-      return err;
-    }
+
   }
 
   @Post("/login")
   async loginUser(@Req() request) {
     console.log(request.body);
+    // return 'wtf';
     try {
-      const user = await this.UserModel.findOne({
-        username: request.body.username
-      });
-      return user;
+      const user = await this.catsService.findOneUsers(request.body.username);
+      return {user: user};
     } catch (err) {
       return err;
     }
@@ -78,14 +58,12 @@ export class CatsController {
   async getAllRooms(@Req() request) {
     const body = request.body;
     try {
-        const user = await this.UserModel.findOne({
-        username: request.body.username
-      });
+        const user = await this.catsService.findOneUsers(request.body.username);
       if (user) {
         console.log(user);
-        const allRooms = await this.RoomModel.find({});
+        const allRooms = await this.catsService.findAllRooms();
         return allRooms;
-      }   
+      }  
       return 'user not found';
     } catch (err) {
       return err;
@@ -96,7 +74,7 @@ export class CatsController {
   async findRoom(@Req() request) {
     const params = request.params;
     try {
-        const room = this.RoomModel.findOne({})
+        const room = this.catsService.findOneRooms(request.params.id);
     } catch (err) {
       return err;
     }

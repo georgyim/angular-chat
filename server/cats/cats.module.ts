@@ -11,6 +11,7 @@ import { CorsMiddleware } from './cors.middleware';
   imports: [MongooseModule.forFeature([{ name: 'Room', schema: RoomSchema }, { name: 'User', schema: UserSchema }])],
   controllers: [CatsController],
   components: [CatsService, EventsGateway],
+  exports: [CatsService]
 })
 
 export class CatsModule {
