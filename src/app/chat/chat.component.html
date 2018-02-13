@@ -1,4 +1,10 @@
-<div class="chat-container">
+<div>
+  <input type="text" placeholder="name" [(ngModel)]="name">
+  <input type="text" placeholder="password" [(ngModel)]="password">
+  <button (click)="login()">login</button>
+  <button (click)="register()">register</button>
+</div>
+<div class="chat-container">  
   <div class="chat">
     <div class="chat__header">
       <span>hello its header</span>

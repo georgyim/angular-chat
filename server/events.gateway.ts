@@ -36,8 +36,6 @@ export class EventsGateway {
 
   @SubscribeMessage('rooms')
   onEvent(client, data): any {
-    console.log(this.RoomModel);
-    console.log(data);
     client.join(data.room, () => {
         const rooms = Object.keys(client.rooms);
         // console.log(rooms);
@@ -49,7 +47,7 @@ export class EventsGateway {
 
   @SubscribeMessage('message')
   message(client, data): any {
-    console.log(data);
+    // console.log(data);
     const event = 'message';
     const response = [1, 2, 3, 4 , 5];
     const payload = {text: data.message, name: 'myself'};
@@ -58,14 +56,23 @@ export class EventsGateway {
   }
 
   @SubscribeMessage('addroom')
-  addroom(client, data): any {
+  async addroom(client, data) {
     console.log(data);
-    // const event = 'message';
-    // const response = [1, 2, 3, 4 , 5];
-    // const payload = {text: data.message, name: 'myself'};
-    // console.log('payload', payload);
-    // return { event, data: payload };
+    const event = 'rooms';
+    const room = data.room;
+    let newRoom = await this.RoomModel.findOne({title: room});
+    if (newRoom) {
+      client.emit('rooms', 'hello its voice from room')
+    } else {
+     newRoom = await this.RoomModel.create({title: room});
+     client.emit('rooms', newRoom)
+    }
   }
 
+  @SubscribeMessage('chatroom')
+  async enterRoom(client, data) {
+    const event = 'rooms';
+    const room = data.room;
+  }
 
 }
