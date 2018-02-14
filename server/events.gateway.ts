@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { RoomSchema } from './cats/schemas/room.schema';
+import { RoomSchema } from './schemas/room.schema';
 import { Document } from 'mongoose';
 
 export interface Room extends Document {
@@ -59,13 +59,13 @@ export class EventsGateway {
   async addroom(client, data) {
     console.log(data);
     const event = 'rooms';
-    const room = data.room;
+    const room = data;
     let newRoom = await this.RoomModel.findOne({title: room});
     if (newRoom) {
       client.emit('rooms', 'hello its voice from room')
     } else {
      newRoom = await this.RoomModel.create({title: room});
-     client.emit('rooms', newRoom)
+     client.emit('rooms', newRoom);
     }
   }
 

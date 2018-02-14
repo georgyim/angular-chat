@@ -8,10 +8,11 @@ import {
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './passport/jwt.strategy';
 import { AuthController } from './auth.controller';
-import { CatsModule } from './../cats/cats.module';
+import { RoomsModule } from './../rooms/rooms.module';
+import { UsersModule } from './../users/users.module';
 
 @Module({
-  imports: [CatsModule],
+  imports: [RoomsModule, UsersModule ],
   components: [AuthService, JwtStrategy],
   controllers: [AuthController],
 })

@@ -9,7 +9,7 @@ import { NotFoundExceptionFilter } from './common/filters/not-found-exception.fi
 
 async function bootstrap() {
     const app = await NestFactory.create(ApplicationModule);
-    app.use(cors())
+    app.use(cors());
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe());
     app.useGlobalFilters(new NotFoundExceptionFilter());

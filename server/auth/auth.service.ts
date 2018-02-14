@@ -1,13 +1,13 @@
 import * as jwt from 'jsonwebtoken';
 import { Component, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { CatsService } from './../cats/cats.service';
+import { UsersService } from './../users/users.service';
 
 @Component()
 export class AuthService {
 
   private authorizedUser;
 
-  constructor(public catService: CatsService) {}
+  constructor(public usersService: UsersService) {}
 
   async createToken() {
     const expiresIn = 60 * 60,
@@ -30,9 +30,18 @@ export class AuthService {
     }
   }
   async validateLogin(user): Promise<boolean> {
-    const existedUser = await this.catService.findOneByUsername(user.username);
-    this.authorizedUser = existedUser;
-    return true;
+    console.log('here?')
+    try {
+      const existedUser = await this.usersService.findOneByUsername(user.username);
+      if (existedUser) {
+        this.authorizedUser = existedUser;
+      }
+      return true;
+    }  catch (err) {
+      console.log(err);
+      return false;
+    }
+
 
     // if (existedUser) {
     //   const passwordIsMatch = await bcrypt.compareSync(userDto.password, existedUser.password);

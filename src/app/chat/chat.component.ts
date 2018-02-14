@@ -24,6 +24,7 @@ export class ChatComponent implements OnInit {
   addroom: String;
   public message: IMessage;
   public messages: IMessage[];
+  rooms;
 
   constructor(
     private chatService: ChatService,
@@ -70,8 +71,8 @@ export class ChatComponent implements OnInit {
     name = "123"; 
     password = "123";
 
-    this.apiservice.getRooms(name, password).subscribe(res => {
-      console.log(res);
+    this.apiservice.getRooms().subscribe(res => {
+      this.rooms = res;
     });
   }
 

@@ -1,19 +1,21 @@
-import { CatsController } from './cats/cats.controller';
 import { EventsGateway } from './events.gateway';
 import { Module, MiddlewaresConsumer } from '@nestjs/common';
-import { CatsModule } from './cats/cats.module';
+import { UsersModule } from './users/users.module';
+import { RoomsModule } from './rooms/rooms.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { RoomSchema } from './cats/schemas/room.schema';
-import { CorsMiddleware } from './cats/cors.middleware';
+import { CorsMiddleware } from './middlewares/cors.middleware';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [  MongooseModule.forRoot('mongodb://localhost:27017/nest'), CatsModule , AuthModule],
-  
-components: []
+  imports: [MongooseModule.forRoot('mongodb://localhost:27017/nest'),
+   UsersModule,
+    RoomsModule,
+   AuthModule
+  ],
+  components: []
 })
 export class ApplicationModule {
-  configure(consumer: MiddlewaresConsumer): void {
-        consumer.apply(CorsMiddleware).forRoutes(CatsController);
-    }
+  // configure(consumer: MiddlewaresConsumer): void {
+  //   consumer.apply(CorsMiddleware).forRoutes('*');
+  // }
 }

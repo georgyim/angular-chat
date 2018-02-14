@@ -33,7 +33,7 @@
     "@angular/platform-browser-dynamic": "^5.2.1",
     "@angular/router": "^5.2.1",
     "@nestjs/common": "^4.5.9",
-    "@nestjs/core": "^4.5.10",
+    "@nestjs/core": "^4.6.0",
     "@nestjs/microservices": "^4.5.8",
     "@nestjs/mongoose": "^3.0.1",
     "@nestjs/testing": "^4.5.5",

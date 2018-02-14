@@ -27,3 +27,8 @@
   <input type="text" [(ngModel)]="addroom">
   <button (click)="addnewroom()"> addroom</button>
 </div>
+
+<div>
+  <button (click)="getRooms()">Get rooms</button>
+  <div *ngFor="let room of rooms">{{room.title}}</div> 
+</div>

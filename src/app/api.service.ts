@@ -15,7 +15,7 @@ export class ApiService {
        params = params.append('username', name);
        params = params.append('password', password);
 
-    return this.http.post(`${url}cats/register`, params )
+    return this.http.post(`${url}users/create`, params );
   }
 
   login(name, password) {
@@ -25,13 +25,13 @@ export class ApiService {
     return this.http.post(`${url}auth/login`, params);
   }
 
-  getRooms(name, password) {
-      console.log('getrooms ', name, password);
+  getRooms() {
+      console.log('getrooms ');
       let params = new HttpParams();
-      params = params.append('username', name);
-      params = params.append('password', password);
+      // params = params.append('username', name);
+      // params = params.append('password', password);
       console.log('params ', params);
-       return this.http.post(`${url}cats/rooms`, params);
+       return this.http.get(`${url}rooms`);
   }
 
 }
