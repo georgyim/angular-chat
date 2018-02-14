@@ -72,8 +72,10 @@ export class EventsGateway {
   @SubscribeMessage('chatroom')
   async enterRoom(client, data) {
     const event = 'joinroom';
-    const room = data;
+    // const room = data;
     console.log('client', data);
+    const room = await this.RoomModel.findOne({_id: data});
+    
   }
 
 }
