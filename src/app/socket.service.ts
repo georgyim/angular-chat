@@ -53,8 +53,16 @@ export class ChatService {
             .map( (data: any) => data );
     }
 
-    joinRoom() {
-        this.socket.emit('join', 543);
+    getRooms() {
+        return this.socket
+            .fromEvent('updatedRooms')
+            .map( (data: any) => data );
+    }
+
+    
+
+    joinRoom(room) {
+        this.socket.emit('chatroom', room);
     }
 
     addRoom(room) {

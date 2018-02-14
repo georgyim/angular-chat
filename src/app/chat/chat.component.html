@@ -1,4 +1,7 @@
 <div>
+    <div *ngFor="let room of rooms" (click)="joinRoom(room._id)" style="height: 30px; background: grey; margin-bottom:5px">{{room.title}}</div> 
+  </div>
+<div>
   <input type="text" placeholder="name" [(ngModel)]="name">
   <input type="text" placeholder="password" [(ngModel)]="password">
   <button (click)="login()">login</button>
@@ -28,7 +31,3 @@
   <button (click)="addnewroom()"> addroom</button>
 </div>
 
-<div>
-  <button (click)="getRooms()">Get rooms</button>
-  <div *ngFor="let room of rooms">{{room.title}}</div> 
-</div>

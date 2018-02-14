@@ -65,14 +65,15 @@ export class EventsGateway {
       client.emit('rooms', 'hello its voice from room')
     } else {
      newRoom = await this.RoomModel.create({title: room});
-     client.emit('rooms', newRoom);
+     client.emit('updatedRooms', newRoom);
     }
   }
 
   @SubscribeMessage('chatroom')
   async enterRoom(client, data) {
-    const event = 'rooms';
-    const room = data.room;
+    const event = 'joinroom';
+    const room = data;
+    console.log('client', data);
   }
 
 }

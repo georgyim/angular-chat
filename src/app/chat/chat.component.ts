@@ -37,8 +37,9 @@ export class ChatComponent implements OnInit {
     this.chatService.getMessage().subscribe(data => {
       this.messages.push(data);
     });
+    this.getRooms();
     this.chatService.init();
-    // this.getRooms();
+    this.getRoomsFromSocket();
   }
 
   send() {
@@ -48,6 +49,14 @@ export class ChatComponent implements OnInit {
 
   addnewroom() {
     this.chatService.addRoom(this.addroom);
+  }
+
+  getRoomsFromSocket() {
+    this.chatService.getRooms()
+      .subscribe(res => {
+        const updatedRooms = [...this.rooms, res];
+        this.rooms = updatedRooms;
+      });
   }
 
   register() {
@@ -76,6 +85,8 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  
+  joinRoom(room) {
+    this.chatService.joinRoom(room);
+  }
 
 }
