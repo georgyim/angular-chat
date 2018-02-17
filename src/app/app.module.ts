@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ApiService } from './api.service';
-import { ChatService } from './socket.service';
+import { ChatService } from './services/chat-sockets/socket.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -16,13 +15,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
-
+import { RoomService } from './services/rooms/rooms.service';
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
-
+import { AuthGuard } from './services/auth/auth-guard.service';
 // App routes
 const routes: Routes = [
   { path: 'auth', component: LoginComponent },
-  { path: '', component: ChatComponent },
+  { path: '', component: ChatComponent, canActivate: [AuthGuard]},
 ];
 
 
@@ -35,7 +34,8 @@ const routes: Routes = [
     LoginComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
+
+  RouterModule.forRoot(routes),
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -45,9 +45,10 @@ const routes: Routes = [
   ],
   providers: [
     ChatService,
-    ApiService,
     AuthenticationService,
     LocalStorageService,
+    RoomService,
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

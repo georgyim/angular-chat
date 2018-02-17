@@ -1,16 +1,11 @@
-import { ApiService } from '../../api.service';
-import { ChatService } from '../../socket.service';
+import { ChatService } from '../../services/chat-sockets/socket.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/auth/authentication.service';
+import { RoomService } from './../../services/rooms/rooms.service';
 
 interface IMessage {
   username: String;
   text: String;
-}
-
-interface IUser {
-  name: String;
-  password: String;
 }
 
 @Component({
@@ -21,20 +16,19 @@ interface IUser {
 export class ChatComponent implements OnInit {
   public text: String;
   public name: String;
-  public password: String;
-  public addroom: String;
-  public message: IMessage;
+  public newRoom: String;
   public messages: IMessage[];
-  public rooms: any[];
+  public rooms: any;
   public curRoom: any;
   public title: String;
   public currentRoomId: String;
 
   constructor(
     private chatService: ChatService,
-    private apiservice: ApiService,
     private authService: AuthenticationService,
+    private roomService: RoomService,
   ) {
+    this.title = 'Eat a carrot )';
     this.messages = [{ username: 'Bugz Bunny', text: 'Choose the room =)' }];
   }
 
@@ -56,8 +50,8 @@ export class ChatComponent implements OnInit {
   }
 
   addnewroom() {
-    if (this.addroom.trim() !== '') {
-      this.chatService.addRoom(this.addroom);
+    if (this.newRoom.trim() !== '') {
+      this.chatService.addRoom(this.newRoom);
     }
   }
 
@@ -69,23 +63,9 @@ export class ChatComponent implements OnInit {
       });
   }
 
-  register() {
-    const { name, password } = this;
-    this.apiservice.register(name, password).subscribe(res => {
-      console.log(res);
-    });
-  }
-
-  login() {
-    const { name, password } = this;
-    this.apiservice.login(name, password).subscribe(res => {
-      localStorage.setItem('mytoken', 'Bearer ' + res['access_token']);
-      console.log(res);
-    });
-  }
 
   getRooms() {
-    this.apiservice.getRooms().subscribe(res => {
+    this.roomService.getRooms().subscribe(res => {
       this.rooms = res;
     });
   }
@@ -96,7 +76,7 @@ export class ChatComponent implements OnInit {
   }
 
   getRoom(id) {
-    this.apiservice.getRoom(id)
+    this.roomService.getRoom(id)
       .subscribe(res => {
         this.messages = res['messages'];
         this.title = res['title'];
@@ -107,7 +87,6 @@ export class ChatComponent implements OnInit {
     this.authService.getProfile()
       .subscribe(res => {
         this.name = res['username'];
-        console.log(this.name);
       });
   }
 

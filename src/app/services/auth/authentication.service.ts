@@ -17,6 +17,7 @@ export class AuthenticationService {
     private storage: LocalStorageService
   ) {
     this.token = this.storage.getToken();
+    this.checkToken();
   }
 
   login(username, password): void {
@@ -33,36 +34,23 @@ export class AuthenticationService {
   }
 
   setTokens(response: any) {
-    // login successful if there's a jwt token in the response
-    console.log('response ', response);
     const accessToken = response && response.access_token;
-    // const refreshToken = response && response.refreshToken;
-
     if (accessToken) {
-      // set token property
       this.token = accessToken;
-
-      // store username and jwt token in local storage to keep user logged in between page refreshes
       this.storage.setToken(accessToken);
-      // this.storage.setRefreshToken(refreshToken);
-      // this.storage.setUser(response.user);
-
-      // return true to indicate successful login
       this.loggedIn$.next(true);
     } else {
-      // return false to indicate failed login
       this.loggedIn$.next(false);
     }
   }
+
   isLoggedIn(): BehaviorSubject<boolean> {
     return this.loggedIn$;
   }
 
   logout(): void {
-    // clear token remove user from local storage to log user out
     this.token = '';
     this.storage.removeTokens();
-    this.storage.removeUser();
     this.loggedIn$.next(false);
   }
 
@@ -70,4 +58,18 @@ export class AuthenticationService {
     return this.http.get(api + 'users/get-profile');
   }
 
+  register(name, password) {
+    let params = new HttpParams();
+    params = params.append('username', name);
+    params = params.append('password', password);
+
+    return this.http.post(`${api}users/create`, params);
+  }
+
+  checkToken() {
+    this.http.get(api + 'users/check-token')
+      .subscribe( (res: boolean) => {
+        this.loggedIn$.next(res);
+      }, () => this.loggedIn$.next(false));
+  }
 }

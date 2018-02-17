@@ -34,7 +34,11 @@ export class LoginComponent implements OnInit {
 }
 
   register() {
-    
+    this.authenticationService.register(this.username, this.password)
+      .subscribe(res => {
+      }, err => {
+        console.warn(err);
+      });
   }
 
 }

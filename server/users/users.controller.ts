@@ -32,7 +32,7 @@ export class UsersController {
   ) { }
 
 
-  @Post("/create")
+  @Post('/create')
   async createUser( @Req() request) {
     const isNewUser = await this.usersService.findOneUsers(request.body.username);
     if (isNewUser) {
@@ -45,17 +45,27 @@ export class UsersController {
 
   @Get('/get-profile')
   async getProfile( @Req() request) {
-    let alo = request.headers.authorization;
-    alo = alo.substr(7);
+    let token = request.headers.authorization;
+    token = token.substr(7);
     try {
       return await jwt.verify(
-        alo,
+        token,
         'secret');
     } catch (err) {
       return 'Unexpected token';
     }
   }
 
+  @Get('/check-token')
+  async checkToken( @Req() req) {
+    let token = req.headers.authorization;
+    token = token.substr(7);
+    try {
+      return this.authSesrvice.checkToken(token);
+    } catch (err) {
+      return 'Unexpected token';
+    }
+  }
 
 }
 

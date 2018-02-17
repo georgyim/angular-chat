@@ -7,7 +7,6 @@ export class LocalStorageService {
   constructor() { }
 
   getToken(): string {
-
     if (this.token === '') {
       const token = this.getTokenFromStorage();
       this.token = token;
@@ -39,11 +38,6 @@ export class LocalStorageService {
 
   removeTokens(): void {
     localStorage.removeItem('authToken');
-    localStorage.removeItem('refreshToken');
-  }
-
-  removeUser(): void {
-    localStorage.removeItem('authUser');
   }
 
 

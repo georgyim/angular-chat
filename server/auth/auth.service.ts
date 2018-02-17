@@ -30,6 +30,7 @@ export class AuthService {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
   }
+
   async validateLogin(user): Promise<boolean> {
     try {
       const existedUser = await this.usersService.findOneByUsername(user.username);
@@ -40,7 +41,15 @@ export class AuthService {
     } catch (err) {
       return false;
     }
+  }
 
+  async checkToken(token) {
+    try {
+      const user = jwt.verify(token, 'secret');
+      return this.validateLogin(user);
+    } catch (err) {
+      return false;
+    }
   }
 
   async validateUser(signedUser): Promise<boolean> {
