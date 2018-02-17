@@ -13,6 +13,10 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { RoomSchema } from './schemas/room.schema';
 import { Document } from 'mongoose';
+import { Room } from './events.gateway';
+import * as mongoose from 'mongoose';
+
+const  ObjectId = mongoose.Types.ObjectId;
 
 export interface Room extends Document {
   // title: { type: String, required: true };
@@ -25,7 +29,7 @@ export interface Room extends Document {
 @WebSocketGateway()
 export class EventsGateway {
   public wtf;
-  constructor(@InjectModel(RoomSchema) private  RoomModel) { 
+  constructor(@InjectModel(RoomSchema) private  RoomModel) {
     this.wtf = RoomModel;
   }
 
@@ -46,25 +50,32 @@ export class EventsGateway {
   }
 
   @SubscribeMessage('message')
-  message(client, data): any {
-    // console.log(data);
+  async message(client, data): any {
+    console.log('pretest', data.room);
+    const lol = await this.RoomModel.findOne({_id: new ObjectId(data.room)});
+    console.log('lol', lol)
+    const test = await this.RoomModel.findOneAndUpdate({_id: new ObjectId(data.room)}, {$push: {messages: {username: data.username, text: data.message}}});
+    console.log('test', test)
     const event = 'message';
-    const response = [1, 2, 3, 4 , 5];
-    const payload = {text: data.message, name: 'myself'};
-    console.log('payload', payload);
-    return { event, data: payload };
+    const payload = {text: data.message, username: data.username, room: data.room};
+    client.to(data.room).emit(event, payload);
+    return { event, data: payload};
   }
 
   @SubscribeMessage('addroom')
   async addroom(client, data) {
-    console.log(data);
+    // console.log(data);
     const event = 'rooms';
     const room = data;
     let newRoom = await this.RoomModel.findOne({title: room});
     if (newRoom) {
-      client.emit('rooms', 'hello its voice from room')
+      client.emit('rooms', 'hello its voice from room');
     } else {
      newRoom = await this.RoomModel.create({title: room});
+     newRoom = {
+       _id: newRoom._id,
+       title: newRoom.title
+     };
      client.emit('updatedRooms', newRoom);
     }
   }
@@ -73,9 +84,11 @@ export class EventsGateway {
   async enterRoom(client, data) {
     const event = 'joinroom';
     // const room = data;
-    console.log('client', data);
+    // console.log('data', data);
     const room = await this.RoomModel.findOne({_id: data});
-    
+    // console.log('socket room', room);
+    client.join(data);
+    // console.log('rooms of client', client.rooms)
   }
 
 }

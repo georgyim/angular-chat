@@ -1,0 +1,31 @@
+<div class="chat-container">
+  <div class="rooms">
+    <div class="addroom">
+      <input type="text" [(ngModel)]="addroom" placeholder="Type a new room" (keyup.enter)="addnewroom()">
+      <button (click)="addnewroom()"> Create</button>
+    </div>
+    <ul>
+      <li *ngFor="let room of rooms" (click)="getRoom(room._id); joinRoom(room._id)">
+        <i class="material-icons room-icon">star_rate</i>
+        <span>{{room.title}}</span>
+      </li>
+    </ul>
+  </div>
+  <div class="chat">
+    <div class="chat__header">
+      <i class="material-icons">label_outline</i>
+      <span>{{title}}</span>
+    </div>
+    <div class="chat__content">
+      <app-message *ngFor="let message of messages" [name]="message.username" [text]="message.text"></app-message>
+    </div>
+    <div class="chat__footer">
+      <div class="text-message">
+        <input type="text" [(ngModel)]="text" placeholder="Type a new message" (keyup.enter)="send()">
+      </div>
+      <div class="send-message">
+        <button (click)="send()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>

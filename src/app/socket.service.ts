@@ -42,9 +42,9 @@ export class ChatService {
         // });
     }
 
-    sendMessage(text) {
-        this.socket.emit('message', {message: text});
-        
+    sendMessage(text, name, roomId) {
+        console.log('chat service ', text, name);
+        this.socket.emit('message', {message: text, username: name, room: roomId});
     }
 
     getMessage() {

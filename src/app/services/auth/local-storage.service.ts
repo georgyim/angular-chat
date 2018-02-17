@@ -52,7 +52,7 @@ export class LocalStorageService {
     
       setToken(token: string) {
         // store jwt token in local sotrage to keep user logged in between page refreshes
-        localStorage.setItem('authToken', 'Bearer ' + token );
+        localStorage.setItem('authToken', token );
         this.token = token;
       }
     

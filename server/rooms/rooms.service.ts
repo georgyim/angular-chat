@@ -28,11 +28,11 @@ export class RoomsService {
   }
 
   async findAllRooms(): Promise<any[]> {
-    return await this.roomModel.find().exec();
+    return await this.roomModel.find().lean().exec();
   }
 
   async findOneRooms(id: string): Promise<any> {
-    return await this.roomModel.findOne({ '_id': id }).exec();
+    return await this.roomModel.findOne({ '_id': id }).lean().exec();
   }
 
   async findOneByRoomname(username: string): Promise<any> {

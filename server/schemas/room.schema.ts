@@ -5,4 +5,5 @@ export const RoomSchema = new mongoose.Schema({
     // connections: { type: [{ userId: String, socketId: String }]},
     title: String,
     connections: String,
+    messages:  [{username: String, text: String}]
 });

@@ -23,23 +23,30 @@ export class RoomsController {
     ) { }
 
 
-    @Get("")
+    @Get()
     async getAllRooms( @Req() request) {
         const body = request.body;
-        try{
+        try {
             const allRooms = await this.roomsService.findAllRooms();
-            return allRooms;
+            return allRooms.map(elem => {
+                const newElem = {...elem};
+                delete newElem.messages;
+                return newElem;
+            });
         } catch (err) {
             console.log(err);
         }
-        
     }
 
     @Get('/room/:id')
     async findRoom( @Req() request) {
         const params = request.params;
+        console.log('get room id', params);
         try {
-            const room = this.roomsService.findOneRooms(request.params.id);
+            const room = await this.roomsService.findOneRooms(request.params.id);
+            // const newRoom = {...room};
+            // delete newRoom.messages;
+            return room;
         } catch (err) {
             return err;
         }

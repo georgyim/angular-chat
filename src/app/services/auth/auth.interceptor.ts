@@ -18,10 +18,10 @@ export class AuthInterceptor implements HttpInterceptor {
         } else {
             // Get the auth token from the service.
             const authToken = this.storageService.getToken();
-
+            console.log('authToken', authToken);
             // Set content headers
             let headers = new HttpHeaders();
-            headers = headers.set('authorization', authToken);
+            headers = headers.set('Authorization', 'Bearer ' + authToken);
 
             // Clone the request to add the new header.
             const authReq = req.clone({ headers: headers });

@@ -1,0 +1,16 @@
+.message-box {
+    display: flex;
+    margin-top: 15px;
+    padding-left: 10px;
+    min-height: 30px;
+    background: #75dc75;
+}
+.message-box 
+p.message-text {
+    margin: auto;
+    width:100%;
+}
+.message-underline
+p.message-name {
+    text-align: right;
+}

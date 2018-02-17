@@ -11,7 +11,7 @@ export class AuthenticationService {
 
   public token: string;
   private loggedIn$ = new BehaviorSubject<boolean>(this.storage.getToken() != null ? true : false);
-
+  private userName: string;
   constructor(
     private http: HttpClient,
     private storage: LocalStorageService
@@ -30,7 +30,6 @@ export class AuthenticationService {
       }, () => {
         this.loggedIn$.next(false);
       });
-
   }
 
   setTokens(response: any) {
@@ -57,14 +56,18 @@ export class AuthenticationService {
   }
   isLoggedIn(): BehaviorSubject<boolean> {
     return this.loggedIn$;
-}
+  }
 
-logout(): void {
+  logout(): void {
     // clear token remove user from local storage to log user out
     this.token = '';
     this.storage.removeTokens();
     this.storage.removeUser();
     this.loggedIn$.next(false);
-}
+  }
+
+  getProfile() {
+    return this.http.get(api + 'users/get-profile');
+  }
 
 }

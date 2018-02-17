@@ -34,4 +34,17 @@ export class ApiService {
        return this.http.get(`${url}rooms`);
   }
 
+  getRoom(id) {
+    console.log('getrooms ');
+    let params = new HttpParams();
+    // params = params.append('username', name);
+    // params = params.append('password', password);
+    console.log('params ', params);
+     return this.http.get(`${url}rooms/room/${id}`);
+}
+
+  getProfile() {
+    return this.http.get(`${url}users/get-profile`);
+  }
+
 }
