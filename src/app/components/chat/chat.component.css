@@ -4,8 +4,8 @@
     margin: auto;
     margin-top: 40px;
     padding-bottom: 10px;
-    width: 700px;
-    height: 500px;
+    width: 800px;
+    height: 700px;
     background: #F2F5F8;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
@@ -55,7 +55,7 @@
     overflow: hidden;
 }
 .chat__content {
-    height: 380px;
+    height: 590px;
     border-bottom: 2px solid #ff9d49;
     overflow: auto;
 }

@@ -21,13 +21,13 @@ interface IUser {
 export class ChatComponent implements OnInit {
   public text: String;
   public name: String;
-  password: String;
-  addroom: String;
+  public password: String;
+  public addroom: String;
   public message: IMessage;
   public messages: IMessage[];
-  rooms;
-  curRoom;
-  title;
+  public rooms: any[];
+  public curRoom: any;
+  public title: String;
   public currentRoomId: String;
 
   constructor(

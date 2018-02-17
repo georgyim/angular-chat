@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { ChatService } from './socket.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,14 +11,13 @@ import { MenuComponent } from './menu/menu.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { MessageComponent } from './components/chat/message/message.component';
 import { AuthenticationService } from './services/auth/authentication.service';
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 import { LocalStorageService } from './services/auth/local-storage.service';
-
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 // App routes
 const routes: Routes = [
@@ -36,12 +35,19 @@ const routes: Routes = [
     LoginComponent
   ],
   imports: [
-
     RouterModule.forRoot(routes),
-
-    BrowserModule, BrowserAnimationsModule, FormsModule, SocketIoModule.forRoot(config), HttpClientModule
+    ReactiveFormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    SocketIoModule.forRoot(config),
+    HttpClientModule
   ],
-  providers: [ChatService, ApiService, AuthenticationService, LocalStorageService,
+  providers: [
+    ChatService,
+    ApiService,
+    AuthenticationService,
+    LocalStorageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

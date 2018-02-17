@@ -1,10 +1,32 @@
-<h3>Hello</h3>
+<div class="login-wrapper">
+  <div class="title">
+    <h3>Welcome</h3>
+  </div>
+  <form [formGroup]="loginForm" class="login-form" novalidate>
+    <div class="username">
+      <div class="subtitle">
+        <span>Username</span>
+      </div>
+      <input type="text"  formControlName="username">
+      <div class="validate-username" *ngIf="loginForm.controls.username.touched &&  loginForm.controls.username.invalid">
+        <span>Minlength = 2, maxlength = 10</span>
+      </div>
+    </div>
 
-<div>
-  <input type="login" [(ngModel)]="username">
-  <input type="password" [(ngModel)]="password">
-</div>
-<div>
-  <button (click)="login()">login</button>
-  <button>register</button>
+    <div class="password">
+      <div class="subtitle">
+        <span>Password</span>
+      </div>
+      <input type="text" formControlName="password">
+      <div class="validate-username" *ngIf="loginForm.controls.password.touched &&  loginForm.controls.password.invalid">
+        <span>Minlength = 2, maxlength = 10</span>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()">Login</button>
+      <span>or</span>
+      <button [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="register()">Register</button>
+    </div>
+  </form>
 </div>
