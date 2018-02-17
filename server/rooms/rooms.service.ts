@@ -9,18 +9,6 @@ export class RoomsService {
 
   constructor(@InjectModel(RoomSchema) private readonly roomModel) {}
 
-//   async createUser(user: any): Promise<any> {
-//     console.log('1', user);
-//     const createdUser = new this.userModel(user);
-//     console.log('2', createdUser);
-//     const takeUser = await createdUser.save();
-//     console.log('3', takeUser);
-//     return takeUser;
-//     // return await createdUser.save((err, user) => {
-//     //   return user;
-//     // });
-//   }
-
   async createRoom(room: any): Promise<any> {
     const createdRoom = new this.roomModel(room);
     const newRoom =  await createdRoom.save();

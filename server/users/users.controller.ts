@@ -34,13 +34,11 @@ export class UsersController {
 
   @Post("/create")
   async createUser( @Req() request) {
-    console.log(request.body);
     const isNewUser = await this.usersService.findOneUsers(request.body.username);
     if (isNewUser) {
       return 'ALREADY REGISTER';
     }
     const newUser = await this.usersService.createUser(request.body);
-    console.log('newuser', newUser);
     return newUser;
 
   }

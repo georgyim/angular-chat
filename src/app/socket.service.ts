@@ -8,58 +8,27 @@ import { Socket } from 'ng-socket-io';
 export class ChatService {
 
     constructor(private socket: Socket) {
-        
-        // socket.on('connect', function() {
-        //     console.log('Connected');
-        //     socket.emit('events', { test: 'test' });
-        // });
-        // socket.on('events', function(data) {
-        //     console.log('event', data);
-        // });
-        // socket.on('exception', function(data) {
-        //     console.log('event', data);
-        // });
-        // socket.on('disconnect', function() {
-        //     console.log('Disconnected');
-        // });
-     }
+    }
 
     init() {
-        console.log('wtf');
         this.socket.emit('rooms', { room: 'hello allo' });
-        // this.socket.on('connect', function() {
-        //     console.log('Connected');
-        //     this.socket.emit('events', { test: 'test' });
-        // });
-        // this.socket.on('events', function(data) {
-        //     console.log('event', data);
-        // });
-        // this.socket.on('exception', function(data) {
-        //     console.log('event', data);
-        // });
-        // this.socket.on('disconnect', function() {
-        //     console.log('Disconnected');
-        // });
     }
 
     sendMessage(text, name, roomId) {
-        console.log('chat service ', text, name);
-        this.socket.emit('message', {message: text, username: name, room: roomId});
+        this.socket.emit('message', { message: text, username: name, room: roomId });
     }
 
     getMessage() {
         return this.socket
             .fromEvent('message')
-            .map( (data: any) => data );
+            .map((data: any) => data);
     }
 
     getRooms() {
         return this.socket
             .fromEvent('updatedRooms')
-            .map( (data: any) => data );
+            .map((data: any) => data);
     }
-
-    
 
     joinRoom(room) {
         this.socket.emit('chatroom', room);
@@ -69,18 +38,3 @@ export class ChatService {
         this.socket.emit('addroom', room);
     }
 }
-
-            // const socket = io('http://localhost:3000');
-            // socket.on('connect', function() {
-            //     console.log('Connected');
-            //     socket.emit('events', { test: 'test' });
-            // });
-            // socket.on('events', function(data) {
-            //     console.log('event', data);
-            // });
-            // socket.on('exception', function(data) {
-            //     console.log('event', data);
-            // });
-            // socket.on('disconnect', function() {
-            //     console.log('Disconnected');
-            // });

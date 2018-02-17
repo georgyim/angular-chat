@@ -50,12 +50,10 @@ export class EventsGateway {
   }
 
   @SubscribeMessage('message')
-  async message(client, data): any {
-    console.log('pretest', data.room);
+  async message(client, data) {
     const lol = await this.RoomModel.findOne({_id: new ObjectId(data.room)});
-    console.log('lol', lol)
-    const test = await this.RoomModel.findOneAndUpdate({_id: new ObjectId(data.room)}, {$push: {messages: {username: data.username, text: data.message}}});
-    console.log('test', test)
+    const test = await this.RoomModel.findOneAndUpdate({_id: new ObjectId(data.room)},
+    {$push: {messages: {username: data.username, text: data.message}}});
     const event = 'message';
     const payload = {text: data.message, username: data.username, room: data.room};
     client.to(data.room).emit(event, payload);
@@ -64,7 +62,6 @@ export class EventsGateway {
 
   @SubscribeMessage('addroom')
   async addroom(client, data) {
-    // console.log(data);
     const event = 'rooms';
     const room = data;
     let newRoom = await this.RoomModel.findOne({title: room});
@@ -83,12 +80,8 @@ export class EventsGateway {
   @SubscribeMessage('chatroom')
   async enterRoom(client, data) {
     const event = 'joinroom';
-    // const room = data;
-    // console.log('data', data);
     const room = await this.RoomModel.findOne({_id: data});
-    // console.log('socket room', room);
     client.join(data);
-    // console.log('rooms of client', client.rooms)
   }
 
 }

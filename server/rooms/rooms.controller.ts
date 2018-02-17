@@ -29,7 +29,7 @@ export class RoomsController {
         try {
             const allRooms = await this.roomsService.findAllRooms();
             return allRooms.map(elem => {
-                const newElem = {...elem};
+                const newElem = { ...elem };
                 delete newElem.messages;
                 return newElem;
             });
@@ -41,11 +41,8 @@ export class RoomsController {
     @Get('/room/:id')
     async findRoom( @Req() request) {
         const params = request.params;
-        console.log('get room id', params);
         try {
             const room = await this.roomsService.findOneRooms(request.params.id);
-            // const newRoom = {...room};
-            // delete newRoom.messages;
             return room;
         } catch (err) {
             return err;
