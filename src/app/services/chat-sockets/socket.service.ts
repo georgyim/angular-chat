@@ -37,4 +37,10 @@ export class ChatService {
     addRoom(room) {
         this.socket.emit('addroom', room);
     }
+
+    getUsers() {
+        return this.socket
+            .fromEvent('usersRoom')
+            .map((data: any) => data);
+    }
 }

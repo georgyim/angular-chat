@@ -4,11 +4,12 @@
     margin: auto;
     margin-top: 40px;
     padding-bottom: 10px;
-    width: 800px;
+    width: 940px;
     height: 700px;
     background: #F2F5F8;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+
 .rooms {
     width: 175px;
     margin-right: 10px;
@@ -17,6 +18,7 @@
     flex-flow: column;
     overflow: auto;
 }
+
 .rooms li {
     height: 30px;
     line-height: 30px;
@@ -25,10 +27,12 @@
     background: #1f98df;
     display: flex;
 }
+
 .rooms li span {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .room-icon {
     width: 22px;
     height: 30px;
@@ -36,11 +40,13 @@
     line-height: 30px;
     color: #ff9d48;
 }
+
 .chat {
-    width: 450px; 
+    width: 450px;
     border: 1px solid #eee;
     /* background: rgba(255,255,255,0.7); */
 }
+
 .chat__header {
     min-height: 50px;
     display: flex;
@@ -50,10 +56,12 @@
     border-bottom: 2px solid #ff9d49;
     overflow: hidden;
 }
+
 .chat__header span {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
 .chat__content {
     height: 590px;
     border-bottom: 2px solid #ff9d49;
@@ -66,9 +74,11 @@
     height: 50px;
     padding-top: 10px;
 }
+
 .addroom {
     margin: 16px 0;
 }
+
 .addroom input {
     width: 96%;
     height: 25px;
@@ -77,15 +87,18 @@
     padding-left: 5px;
     margin-bottom: 5px;
 }
+
 .addroom button {
     background: #f7b02d;
     border: none;
     outline: none;
     height: 25px;
 }
+
 .text-message {
     width: 395px;
 }
+
 .text-message input {
     width: 96%;
     height: 25px;
@@ -94,10 +107,16 @@
     padding-left: 5px;
     margin-bottom: 5px;
 }
+
 .send-message button {
     background: #1f98df;
     border: none;
     outline: none;
     height: 28px;
     color: white;
+}
+
+.users {
+    width: 250px;
+    margin-left: 15px;
 }

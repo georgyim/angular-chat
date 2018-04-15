@@ -22,6 +22,7 @@ export class ChatComponent implements OnInit {
   public curRoom: any;
   public title: String;
   public currentRoomId: String;
+  public users: any[];
 
   constructor(
     private chatService: ChatService,
@@ -40,6 +41,7 @@ export class ChatComponent implements OnInit {
     this.getRooms();
     this.chatService.init();
     this.getRoomsFromSocket();
+    this.getUsersList();
   }
 
   send() {
@@ -90,5 +92,12 @@ export class ChatComponent implements OnInit {
       });
   }
 
+  getUsersList() {
+    this.chatService.getUsers()
+      .subscribe(res => {
+        this.users = res;
+        console.log(this.users);
+      });
+  }
 
 }

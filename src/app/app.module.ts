@@ -20,6 +20,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {
   'query': 'token=' + localStorage.getItem('authToken')
 } };
 import { AuthGuard } from './services/auth/auth-guard.service';
+import { UserlistComponent } from './components/chat/userlist/userlist.component';
 // App routes
 const routes: Routes = [
   { path: 'auth', component: LoginComponent },
@@ -33,7 +34,8 @@ const routes: Routes = [
     MenuComponent,
     ChatComponent,
     MessageComponent,
-    LoginComponent
+    LoginComponent,
+    UserlistComponent
   ],
   imports: [
 

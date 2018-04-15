@@ -1,0 +1,8 @@
+<div class="title">
+  <h3>Userlist</h3>
+</div>
+<ng-container *ngIf="users && users.length > 0">
+  <div class="user-block" *ngFor="let user of users">
+    {{user}}
+  </div>
+</ng-container>
