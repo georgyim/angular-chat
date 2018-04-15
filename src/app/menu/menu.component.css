@@ -1,10 +1,16 @@
 .header {
     min-height: 50px;
     /* background: #27bb7d; */
-    color: white;
+    background: #1f98df;
+    color: black;
+    font-weight: bold;
     display: flex;
     flex-flow: row;
+    -webkit-box-shadow: 0px 0px 63px -11px rgba(15, 15, 15, 1);
+    -moz-box-shadow: 0px 0px 63px -11px rgba(15, 15, 15, 1);
+    box-shadow: 0px 0px 63px -11px rgba(15, 15, 15, 1);
 }
+
 .item {
     width: 250px;
     min-width: 250px;

@@ -18,9 +18,12 @@ import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { RoomService } from './services/rooms/rooms.service';
 import { SocketOne } from './services/chat-sockets/socket-one.service';
 
-
+import { NgSemanticModule } from 'ng-semantic';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
+import { UsersControlComponent } from './components/users-control/users-control.component';
+import { UsersService } from './services/users/users.service';
+
 // App routes
 const routes: Routes = [
   { path: 'auth', component: LoginComponent },
@@ -35,7 +38,8 @@ const routes: Routes = [
     ChatComponent,
     MessageComponent,
     LoginComponent,
-    UserlistComponent
+    UserlistComponent,
+    UsersControlComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -44,7 +48,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     SocketIoModule,
-    HttpClientModule
+    HttpClientModule,
+    NgSemanticModule
   ],
   providers: [
     SocketOne,
@@ -53,6 +58,7 @@ const routes: Routes = [
     LocalStorageService,
     RoomService,
     AuthGuard,
+    UsersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

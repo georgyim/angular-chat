@@ -1,4 +1,5 @@
-<div class="header">
+<ng-container *ngIf="authService.loggedIn$ | async">
+  <div class="header">
     <div class="item1 item">
       <span>Menu1</span>
     </div>
@@ -8,4 +9,6 @@
     <div class="item3 item">
       <span (click)="exit()">EXIT</span>
     </div>
-</div>
+  </div>
+
+</ng-container>

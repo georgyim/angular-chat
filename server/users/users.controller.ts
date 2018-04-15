@@ -67,5 +67,17 @@ export class UsersController {
     }
   }
 
+
+  @Get('/get-users')
+  async getAllUsers( @Req() request) {
+    console.log('users get users')
+      try {
+          const allusers = await this.usersService.findAllUsers();
+          return allusers;
+      } catch (err) {
+          console.log(err);
+      }
+  }
+
 }
 

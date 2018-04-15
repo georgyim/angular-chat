@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common/src/pipes/async_pipe';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../services/auth/authentication.service';
 import { Router } from '@angular/router';
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService, private router: Router) { }
+  constructor(public authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
   }
