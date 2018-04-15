@@ -10,6 +10,7 @@ const api = 'http://localhost:3000/api/';
 export class AuthenticationService {
 
   public token: string;
+  public error$ = new BehaviorSubject<boolean>(false);
   private loggedIn$ = new BehaviorSubject<boolean>(this.storage.getToken() != null ? true : false);
   private userName: string;
   constructor(
@@ -30,6 +31,7 @@ export class AuthenticationService {
         this.setTokens(response);
       }, () => {
         this.loggedIn$.next(false);
+        this.error$.next(true);
       });
   }
 

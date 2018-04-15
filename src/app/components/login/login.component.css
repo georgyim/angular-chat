@@ -8,30 +8,37 @@
     background-color: #F2F5F8;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+
 .title {
     padding-top: 15px;
     text-align: center;
     font-size: 22px;
 }
+
 .subtitle {
     margin-bottom: 15px;
     font-size: 18px;
 }
+
 .login-form {
     display: flex;
     flex-flow: column;
     margin: auto;
     width: 100%;
 }
-.username, .password {
+
+.username,
+.password {
     height: 100px;
     text-align: center;
 }
+
 input {
     height: 30px;
     width: 80%;
     padding-left: 15px;
 }
+
 .buttons {
     display: flex;
     flex-flow: row;
@@ -39,6 +46,7 @@ input {
     justify-content: space-evenly;
     /* text-align: center; */
 }
+
 .buttons button {
     background: #2dacf8;
     height: 35px;
@@ -47,10 +55,20 @@ input {
     color: white;
     cursor: pointer;
 }
-.validate-username, .validate-password {
+
+.validate-username,
+.validate-password {
     color: red;
     font-weight: bold;
 }
+
 .disabled {
     cursor: not-allowed !important;
+}
+
+.alert-danger {
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: red;
 }

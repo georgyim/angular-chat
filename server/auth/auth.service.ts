@@ -34,10 +34,12 @@ export class AuthService {
   async validateLogin(user): Promise<boolean> {
     try {
       const existedUser = await this.usersService.findOneByUsername(user.username);
-      if (existedUser) {
+      if (existedUser !== null) {
         this.authorizedUser = existedUser;
+        return true;
       }
-      return true;
+      return false;
+
     } catch (err) {
       return false;
     }
