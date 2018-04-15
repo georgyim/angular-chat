@@ -16,7 +16,9 @@ import { LoginComponent } from './components/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { RoomService } from './services/rooms/rooms.service';
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {
+  'query': 'token=' + localStorage.getItem('authToken')
+} };
 import { AuthGuard } from './services/auth/auth-guard.service';
 // App routes
 const routes: Routes = [
