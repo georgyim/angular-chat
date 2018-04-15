@@ -48,12 +48,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginErrorHandler() {
     this.errorSubscription$ = this.authenticationService.error$
-      .subscribe(() => this.error = 'Auth failed');
+      .subscribe((res) => {
+        res === true ? this.error = 'Auth failed' : '';
+      });
   }
 
   ngOnDestroy() {
-    this.registerSubscription$.unsubscribe();
-    this.errorSubscription$.unsubscribe();
+    if (this.registerSubscription$) {
+      this.registerSubscription$.unsubscribe();
+    }
+    if (this.errorSubscription$) {
+      this.errorSubscription$.unsubscribe();
+    }
   }
 
 }

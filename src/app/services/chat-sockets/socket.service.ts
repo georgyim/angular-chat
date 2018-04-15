@@ -3,14 +3,15 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Socket } from 'ng-socket-io';
-
+import { SocketOne } from './socket-one.service';
 @Injectable()
 export class ChatService {
 
-    constructor(private socket: Socket) {
+    constructor(private socket: SocketOne) {
     }
 
     init() {
+        console.log('init socket');
         this.socket.emit('rooms', { room: 'hello allo' });
     }
 

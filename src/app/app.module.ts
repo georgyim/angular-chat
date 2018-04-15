@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { SocketIoModule } from 'ng-socket-io';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { ChatComponent } from './components/chat/chat.component';
@@ -16,15 +16,15 @@ import { LoginComponent } from './components/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { RoomService } from './services/rooms/rooms.service';
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {
-  'query': 'token=' + localStorage.getItem('authToken')
-} };
+import { SocketOne } from './services/chat-sockets/socket-one.service';
+
+
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
 // App routes
 const routes: Routes = [
   { path: 'auth', component: LoginComponent },
-  { path: '', component: ChatComponent, canActivate: [AuthGuard]},
+  { path: '', component: ChatComponent, canActivate: [AuthGuard] },
 ];
 
 
@@ -38,16 +38,16 @@ const routes: Routes = [
     UserlistComponent
   ],
   imports: [
-
-  RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes),
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    SocketIoModule.forRoot(config),
+    SocketIoModule,
     HttpClientModule
   ],
   providers: [
+    SocketOne,
     ChatService,
     AuthenticationService,
     LocalStorageService,
