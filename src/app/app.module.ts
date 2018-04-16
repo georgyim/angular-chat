@@ -1,3 +1,4 @@
+import { SearchFilterSortService } from './services/filter/filter.service';
 import { HttpClient } from '@angular/common/http';
 import { ChatService } from './services/chat-sockets/socket.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,11 +24,16 @@ import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
 import { UsersControlComponent } from './components/users-control/users-control.component';
 import { UsersService } from './services/users/users.service';
+import { DatePipe } from '@angular/common';
+import { SortDirective } from './directives/sort/sort.directive';
+import { MatIconModule } from '@angular/material/icon';
+
 
 // App routes
 const routes: Routes = [
   { path: 'auth', component: LoginComponent },
   { path: '', component: ChatComponent, canActivate: [AuthGuard] },
+  { path: 'user-control', component: UsersControlComponent, canActivate: [AuthGuard] },
 ];
 
 
@@ -39,7 +45,8 @@ const routes: Routes = [
     MessageComponent,
     LoginComponent,
     UserlistComponent,
-    UsersControlComponent
+    UsersControlComponent,
+    SortDirective
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -49,7 +56,8 @@ const routes: Routes = [
     FormsModule,
     SocketIoModule,
     HttpClientModule,
-    NgSemanticModule
+    NgSemanticModule,
+    MatIconModule
   ],
   providers: [
     SocketOne,
@@ -59,6 +67,8 @@ const routes: Routes = [
     RoomService,
     AuthGuard,
     UsersService,
+    DatePipe,
+    SearchFilterSortService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

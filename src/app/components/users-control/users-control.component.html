@@ -1,3 +1,25 @@
-<p>
-  Here i am going to get users and take over them.
-</p>
+<div class="fitler-input">
+  <input type="text" [(ngModel)]="filterField" (ngModelChange)="filter($event)">
+</div>
+
+
+<table class="users-table">
+  <thead>
+    <th appSort [array]="filteredUsers" [value]="'_id'">ID</th>
+    <th appSort [array]="filteredUsers" [value]="'username'">Имя</th>
+    <th appSort [array]="filteredUsers" [value]="'password'">Пароль</th>
+    <th>2</th>
+    <th>3</th>
+    <th>4</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of filteredUsers">
+      <td>{{user._id | slice:0:8}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.password}}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

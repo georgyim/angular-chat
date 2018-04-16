@@ -37,8 +37,9 @@ input {
     height: 30px;
     width: 80%;
     padding-left: 15px;
+    outline: none;
+    border: 1px solid #2dacf8;
 }
-
 
 .buttons {
     display: flex;

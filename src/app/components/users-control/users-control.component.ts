@@ -1,5 +1,11 @@
+import { SortDirective } from './../../directives/sort/sort.directive';
+import { SearchFilterSortService } from './../../services/filter/filter.service';
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './../../services/users/users.service';
+import { SlicePipe } from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
+
+
 
 @Component({
   selector: 'app-users-control',
@@ -8,7 +14,11 @@ import { UsersService } from './../../services/users/users.service';
 })
 export class UsersControlComponent implements OnInit {
 
-  constructor(private userService: UsersService) { }
+  public users: any;
+  public filteredUsers;
+  filterField: any;
+
+  constructor(private userService: UsersService, private filterService: SearchFilterSortService) { }
 
   ngOnInit() {
     this.getUsers();
@@ -17,8 +27,16 @@ export class UsersControlComponent implements OnInit {
   getUsers() {
     this.userService.getUsers()
       .subscribe(res => {
-        console.log(res);
+        this.users = res;
+        this.filteredUsers = res;
       });
   }
 
+  filter(value) {
+    this.filteredUsers = this.filterService.search(this.users, this.filterField, ["_id", "password"])
+  }
+
+  sort(value) {
+    this.filteredUsers = this.filterService.orderBy(this.filteredUsers, value);
+  }
 }
