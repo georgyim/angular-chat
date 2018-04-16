@@ -1,8 +1,9 @@
 .header {
     min-height: 50px;
     /* background: #27bb7d; */
-    background: #1f98df;
-    color: black;
+    background: #007bff;
+    font-size: 16px;
+    color: white;
     font-weight: bold;
     display: flex;
     flex-flow: row;

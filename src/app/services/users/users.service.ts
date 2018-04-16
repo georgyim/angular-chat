@@ -15,5 +15,16 @@ export class UsersService {
     return this.http.get(`${api}users/get-users`);
   }
 
+  addUser(username, password) {
+    let body = new HttpParams();
+    body = body.append('username', username);
+    body = body.append('password', password);
+
+    return this.http.post(`${api}users/create`, body);
+  }
+
+  deleteUser(id) {
+    return this.http.delete(`${api}users/delete/${id}`);
+  }
 
 }

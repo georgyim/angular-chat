@@ -27,7 +27,9 @@ import { UsersService } from './services/users/users.service';
 import { DatePipe } from '@angular/common';
 import { SortDirective } from './directives/sort/sort.directive';
 import { MatIconModule } from '@angular/material/icon';
-
+import { PaginatorService } from './services/paginator/paginator.service';
+import { AddUserComponent } from './components/users-control/add-user/add-user.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 // App routes
 const routes: Routes = [
@@ -38,6 +40,9 @@ const routes: Routes = [
 
 
 @NgModule({
+  entryComponents: [
+    AddUserComponent  
+  ],
   declarations: [
     AppComponent,
     MenuComponent,
@@ -46,10 +51,11 @@ const routes: Routes = [
     LoginComponent,
     UserlistComponent,
     UsersControlComponent,
-    SortDirective
+    SortDirective,
+    AddUserComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
+  RouterModule.forRoot(routes),
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -57,7 +63,8 @@ const routes: Routes = [
     SocketIoModule,
     HttpClientModule,
     NgSemanticModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [
     SocketOne,
@@ -68,6 +75,7 @@ const routes: Routes = [
     AuthGuard,
     UsersService,
     DatePipe,
+    PaginatorService,
     SearchFilterSortService,
     {
       provide: HTTP_INTERCEPTORS,

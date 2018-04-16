@@ -3,8 +3,10 @@ import { SearchFilterSortService } from './../../services/filter/filter.service'
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './../../services/users/users.service';
 import { SlicePipe } from '@angular/common';
-import {MatIconModule} from '@angular/material/icon';
-
+import { MatIconModule } from '@angular/material/icon';
+import { PaginatorService } from './../../services/paginator/paginator.service';
+import { MatDialog } from '@angular/material';
+import { AddUserComponent } from './add-user/add-user.component';
 
 
 @Component({
@@ -18,7 +20,15 @@ export class UsersControlComponent implements OnInit {
   public filteredUsers;
   filterField: any;
 
-  constructor(private userService: UsersService, private filterService: SearchFilterSortService) { }
+  pager: any = {};
+  pagedItems: any[];
+
+  constructor(
+    private userService: UsersService,
+    private filterService: SearchFilterSortService,
+    private paginator: PaginatorService,
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
     this.getUsers();
@@ -29,14 +39,41 @@ export class UsersControlComponent implements OnInit {
       .subscribe(res => {
         this.users = res;
         this.filteredUsers = res;
+        this.setPage(1);
       });
   }
 
+
+
   filter(value) {
-    this.filteredUsers = this.filterService.search(this.users, this.filterField, ["_id", "password"])
+    this.filteredUsers = this.filterService.search(this.users, this.filterField, ["_id", "password"]);
   }
 
   sort(value) {
     this.filteredUsers = this.filterService.orderBy(this.filteredUsers, value);
   }
+
+  setPage(page: number) {
+    if (page < 1 || page > this.pager.totalPages) {
+      return;
+    }
+
+    // get pager object from service
+    this.pager = this.paginator.getPager(this.filteredUsers.length, page);
+
+    // get current page of items
+    this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1);
+  }
+
+
+  openAddUserModal(): void {
+    let dialogRef = this.dialog.open(AddUserComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result !== undefined) {
+        console.log(result);
+      }
+    });
+  }
+
 }

@@ -1,13 +1,13 @@
 <ng-container *ngIf="authService.loggedIn$ | async">
-  <div class="header">
+  <div class="header navbar ">
     <div class="item1 item">
-      <span>Menu1</span>
+      <span class="nav-link">Chat</span>
     </div>
     <div class="item2 item">
-      <span>Menu2</span>
+      <span class="nav-link">User manage</span>
     </div>
     <div class="item3 item">
-      <span (click)="exit()">EXIT</span>
+      <span class="nav-link" (click)="logout()">Logout</span>
     </div>
   </div>
 
