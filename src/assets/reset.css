@@ -45,7 +45,15 @@ input {
 	border: none;
 	outline: none;
 }
+input:active, input:hover, input:focus {
+	border: none;
+	outline: none;
+}
 button {
 	border:none;
+	outline: none;
+}
+button:active, button:hover, button:focus {
+	border: none;
 	outline: none;
 }

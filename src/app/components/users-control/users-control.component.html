@@ -1,45 +1,47 @@
-<div class="fitler-input">
-  <input type="text" [(ngModel)]="filterField" (ngModelChange)="filter($event)">
-</div>
+<div class="main-container">
+  <div class="fitler-input">
+    <input type="text" placeholder="Filter by username" [(ngModel)]="filterField" (ngModelChange)="filter($event)">
+  </div>
 
 
-<table class="users-table">
-  <thead>
-    <th appSort [array]="filteredUsers" [value]="'_id'">ID</th>
-    <th appSort [array]="filteredUsers" [value]="'username'">Имя</th>
-    <th appSort [array]="filteredUsers" [value]="'password'">Пароль</th>
-    <th>2</th>
-    <th>3</th>
-    <th>4</th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of filteredUsers">
-      <td>{{user._id | slice:0:8}}</td>
-      <td>{{user.username}}</td>
-      <td>{{user.password}}</td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+  <table class="users-table">
+    <thead>
+      <th appSort [array]="filteredUsers" [value]="'_id'">ID</th>
+      <th appSort [array]="filteredUsers" [value]="'username'">username</th>
+      <th appSort [array]="filteredUsers" [value]="'password'">password</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>{{user._id | slice:0:8}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.password}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 
-<button (click)="openAddUserModal()">ADD USER</button>
+  <button (click)="openAddUserModal()">ADD USER</button>
 
-<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-  <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
       <a class="page-link" (click)="setPage(1)">First</a>
-  </li>
-  <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
       <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
-  </li>
-  <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+    </li>
+    <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
       <a class="page-link" (click)="setPage(page)">{{page}}</a>
-  </li>
-  <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
       <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
-  </li>
-  <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+    </li>
+    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
       <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
-  </li>
-</ul>
+    </li>
+  </ul>
+</div>
