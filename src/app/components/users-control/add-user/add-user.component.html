@@ -1,4 +1,10 @@
-
 <input type="text" placeholder="username" [(ngModel)]="username">
 <input type="text" placeholder="password" [(ngModel)]="password">
-<button (click)="addUser()">SAVE</button>
+<button (click)="addUser()" [disabled]="error" [ngClass]="{'disabled': error}">SAVE</button>
+
+
+<ng-container *ngIf="error">
+    <div class="alert-danger" style="text-align: center; margin-top: 30px;color: #0b0a0c">
+        <span style="font-weight: bold">{{error}}</span>
+    </div>
+</ng-container>

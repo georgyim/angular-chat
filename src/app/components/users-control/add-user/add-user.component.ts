@@ -11,6 +11,7 @@ export class AddUserComponent implements OnInit {
 
   username: any;
   password: any;
+  error: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddUserComponent>,
@@ -19,10 +20,13 @@ export class AddUserComponent implements OnInit {
   ) { }
 
   addUser() {
+    if (!this.username || !this.password || this.username.trim() === '' || this.password.trim() === '') {
+      this.error = 'Please fill all fields';
+      return;
+    }
     this.userService.addUser(this.username, this.password)
       .subscribe(res => {
-        console.log(res);
-        this.dialogRef.close(true);
+        this.dialogRef.close(res);
       });
   }
 
