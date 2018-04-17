@@ -1,7 +1,7 @@
 <ng-container *ngIf="authService.loggedIn$ | async">
   <div class="header navbar ">
     <div class="item1 item">
-      <a class="nav-link" routerLink="/auth" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Chat</a>
+      <a class="nav-link" routerLink="/chat" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Chat</a>
     </div>
     <div class="item2 item">
       <a class="nav-link" routerLink="/user-control" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">User control</a>

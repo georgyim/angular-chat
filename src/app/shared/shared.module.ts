@@ -12,12 +12,14 @@ import { SocketOne } from '../services/chat-sockets/socket-one.service';
 import { UsersService } from '../services/users/users.service';
 import { PaginatorService } from '../services/paginator/paginator.service';
 
+import { SortDirective } from './../directives/sort/sort.directive';
+
+
 
 @NgModule({
   imports: [],
-  providers: [],
-  declarations: [],
-  exports: [],
+  declarations: [SortDirective],
+  exports: [SortDirective],
   bootstrap: []
 })
 
@@ -32,7 +34,7 @@ export class SharedModule {
         LocalStorageService,
         RoomService,
         UsersService,
-        DatePipe, 
+        DatePipe,
         SearchFilterSortService,
         PaginatorService,
       ]

@@ -5,16 +5,19 @@
 }
 
 .users-table {
-    width: 500px;
+    /* width: 500px; */
     margin: auto;
 }
-
+th:hover {
+    cursor: pointer;
+}
 th,
 td {
     border: 1px solid white;
     text-align: center;
     height: 30px;
     vertical-align: middle;
+    width: 170px;
 }
 
 .disabled {
