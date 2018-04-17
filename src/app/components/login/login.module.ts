@@ -1,7 +1,10 @@
 import { NgModule }      from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
-  imports:      [  ],
+  imports:      [ CommonModule, FormsModule, ReactiveFormsModule ],
   providers:    [  ],
   declarations: [  ],
   exports:      [  ],
