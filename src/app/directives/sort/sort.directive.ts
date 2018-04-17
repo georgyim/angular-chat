@@ -1,16 +1,17 @@
 import { SearchFilterSortService } from './../../services/search-sort-filter/search-sort-filter.service';
-import { Directive, ElementRef, ViewContainerRef, HostListener, Renderer2, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
-import { TemplateRef, Input } from '@angular/core';
+import { Directive, ElementRef, ViewContainerRef, HostListener, Renderer2, OnInit, EventEmitter } from '@angular/core';
+import { TemplateRef, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 
 @Directive({
   selector: '[appSort]'
 })
-export class SortDirective {
+export class SortDirective implements OnInit {
 
   @Input() array;
   @Input() value;
+  @Output() setPage = new EventEmitter<boolean>();
 
   sortedArray;
   arrayDirection = 'up';
@@ -25,6 +26,7 @@ export class SortDirective {
       this.sort();
       this.addArrow('up');
     }
+    this.setPage.emit(true);
   }
 
 
@@ -45,7 +47,7 @@ export class SortDirective {
       this.arrayDirection = 'up';
     } else {
       this.arrayDirection = 'down';
-      direction = 'arrow_downward'
+      direction = 'arrow_downward';
     }
 
     this.matIcon = this.renderer.createElement('mat-icon');
@@ -59,7 +61,7 @@ export class SortDirective {
   }
 
   deleteArrow() {
-    this.renderer.removeChild(this.el.nativeElement, this.matIcon)
+    this.renderer.removeChild(this.el.nativeElement, this.matIcon);
   }
 
   sort(reverse?) {

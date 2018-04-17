@@ -68,9 +68,16 @@ input {
     cursor: not-allowed !important;
 }
 
-.alert-danger {
+.alert {
     margin-bottom: 20px;
     text-align: center;
     font-weight: bold;
+}
+
+.alert-danger {
     color: red;
+}
+
+.alert-success {
+    color: green;
 }

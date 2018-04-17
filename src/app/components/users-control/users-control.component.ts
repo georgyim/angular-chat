@@ -7,12 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { PaginatorService } from './../../services/paginator/paginator.service';
 import { MatDialog } from '@angular/material';
 import { AddUserComponent } from './add-user/add-user.component';
-
+import { fadeOffAnimation } from './../../common/animation';
 
 @Component({
   selector: 'app-users-control',
   templateUrl: './users-control.component.html',
-  styleUrls: ['./users-control.component.css']
+  styleUrls: ['./users-control.component.css'],
+  animations: [fadeOffAnimation]
 })
 export class UsersControlComponent implements OnInit {
 
@@ -44,13 +45,24 @@ export class UsersControlComponent implements OnInit {
   }
 
 
+  deleteUser(id, Idx) {
+    this.pagedItems.splice(Idx, 1);
+
+    // this.userService.deleteUser(id)
+    //     .subscribe(res => {
+    //       this.pagedItems.splice(Idx);
+    //     });
+  }
+
 
   filter(value) {
     this.filteredUsers = this.SFSService.search(this.users, this.filterField, ["_id", "password"]);
+    this.setPage(1);
   }
 
   sort(value) {
     this.filteredUsers = this.SFSService.orderBy(this.filteredUsers, value);
+    this.setPage(1);
   }
 
   setPage(page: number) {
@@ -58,12 +70,12 @@ export class UsersControlComponent implements OnInit {
       return;
     }
 
-    // get pager object from service
     this.pager = this.paginator.getPager(this.filteredUsers.length, page);
 
-    // get current page of items
     this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
+
+  
 
 
   openAddUserModal(): void {
@@ -71,7 +83,7 @@ export class UsersControlComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result !== undefined) {
-        console.log(result);
+        this.pagedItems.unshift(result);
       }
     });
   }

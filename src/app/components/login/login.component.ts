@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   username: string;
   password: string;
   error: string;
+  alert: string;
   registerSubscription$;
   errorSubscription$;
 
@@ -41,6 +42,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   register() {
     this.registerSubscription$ = this.authenticationService.register(this.username, this.password)
       .subscribe(res => {
+        if (res && res['err']) {
+          this.error = res['err'];
+        } else {
+          this.error = null;
+          this.alert = 'User succesfully register, now you can login.';
+          setTimeout(() => this.alert = null, 3000);
+      }
       }, err => {
         console.warn(err);
       });

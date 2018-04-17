@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
   Body,
   UseGuards,
   ReflectMetadata,
@@ -36,7 +37,8 @@ export class UsersController {
   async createUser( @Req() request) {
     const isNewUser = await this.usersService.findOneUsers(request.body.username);
     if (isNewUser) {
-      return 'ALREADY REGISTER';
+      const err = 'ALREADY REGISTER';
+      return { err };
     }
     const newUser = await this.usersService.createUser(request.body);
     return newUser;
@@ -70,14 +72,22 @@ export class UsersController {
 
   @Get('/get-users')
   async getAllUsers( @Req() request) {
-    console.log('users get users')
-      try {
-          const allusers = await this.usersService.findAllUsers();
-          return allusers;
-      } catch (err) {
-          console.log(err);
-      }
+    try {
+      const allusers = await this.usersService.findAllUsers();
+      return allusers;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
+  @Delete('/delete/:id')
+  async deleteuser( @Param() param) {
+    try {
+      const allusers = await this.usersService.deleteUser(param.id);
+      return {status: 'ok'};
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 

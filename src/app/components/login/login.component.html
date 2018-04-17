@@ -24,8 +24,12 @@
     </div>
 
     <ng-container *ngIf="error">
-      <span class="alert-danger" [innerText]="error"></span>
+      <span class="alert alert-danger" [innerText]="error"></span>
     </ng-container>
+
+    <ng-container  *ngIf="alert">
+        <span class="alert alert-success" [innerText]="alert"></span> 
+    </ng-container>  
 
     <div class="buttons">
       <button [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()">Login</button>
