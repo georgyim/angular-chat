@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { MyOwnCustomMaterialModule } from './common/ang-material.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './components/login/login.module';
+import { UserControlModule } from './components/users-control/user-control.module';
 
 
 // Other
@@ -30,39 +31,33 @@ import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { NgSemanticModule } from 'ng-semantic';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
-import { UsersControlComponent } from './components/users-control/users-control.component';
 
-import { AddUserComponent } from './components/users-control/add-user/add-user.component';
 import { SortDirective } from './directives/sort/sort.directive';
-
 
 
 // App routes
 const routes: Routes = [
   { path: 'auth', loadChildren: 'app/components/login/login.module#LoginModule' },
   { path: '', component: ChatComponent, canActivate: [AuthGuard] },
-  { path: 'user-control', component: UsersControlComponent, canActivate: [AuthGuard] },
+  { path: 'user-control',loadChildren: 'app/components/users-control/user-control.module#UserControlModule', canActivate: [AuthGuard] },
 ];
 
 
 @NgModule({
   entryComponents: [
-    AddUserComponent
   ],
   declarations: [
     AppComponent,
     MenuComponent,
     ChatComponent,
     MessageComponent,
-
     UserlistComponent,
-    UsersControlComponent,
     SortDirective,
-    AddUserComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     SharedModule.forRoot(),
+    UserControlModule,
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
