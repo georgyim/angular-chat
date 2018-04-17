@@ -1,20 +1,34 @@
-import { SearchFilterSortService } from './services/filter/filter.service';
-import { HttpClient } from '@angular/common/http';
-import { ChatService } from './services/chat-sockets/socket.service';
+// Core
+
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient } from '@angular/common/http';
+
+
+// Modules
+
+import { MyOwnCustomMaterialModule } from './common/ang-material.module';
+
+
+// Other
+
+
+
+import { SearchFilterSortService } from './services/search-sort-filter/search-sort-filter.service';
+import { ChatService } from './services/chat-sockets/socket.service';
 import { SocketIoModule } from 'ng-socket-io';
 import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
+import { MenuComponent } from './components/menu/menu.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { MessageComponent } from './components/chat/message/message.component';
 import { AuthenticationService } from './services/auth/authentication.service';
 import { LocalStorageService } from './services/auth/local-storage.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
-import { Routes, RouterModule } from '@angular/router';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { RoomService } from './services/rooms/rooms.service';
 import { SocketOne } from './services/chat-sockets/socket-one.service';
@@ -24,12 +38,14 @@ import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
 import { UsersControlComponent } from './components/users-control/users-control.component';
 import { UsersService } from './services/users/users.service';
-import { DatePipe } from '@angular/common';
 import { SortDirective } from './directives/sort/sort.directive';
-import { MatIconModule } from '@angular/material/icon';
+
 import { PaginatorService } from './services/paginator/paginator.service';
 import { AddUserComponent } from './components/users-control/add-user/add-user.component';
-import {MatDialogModule} from '@angular/material/dialog';
+
+
+
+
 
 // App routes
 const routes: Routes = [
@@ -41,7 +57,7 @@ const routes: Routes = [
 
 @NgModule({
   entryComponents: [
-    AddUserComponent  
+    AddUserComponent
   ],
   declarations: [
     AppComponent,
@@ -55,7 +71,7 @@ const routes: Routes = [
     AddUserComponent
   ],
   imports: [
-  RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes),
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -63,8 +79,7 @@ const routes: Routes = [
     SocketIoModule,
     HttpClientModule,
     NgSemanticModule,
-    MatIconModule,
-    MatDialogModule
+    MyOwnCustomMaterialModule
   ],
   providers: [
     SocketOne,

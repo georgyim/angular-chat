@@ -1,5 +1,5 @@
+import { SearchFilterSortService } from './../../services/search-sort-filter/search-sort-filter.service';
 import { SortDirective } from './../../directives/sort/sort.directive';
-import { SearchFilterSortService } from './../../services/filter/filter.service';
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './../../services/users/users.service';
 import { SlicePipe } from '@angular/common';
@@ -25,7 +25,7 @@ export class UsersControlComponent implements OnInit {
 
   constructor(
     private userService: UsersService,
-    private filterService: SearchFilterSortService,
+    private SFSService: SearchFilterSortService,
     private paginator: PaginatorService,
     public dialog: MatDialog,
   ) { }
@@ -46,11 +46,11 @@ export class UsersControlComponent implements OnInit {
 
 
   filter(value) {
-    this.filteredUsers = this.filterService.search(this.users, this.filterField, ["_id", "password"]);
+    this.filteredUsers = this.SFSService.search(this.users, this.filterField, ["_id", "password"]);
   }
 
   sort(value) {
-    this.filteredUsers = this.filterService.orderBy(this.filteredUsers, value);
+    this.filteredUsers = this.SFSService.orderBy(this.filteredUsers, value);
   }
 
   setPage(page: number) {

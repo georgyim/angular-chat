@@ -1,4 +1,4 @@
-import { SearchFilterSortService } from './../../services/filter/filter.service';
+import { SearchFilterSortService } from './../../services/search-sort-filter/search-sort-filter.service';
 import { Directive, ElementRef, ViewContainerRef, HostListener, Renderer2, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { TemplateRef, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,7 +31,7 @@ export class SortDirective {
   constructor(private el: ElementRef,
     private viewContainer: ViewContainerRef,
     private renderer: Renderer2,
-    private filterService: SearchFilterSortService) {
+    private SFSService: SearchFilterSortService) {
   }
 
   ngOnInit() {
@@ -65,9 +65,9 @@ export class SortDirective {
   sort(reverse?) {
     this.deleteArrow();
     if (reverse) {
-      this.sortedArray = this.filterService.orderBy(this.array, this.value, true);
+      this.sortedArray = this.SFSService.orderBy(this.array, this.value, true);
     } else {
-      this.sortedArray = this.filterService.orderBy(this.array, this.value);
+      this.sortedArray = this.SFSService.orderBy(this.array, this.value);
     }
   }
 
