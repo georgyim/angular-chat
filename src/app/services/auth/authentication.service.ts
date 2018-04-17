@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/comm
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocalStorageService } from './local-storage.service';
+import { Router } from '@angular/router';
 
 const api = 'http://localhost:3000/api/';
 
@@ -15,7 +16,8 @@ export class AuthenticationService {
   private userName: string;
   constructor(
     private http: HttpClient,
-    private storage: LocalStorageService
+    private storage: LocalStorageService,
+    private router: Router
   ) {
     this.token = this.storage.getToken();
     this.checkToken();
@@ -70,8 +72,15 @@ export class AuthenticationService {
 
   checkToken() {
     this.http.get(api + 'users/check-token')
-      .subscribe( (res: boolean) => {
-        this.loggedIn$.next(res);
-      }, () => this.loggedIn$.next(false));
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.loggedIn$.next(res);
+        } else {
+          this.loggedIn$.next(false);
+          this.router.navigate(['/auth']);
+        }
+      }, () => {
+
+      });
   }
 }

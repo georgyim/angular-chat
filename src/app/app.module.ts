@@ -11,7 +11,6 @@ import { HttpClient } from '@angular/common/http';
 
 // Modules
 
-import { MyOwnCustomMaterialModule } from './common/ang-material.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './components/login/login.module';
 import { UserControlModule } from './components/users-control/user-control.module';
@@ -32,14 +31,21 @@ import { NgSemanticModule } from 'ng-semantic';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
 
-import { SortDirective } from './directives/sort/sort.directive';
 
 
 // App routes
 const routes: Routes = [
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
+
   { path: 'auth', loadChildren: 'app/components/login/login.module#LoginModule' },
-  { path: '', component: ChatComponent, canActivate: [AuthGuard] },
-  { path: 'user-control',loadChildren: 'app/components/users-control/user-control.module#UserControlModule', canActivate: [AuthGuard] },
+  {
+    path: 'user-control', canActivate: [AuthGuard],
+    loadChildren: 'app/components/users-control/user-control.module#UserControlModule'
+  },
+
+  { path: '', component: ChatComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+
+
 ];
 
 
@@ -52,7 +58,6 @@ const routes: Routes = [
     ChatComponent,
     MessageComponent,
     UserlistComponent,
-    SortDirective,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -65,7 +70,6 @@ const routes: Routes = [
     SocketIoModule,
     HttpClientModule,
     NgSemanticModule,
-    MyOwnCustomMaterialModule
   ],
   providers: [
     AuthGuard,

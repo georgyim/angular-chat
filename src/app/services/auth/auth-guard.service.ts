@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
       this.loggedIn = loggedIn;
     });
+
   }
 
   canActivate(): boolean {

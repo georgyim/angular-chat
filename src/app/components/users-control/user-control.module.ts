@@ -5,32 +5,34 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UsersControlComponent } from './users-control.component';
 import { AddUserComponent } from './add-user/add-user.component';
-// import { MyOwnCustomMaterialModule } from '../../common/ang-material.module';
+import { MyOwnCustomMaterialModule } from '../../common/ang-material.module';
+import { SharedModule } from './../../shared/shared.module';
 
 
 const routes: Routes = [
-    {
-      path: '',
-      component: AddUserComponent
-    }
-  ];
+  {
+    path: '',
+    component: UsersControlComponent
+  }
+];
 
 
 @NgModule({
-    entryComponents: [
-        AddUserComponent
-    ],
-    imports: [
-        // MyOwnCustomMaterialModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule.forChild(routes)
-      ],
-    providers: [],
-    declarations: [AddUserComponent],
-    exports: [RouterModule],
-    bootstrap: []
+  entryComponents: [
+    AddUserComponent
+  ],
+  imports: [
+    SharedModule,
+    MyOwnCustomMaterialModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes)
+  ],
+  providers: [],
+  declarations: [UsersControlComponent , AddUserComponent],
+  exports: [RouterModule],
+  bootstrap: []
 })
 
 export class UserControlModule { }
