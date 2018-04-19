@@ -27,7 +27,6 @@ import { MessageComponent } from './components/chat/message/message.component';
 
 
 import { AuthInterceptor } from './services/auth/auth.interceptor';
-import { NgSemanticModule } from 'ng-semantic';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
 
@@ -69,7 +68,6 @@ const routes: Routes = [
     FormsModule,
     SocketIoModule,
     HttpClientModule,
-    NgSemanticModule,
   ],
   providers: [
     AuthGuard,
