@@ -18,7 +18,7 @@
         <td>{{user.username}}</td>
         <td>{{user.password}}</td>
         <td>
-          <mat-icon style="cursor: pointer">mode_edit
+          <mat-icon style="cursor: pointer" (click)="openAddUserModal(user)">mode_edit
           </mat-icon>
         </td>
         <td>

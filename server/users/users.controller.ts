@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   Body,
   UseGuards,
@@ -42,7 +43,6 @@ export class UsersController {
     }
     const newUser = await this.usersService.createUser(request.body);
     return newUser;
-
   }
 
   @Get('/get-profile')
@@ -84,10 +84,23 @@ export class UsersController {
   async deleteuser( @Param() param) {
     try {
       const allusers = await this.usersService.deleteUser(param.id);
-      return {status: 'ok'};
+      return { status: 'ok' };
     } catch (err) {
       console.log(err);
     }
   }
+
+  @Put('/edit/:id')
+  async editUser( @Req() request, @Param() param) {
+    try {
+      const allusers = await this.usersService.updateUser(param.id,
+        { username: request.body.username, password: request.body.password });
+      return { status: 'ok' };
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
 }
 

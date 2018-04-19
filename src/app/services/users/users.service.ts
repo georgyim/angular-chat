@@ -27,4 +27,12 @@ export class UsersService {
     return this.http.delete(`${api}users/delete/${id}`);
   }
 
+  editUser(username, password, id) {
+    let body = new HttpParams();
+    body = body.append('username', username);
+    body = body.append('password', password);
+
+    return this.http.put(`${api}users/edit/${id}`, body);
+  }
+
 }

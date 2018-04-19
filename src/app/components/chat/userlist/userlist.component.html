@@ -2,10 +2,8 @@
   <h3>Userlist</h3>
 </div>
 <ng-container *ngIf="users && users.length > 0">
-  <sm-list class="ordered">
-    <sm-item *ngFor="let user of users">{{user}}</sm-item>
-  </sm-list>
-  <!-- <div class="user-block" *ngFor="let user of users">
-    {{user}}
-  </div> -->
+  <ul>
+    <li *ngFor="let user of users">{{user}}</li>
+  </ul>
+
 </ng-container>

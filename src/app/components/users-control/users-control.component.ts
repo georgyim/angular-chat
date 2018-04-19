@@ -5,7 +5,7 @@ import { UsersService } from './../../services/users/users.service';
 import { SlicePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { PaginatorService } from './../../services/paginator/paginator.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AddUserComponent } from './add-user/add-user.component';
 import { fadeOffAnimation } from './../../common/animation';
 
@@ -84,8 +84,12 @@ export class UsersControlComponent implements OnInit {
 
 
 
-  openAddUserModal(): void {
-    let dialogRef = this.dialog.open(AddUserComponent);
+  openAddUserModal(user?): void {
+    const config = new MatDialogConfig();
+    if (user) {
+      config.data = user;
+    }
+    let dialogRef = this.dialog.open(AddUserComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result !== undefined) {
