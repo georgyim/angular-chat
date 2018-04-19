@@ -20,6 +20,7 @@ export class UsersControlComponent implements OnInit {
   public users: any;
   public filteredUsers;
   filterField: any;
+  disabledAnimation = true;
 
   pager: any = {};
   pagedItems: any[];
@@ -41,17 +42,20 @@ export class UsersControlComponent implements OnInit {
         this.users = res;
         this.filteredUsers = res;
         this.setPage(1);
+
       });
   }
 
 
   deleteUser(id, Idx) {
+    this.disabledAnimation = false;
     this.pagedItems.splice(Idx, 1);
-
-    // this.userService.deleteUser(id)
-    //     .subscribe(res => {
-    //       this.pagedItems.splice(Idx);
-    //     });
+    setTimeout(() => this.disabledAnimation = true, 0);
+    
+    this.userService.deleteUser(id)
+      .subscribe(res => {
+        this.pagedItems.splice(Idx);
+      });
   }
 
 
@@ -66,6 +70,8 @@ export class UsersControlComponent implements OnInit {
   }
 
   setPage(page: number) {
+    this.disabledAnimation = true;
+
     if (page < 1 || page > this.pager.totalPages) {
       return;
     }
@@ -75,7 +81,7 @@ export class UsersControlComponent implements OnInit {
     this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
-  
+
 
 
   openAddUserModal(): void {
@@ -83,7 +89,9 @@ export class UsersControlComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result !== undefined) {
+        this.disabledAnimation = false;
         this.pagedItems.unshift(result);
+        setTimeout(() => this.disabledAnimation = true, 0);
       }
     });
   }

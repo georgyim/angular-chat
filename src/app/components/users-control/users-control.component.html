@@ -13,7 +13,7 @@
       <th>3</th>
       <th>delete</th>
     </thead>
-    <tbody>
+    <tbody [@.disabled]="disabledAnimation">
       <tr *ngFor="let user of pagedItems; let i = index" [@fadeOffAnimation]>
         <td>{{user._id | slice:0:8}}</td>
         <td>{{user.username}}</td>
