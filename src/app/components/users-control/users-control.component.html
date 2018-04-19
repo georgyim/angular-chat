@@ -9,8 +9,7 @@
       <th appSort [array]="filteredUsers" [value]="'_id'" (setPage)=setPage(1)>ID</th>
       <th appSort [array]="filteredUsers" [value]="'username'" (setPage)=setPage(1)>username</th>
       <th appSort [array]="filteredUsers" [value]="'password'" (setPage)=setPage(1)>password</th>
-      <th>2</th>
-      <th>3</th>
+      <th>edit</th>
       <th>delete</th>
     </thead>
     <tbody [@.disabled]="disabledAnimation">
@@ -18,8 +17,10 @@
         <td>{{user._id | slice:0:8}}</td>
         <td>{{user.username}}</td>
         <td>{{user.password}}</td>
-        <td></td>
-        <td></td>
+        <td>
+          <mat-icon style="cursor: pointer">mode_edit
+          </mat-icon>
+        </td>
         <td>
           <mat-icon style="cursor: pointer" (click)="deleteUser(user._id, i)">delete_sweep
           </mat-icon>

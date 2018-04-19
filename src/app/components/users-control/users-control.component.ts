@@ -49,12 +49,12 @@ export class UsersControlComponent implements OnInit {
 
   deleteUser(id, Idx) {
     this.disabledAnimation = false;
-    this.pagedItems.splice(Idx, 1);
-    setTimeout(() => this.disabledAnimation = true, 0);
-    
+
     this.userService.deleteUser(id)
       .subscribe(res => {
-        this.pagedItems.splice(Idx);
+        this.filteredUsers.splice(Idx, 1);
+        this.pagedItems.splice(Idx, 1);
+        setTimeout(() => this.disabledAnimation = true, 0);
       });
   }
 
