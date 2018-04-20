@@ -6,8 +6,9 @@
     "dev": "concurrently \"nodemon \" \"ng serve --progress=false --proxy-config proxy.conf.json\"  ",
     "ng": "ng",
     "prestart": "npm run build",
-    "start": "set NODE_ENV=production && node dist/server/main.js",
-    "build": "ng build --prod && tsc -p ./server"
+    "start": "node dist/server/main.js",
+    "build": "ng build --prod && tsc -p ./server",
+    "heroku-postbuild": "npm run build"
   },
   "private": true,
   "dependencies": {
