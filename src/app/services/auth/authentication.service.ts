@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   public token: string;
   public error$ = new BehaviorSubject<boolean>(false);
-  private loggedIn$ = new BehaviorSubject<boolean>(this.storage.getToken() != null ? true : false);
+  public loggedIn$ = new BehaviorSubject<boolean>(this.storage.getToken() != null ? true : false);
   private userName: string;
   constructor(
     private http: HttpClient,

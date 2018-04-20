@@ -7,7 +7,7 @@ import { CorsMiddleware } from './middlewares/cors.middleware';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost:27017/nest'),
+  imports: [MongooseModule.forRoot('mongodb://admin:admin@ds249839.mlab.com:49839/angular-nest-chat-app'),
    UsersModule,
     RoomsModule,
    AuthModule

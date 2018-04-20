@@ -14,7 +14,7 @@ import {
 import { InjectModel } from "@nestjs/mongoose";
 import { RoomsService } from './rooms.service';
 
-@Controller("rooms")
+@Controller("api/rooms")
 // @UseGuards(RolesGuard)
 export class RoomsController {
     constructor(

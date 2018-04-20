@@ -22,7 +22,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { AuthService } from './../auth/auth.service';
 import { JwtStrategy } from './../auth/passport/jwt.strategy';
 
-@Controller("users")
+@Controller("api/users")
 // @UseGuards(RolesGuard)
 export class UsersController {
   constructor(
