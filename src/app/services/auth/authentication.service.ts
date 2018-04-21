@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
 
-const api = 'http://localhost:3000/api/';
+const api = '/api/';
 
 @Injectable()
 export class AuthenticationService {
