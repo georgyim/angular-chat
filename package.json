@@ -2,10 +2,6 @@
   "name": "angular-nest-starter",
   "version": "0.1.0",
   "license": "MIT",
-  "engines": {
-    "node": "8.9.4",
-    "npm": "5.6.0"
-  },
   "scripts": {
     "dev": "concurrently \"nodemon \" \"ng serve --progress=false --proxy-config proxy.conf.json\"  ",
     "ng": "ng",
