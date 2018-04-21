@@ -6,7 +6,7 @@ export class SocketOne extends Socket {
 
     constructor() {
         super({
-            url: '/', options: {
+            url: '', options: {
                 'query': 'token=' + localStorage.getItem('authToken')
             }
         });
