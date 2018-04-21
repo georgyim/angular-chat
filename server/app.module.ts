@@ -6,11 +6,20 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CorsMiddleware } from './middlewares/cors.middleware';
 import { AuthModule } from './auth/auth.module';
 
+
+const getMongoUrl = () => {
+  if (process.env.MONGOUSER && process.env.MONGOPASSWORD) {
+    return `mongodb://${process.env.MONGOUSER}:${process.env.MONGOPASSWORD}@ds249839.mlab.com:49839/angular-nest-chat-app`;
+  } else {
+    return 'mongodb://localhost:27017/nest';
+  }
+};
+
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://admin:admin@ds249839.mlab.com:49839/angular-nest-chat-app'),
-   UsersModule,
+  imports: [MongooseModule.forRoot(getMongoUrl()),
+    UsersModule,
     RoomsModule,
-   AuthModule
+    AuthModule
   ],
   components: []
 })

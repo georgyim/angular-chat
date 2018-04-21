@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
 
 
-const api = 'http://localhost:3000/api/';
+const api = '/api/';
 
 @Injectable()
 export class RoomService {

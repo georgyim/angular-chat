@@ -7,14 +7,22 @@ import { ApplicationModule } from './app.module';
 import { ValidationPipe } from './common/pipes/validation.pipe';
 import { NotFoundExceptionFilter } from './common/filters/not-found-exception.filter';
 
+const port = process.env.PORT || 3000;
+
+
 async function bootstrap() {
-  const app = await NestFactory.create(ApplicationModule);
+  const server = express();
+  const app = await NestFactory.create(ApplicationModule, server);
+
+
   app.use(cors());
   // app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new NotFoundExceptionFilter());
 
   app.use(express.static(path.join(__dirname, '../../dist')));
-  await app.listen(process.env.PORT || 3000, '0.0.0.0');
+
+  await app.listen(parseInt(process.env.PORT) || 3000);
+
 }
 bootstrap();
