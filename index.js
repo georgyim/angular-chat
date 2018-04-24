@@ -1,2 +1,2 @@
-require('ts-node').register({ project: 'server/tsconfig.json' });
+require('ts-node/register');
 require('./server/main');

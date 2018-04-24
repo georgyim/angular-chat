@@ -1,5 +1,6 @@
 // Core
-
+import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -63,7 +64,8 @@ const routes: Routes = [
     SharedModule.forRoot(),
     UserControlModule,
     ReactiveFormsModule,
-    BrowserModule,
+    // BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'ng-app-chat' }),
     BrowserAnimationsModule,
     FormsModule,
     SocketIoModule,
@@ -79,4 +81,13 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(APP_ID) private appId: string) {
+    const platform = isPlatformBrowser(platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Running ${platform} with appId=${appId}`);
+  }
+}

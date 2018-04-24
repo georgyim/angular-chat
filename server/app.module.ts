@@ -3,8 +3,10 @@ import { Module, MiddlewaresConsumer } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { MongooseModule } from '@nestjs/mongoose';
+// import { MongooseModule } from 'mongoose';
 import { CorsMiddleware } from './middlewares/cors.middleware';
 import { AuthModule } from './auth/auth.module';
+import { StaticModule } from './static/static.module';
 
 
 const getMongoUrl = () => {
@@ -17,9 +19,10 @@ const getMongoUrl = () => {
 
 @Module({
   imports: [MongooseModule.forRoot(getMongoUrl()),
-    UsersModule,
+  UsersModule,
     RoomsModule,
-    AuthModule
+    AuthModule,
+    StaticModule
   ],
   components: []
 })

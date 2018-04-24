@@ -1,6 +1,6 @@
 import { SearchFilterSortService } from './../../services/search-sort-filter/search-sort-filter.service';
 import { SortDirective } from './../../directives/sort/sort.directive';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { UsersService } from './../../services/users/users.service';
 import { SlicePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +8,9 @@ import { PaginatorService } from './../../services/paginator/paginator.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AddUserComponent } from './add-user/add-user.component';
 import { fadeOffAnimation } from './../../common/animation';
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+
 
 @Component({
   selector: 'app-users-control',
@@ -16,6 +19,8 @@ import { fadeOffAnimation } from './../../common/animation';
   animations: [fadeOffAnimation]
 })
 export class UsersControlComponent implements OnInit {
+  isBrowser;
+
 
   public users: any;
   public filteredUsers;
@@ -30,7 +35,10 @@ export class UsersControlComponent implements OnInit {
     private SFSService: SearchFilterSortService,
     private paginator: PaginatorService,
     public dialog: MatDialog,
-  ) { }
+    @Inject(PLATFORM_ID) private platformId
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+   }
 
   ngOnInit() {
     this.getUsers();

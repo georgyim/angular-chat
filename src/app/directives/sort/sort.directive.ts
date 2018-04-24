@@ -1,8 +1,9 @@
 import { SearchFilterSortService } from './../../services/search-sort-filter/search-sort-filter.service';
 import { Directive, ElementRef, ViewContainerRef, HostListener, Renderer2, OnInit, EventEmitter } from '@angular/core';
-import { TemplateRef, Input, Output } from '@angular/core';
+import { TemplateRef, Input, Output, Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Directive({
   selector: '[appSort]'
@@ -30,14 +31,17 @@ export class SortDirective implements OnInit {
   }
 
 
-  constructor(private el: ElementRef,
+  constructor( @Inject(PLATFORM_ID) private platformId: Object,
+    private el: ElementRef,
     private viewContainer: ViewContainerRef,
     private renderer: Renderer2,
     private SFSService: SearchFilterSortService) {
   }
 
   ngOnInit() {
-    this.addArrow('up');
+    if (isPlatformBrowser(this.platformId)) {
+      this.addArrow('up');
+    }
   }
 
   addArrow(value?) {
