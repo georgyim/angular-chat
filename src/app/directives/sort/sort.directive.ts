@@ -39,9 +39,9 @@ export class SortDirective implements OnInit {
   }
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       this.addArrow('up');
-    }
+    // }
   }
 
   addArrow(value?) {
