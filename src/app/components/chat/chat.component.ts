@@ -1,5 +1,5 @@
 import { ChatService } from '../../services/chat-sockets/socket.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../services/auth/authentication.service';
 import { RoomService } from './../../services/rooms/rooms.service';
 
@@ -13,7 +13,11 @@ interface IMessage {
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+
+
+
   public text: String;
   public name: String;
   public newRoom: String;
@@ -37,12 +41,19 @@ export class ChatComponent implements OnInit {
     this.getProfile();
     this.chatService.getMessage().subscribe(data => {
       this.messages.push(data);
+      setTimeout(() => this.scrollToBottom(), 0);
     });
     this.getRooms();
     this.chatService.init();
     this.getRoomsFromSocket();
     this.getUsersList();
+    this.scrollToBottom();
   }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
 
   send() {
     if (this.text.trim() !== '') {
@@ -82,6 +93,7 @@ export class ChatComponent implements OnInit {
       .subscribe(res => {
         this.messages = res['messages'];
         this.title = res['title'];
+        setTimeout(() => this.scrollToBottom(), 0);
       });
   }
 
@@ -98,6 +110,10 @@ export class ChatComponent implements OnInit {
         this.users = res;
         console.log(this.users);
       });
+  }
+
+  scrollToBottom(): void {
+    this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
   }
 
 }

@@ -11,12 +11,12 @@
       </li>
     </ul>
   </div>
-  <div class="chat">
+  <div class="chat" >
     <div class="chat__header">
       <i class="material-icons">label_outline</i>
       <span>{{title}}</span>
     </div>
-    <div class="chat__content">
+    <div class="chat__content" #scrollMe>
       <app-message *ngFor="let message of messages" [name]="message.username" [text]="message.text"></app-message>
     </div>
     <div class="chat__footer">
