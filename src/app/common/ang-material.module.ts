@@ -3,7 +3,8 @@ import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule } fr
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-    imports: [CommonModule, MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule],
-    exports: [MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule],
+  imports: [ CommonModule, MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule ],
+  exports: [ MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule ],
 })
-export class MyOwnCustomMaterialModule { }
+export class MyOwnCustomMaterialModule {
+}

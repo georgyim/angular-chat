@@ -1,7 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 // Services
-
 import { DatePipe } from '@angular/common';
 import { SearchFilterSortService } from '../services/search-sort-filter/search-sort-filter.service';
 import { ChatService } from '../services/chat-sockets/socket.service';
@@ -14,12 +13,10 @@ import { PaginatorService } from '../services/paginator/paginator.service';
 
 import { SortDirective } from './../directives/sort/sort.directive';
 
-
-
 @NgModule({
   imports: [],
-  declarations: [SortDirective],
-  exports: [SortDirective],
+  declarations: [ SortDirective ],
+  exports: [ SortDirective ],
   bootstrap: []
 })
 

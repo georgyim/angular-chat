@@ -10,47 +10,36 @@ import { HttpClient } from '@angular/common/http';
 
 
 // Modules
-
 import { SharedModule } from './shared/shared.module';
-import { LoginModule } from './components/login/login.module';
 import { UserControlModule } from './components/users-control/user-control.module';
 
-
 // Other
-
 import { SocketIoModule } from 'ng-socket-io';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { MessageComponent } from './components/chat/message/message.component';
-
-
-
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
 
-
-
 // App routes
 const routes: Routes = [
-  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
+  {path: 'chat', component: ChatComponent, canActivate: [ AuthGuard ]},
 
-  { path: 'auth', loadChildren: 'app/components/login/login.module#LoginModule' },
+  {path: 'auth', loadChildren: 'app/components/login/login.module#LoginModule'},
   {
-    path: 'user-control', canActivate: [AuthGuard],
+    path: 'user-control', canActivate: [ AuthGuard ],
     loadChildren: 'app/components/users-control/user-control.module#UserControlModule'
   },
 
-  { path: '', component: ChatComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+  {path: '', component: ChatComponent, canActivate: [ AuthGuard ], pathMatch: 'full'},
 
 
 ];
 
-
 @NgModule({
-  entryComponents: [
-  ],
+  entryComponents: [],
   declarations: [
     AppComponent,
     MenuComponent,
@@ -77,6 +66,8 @@ const routes: Routes = [
       multi: true
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+
+export class AppModule {
+}

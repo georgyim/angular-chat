@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
 
-const api = '/api/';
 
 @Injectable()
 export class AuthenticationService {
-
+  private readonly api = '/api';
   public token: string;
-  public error$ = new BehaviorSubject<boolean>(false);
-  public loggedIn$ = new BehaviorSubject<boolean>(this.storage.getToken() != null ? true : false);
-  private userName: string;
-  constructor(
+  public error$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.storage.getToken() != null ? true : false);
+
+  public constructor(
     private http: HttpClient,
     private storage: LocalStorageService,
     private router: Router
@@ -28,7 +27,7 @@ export class AuthenticationService {
     params = params.append('username', username);
     params = params.append('password', password);
 
-    this.http.post(api + 'auth/login', params)
+    this.http.post(this.api + 'auth/login', params)
       .subscribe((response: any) => {
         this.setTokens(response);
       }, () => {
@@ -37,7 +36,7 @@ export class AuthenticationService {
       });
   }
 
-  setTokens(response: any) {
+  setTokens(response: any): void {
     const accessToken = response && response.access_token;
     if (accessToken) {
       this.token = accessToken;
@@ -58,29 +57,28 @@ export class AuthenticationService {
     this.loggedIn$.next(false);
   }
 
-  getProfile() {
-    return this.http.get(api + 'users/get-profile');
+  getProfile(): Observable<Object> {
+    return this.http.get(this.api + 'users/get-profile');
   }
 
-  register(name, password) {
+  register(name, password): Observable<Object> {
     let params = new HttpParams();
     params = params.append('username', name);
     params = params.append('password', password);
-
-    return this.http.post(`${api}users/create`, params);
+    return this.http.post(`${this.api}users/create`, params);
   }
 
   checkToken() {
-    this.http.get(api + 'users/check-token')
+    this.http.get(this.api + 'users/check-token')
       .subscribe((res: boolean) => {
         if (res) {
           this.loggedIn$.next(res);
         } else {
           this.loggedIn$.next(false);
-          this.router.navigate(['/auth']);
+          this.router.navigate([ '/auth' ]);
         }
       }, () => {
-
+        // TODO
       });
   }
 }
