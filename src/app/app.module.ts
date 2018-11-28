@@ -14,7 +14,7 @@ import { SharedModule } from './shared/shared.module';
 import { UserControlModule } from './components/users-control/user-control.module';
 
 // Other
-import { SocketIoModule } from 'ng-socket-io';
+import { SocketIoModule } from 'ngx-socket-io';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ChatComponent } from './components/chat/chat.component';

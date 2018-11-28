@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
+
 import { Injectable } from '@angular/core';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 import { SocketOne } from './socket-one.service';
 @Injectable()
 export class ChatService {
@@ -22,13 +22,11 @@ export class ChatService {
     getMessage() {
         return this.socket
             .fromEvent('message')
-            .map((data: any) => data);
     }
 
     getRooms() {
         return this.socket
             .fromEvent('updatedRooms')
-            .map((data: any) => data);
     }
 
     joinRoom(room) {
@@ -42,6 +40,5 @@ export class ChatService {
     getUsers() {
         return this.socket
             .fromEvent('usersRoom')
-            .map((data: any) => data);
     }
 }

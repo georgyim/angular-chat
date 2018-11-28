@@ -1,5 +1,5 @@
 import { Injectable, NgModule } from '@angular/core';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable()
 export class SocketOne extends Socket {

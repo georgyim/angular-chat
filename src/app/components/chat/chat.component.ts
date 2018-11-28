@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.getProfile();
-    this.chatService.getMessage().subscribe(data => {
+    this.chatService.getMessage().subscribe((data: IMessage) => {
       this.messages.push(data);
     });
     this.getRooms();
@@ -94,7 +94,7 @@ export class ChatComponent implements OnInit {
 
   getUsersList() {
     this.chatService.getUsers()
-      .subscribe(res => {
+      .subscribe((res: any) => {
         this.users = res;
         console.log(this.users);
       });
