@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   register() {
     this.registerSubscription$ = this.authenticationService.register(this.username, this.password)
       .subscribe((res: User) => {
+        // TODO wtf is that lol
         if (res && res['err']) {
           this.error = res['err'];
         } else {
