@@ -1,25 +1,17 @@
 import { Injectable } from '@angular/core';
+import { PaginatorHelper } from './paginator-helper';
 
 @Injectable()
 export class PaginatorService {
 
-  totalItems;
-  totalPages;
-  pageSize;
-  currentPage;
-  startPage;
-  endPage;
-  startIndex;
-  endIndex;
-  pages;
+  public paginatorHelper: PaginatorHelper;
 
-  constructor() { }
+  public constructor() { }
 
 
-  getPager(totalItems, currentPage = 1, pageSize = 10) {
-    let totalPages = Math.ceil(totalItems / pageSize);
-
-    let startPage, endPage;
+  public getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10): PaginatorHelper {
+    let totalPages: number = Math.ceil(totalItems / pageSize);
+    let startPage: number, endPage: number;
 
     if (totalPages <= 10) {
       startPage = 1;
@@ -37,25 +29,15 @@ export class PaginatorService {
       }
     }
 
-    let startIndex = (currentPage - 1) * pageSize;
-    let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+    let startIndex: number = (currentPage - 1) * pageSize;
+    let endIndex: number = Math.min(startIndex + pageSize - 1, totalItems - 1);
 
-    let pages = this.numberRange(startPage, endPage + 1);
+    let pages: number[] = this.numberRange(startPage, endPage + 1);
 
-    return {
-      totalItems: totalItems,
-      currentPage: currentPage,
-      pageSize: pageSize,
-      totalPages: totalPages,
-      startPage: startPage,
-      endPage: endPage,
-      startIndex: startIndex,
-      endIndex: endIndex,
-      pages: pages,
-    };
+    return new PaginatorHelper(totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages) 
   }
 
-  numberRange(start, end) {
+  private numberRange(start, end): number[] {
     return new Array(end - start).fill(start).map((d, i) => i + start);
   }
 

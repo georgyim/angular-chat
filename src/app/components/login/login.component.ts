@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from './../../services/auth/authentication.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+
+import { AuthenticationService } from './../../services/auth/authentication.service';
+import { User } from '../../entities/user';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +20,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   password: string;
   error: string;
   alert: string;
-  registerSubscription$;
-  errorSubscription$;
+  registerSubscription$: Subscription;
+  errorSubscription$: Subscription;
 
   constructor(
     private router: Router,
@@ -41,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   register() {
     this.registerSubscription$ = this.authenticationService.register(this.username, this.password)
-      .subscribe(res => {
+      .subscribe((res: User) => {
         if (res && res['err']) {
           this.error = res['err'];
         } else {
