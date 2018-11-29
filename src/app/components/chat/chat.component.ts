@@ -2,11 +2,10 @@ import { ChatService } from '../../services/chat-sockets/socket.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/auth/authentication.service';
 import { RoomService } from './../../services/rooms/rooms.service';
+import { User } from '../../entities/user';
+import { Room } from '../..//entities/room';
+import { Message } from '../..//entities/message';
 
-interface IMessage {
-  username: String;
-  text: String;
-}
 
 @Component({
   selector: 'app-chat',
@@ -14,15 +13,15 @@ interface IMessage {
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  public text: String;
-  public name: String;
-  public newRoom: String;
-  public messages: IMessage[];
-  public rooms: any;
-  public curRoom: any;
-  public title: String;
-  public currentRoomId: String;
-  public users: any[];
+  public text: string;
+  public name: string;
+  public newRoom: string;
+  public messages: Message[];
+  public rooms: Room[];
+  public curRoom: Room;
+  public title: string;
+  public currentRoomId: string;
+  public users: User[];
 
   constructor(
     private chatService: ChatService,
@@ -30,12 +29,12 @@ export class ChatComponent implements OnInit {
     private roomService: RoomService,
   ) {
     this.title = 'Eat a carrot )';
-    this.messages = [{ username: 'Bugz Bunny', text: 'Choose the room =)' }];
+    this.messages.push(new Message('Bugz Bunny', 'Choose the room =)'));
   }
 
   ngOnInit() {
     this.getProfile();
-    this.chatService.getMessage().subscribe((data: IMessage) => {
+    this.chatService.getMessage().subscribe((data: Message) => {
       this.messages.push(data);
     });
     this.getRooms();
@@ -59,7 +58,7 @@ export class ChatComponent implements OnInit {
 
   getRoomsFromSocket() {
     this.chatService.getRooms()
-      .subscribe(res => {
+      .subscribe((res: Room) => {
         const updatedRooms = [...this.rooms, res];
         this.rooms = updatedRooms;
       });
@@ -67,7 +66,7 @@ export class ChatComponent implements OnInit {
 
 
   getRooms() {
-    this.roomService.getRooms().subscribe(res => {
+    this.roomService.getRooms().subscribe((res: Room[]) => {
       this.rooms = res;
     });
   }
@@ -79,24 +78,23 @@ export class ChatComponent implements OnInit {
 
   getRoom(id) {
     this.roomService.getRoom(id)
-      .subscribe(res => {
-        this.messages = res['messages'];
-        this.title = res['title'];
+      .subscribe((res: Room) => {
+        this.messages = res.messages;
+        this.title = res.title;
       });
   }
 
   getProfile() {
     this.authService.getProfile()
-      .subscribe(res => {
-        this.name = res['username'];
+      .subscribe((res: User) => {
+        this.name = res.username;
       });
   }
 
   getUsersList() {
     this.chatService.getUsers()
-      .subscribe((res: any) => {
+      .subscribe((res: User[]) => {
         this.users = res;
-        console.log(this.users);
       });
   }
 

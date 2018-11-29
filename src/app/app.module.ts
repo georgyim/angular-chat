@@ -25,17 +25,26 @@ import { UserlistComponent } from './components/chat/userlist/userlist.component
 
 // App routes
 const routes: Routes = [
-  {path: 'chat', component: ChatComponent, canActivate: [ AuthGuard ]},
-
-  {path: 'auth', loadChildren: 'app/components/login/login.module#LoginModule'},
   {
-    path: 'user-control', canActivate: [ AuthGuard ],
+    path: 'chat',
+    component: ChatComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'auth',
+    loadChildren: 'app/components/login/login.module#LoginModule'
+  },
+  {
+    path: 'user-control',
+    canActivate: [AuthGuard],
     loadChildren: 'app/components/users-control/user-control.module#UserControlModule'
   },
-
-  {path: '', component: ChatComponent, canActivate: [ AuthGuard ], pathMatch: 'full'},
-
-
+  {
+    path: '',
+    component: ChatComponent,
+    canActivate: [AuthGuard],
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
@@ -66,7 +75,7 @@ const routes: Routes = [
       multi: true
     },
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 
 export class AppModule {
