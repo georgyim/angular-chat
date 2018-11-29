@@ -31,7 +31,7 @@
 
   <button (click)="openAddUserModal()">ADD USER</button>
 
-  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+  <ul *ngIf="pager && pager.pages && pager.pages.length" class="pagination">
     <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
       <a class="page-link" (click)="setPage(1)">First</a>
     </li>

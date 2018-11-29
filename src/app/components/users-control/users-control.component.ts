@@ -8,6 +8,8 @@ import { PaginatorService } from './../../services/paginator/paginator.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AddUserComponent } from './add-user/add-user.component';
 import { fadeOffAnimation } from './../../common/animation';
+import {User} from '../../entities/user';
+import {PaginatorHelper} from '../../services/paginator/paginator-helper';
 
 @Component({
   selector: 'app-users-control',
@@ -17,41 +19,44 @@ import { fadeOffAnimation } from './../../common/animation';
 })
 export class UsersControlComponent implements OnInit {
 
-  public users: any;
-  public filteredUsers;
-  filterField: any;
-  disabledAnimation = true;
+  public users: User[];
 
-  pager: any = {};
-  pagedItems: any[];
+  public filteredUsers: User[];
 
-  constructor(
+  public filterField: any;
+
+  public disabledAnimation: boolean = true;
+
+  public pager: PaginatorHelper;
+
+  public pagedItems: any[];
+
+  public constructor(
     private userService: UsersService,
     private SFSService: SearchFilterSortService,
     private paginator: PaginatorService,
     public dialog: MatDialog,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getUsers();
   }
 
-  getUsers() {
+  public getUsers(): void {
     this.userService.getUsers()
-      .subscribe(res => {
+      .subscribe((res: User[]) => {
         this.users = res;
         this.filteredUsers = res;
         this.setPage(1);
-
       });
   }
 
 
-  deleteUser(id, Idx) {
+  public deleteUser(id, Idx) {
     this.disabledAnimation = false;
-
+    // TODO res type
     this.userService.deleteUser(id)
-      .subscribe(res => {
+      .subscribe((res: any) => {
         this.filteredUsers.splice(Idx, 1);
         this.pagedItems.splice(Idx, 1);
         setTimeout(() => this.disabledAnimation = true, 0);
@@ -72,13 +77,14 @@ export class UsersControlComponent implements OnInit {
   setPage(page: number) {
     this.disabledAnimation = true;
 
-    if (page < 1 || page > this.pager.totalPages) {
+    this.pager = this.paginator.getPager(this.filteredUsers.length, page);
+
+    if (!this.pager || page < 1 || page > this.pager.totalPages) {
       return;
     }
 
-    this.pager = this.paginator.getPager(this.filteredUsers.length, page);
-
     this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    console.log('this.pagedItems')
   }
 
 

@@ -10,7 +10,7 @@ export class PaginatorService {
 
 
   public getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10): PaginatorHelper {
-    let totalPages: number = Math.ceil(totalItems / pageSize);
+    const totalPages: number = Math.ceil(totalItems / pageSize);
     let startPage: number, endPage: number;
 
     if (totalPages <= 10) {
@@ -29,16 +29,15 @@ export class PaginatorService {
       }
     }
 
-    let startIndex: number = (currentPage - 1) * pageSize;
-    let endIndex: number = Math.min(startIndex + pageSize - 1, totalItems - 1);
+    const startIndex: number = (currentPage - 1) * pageSize;
+    const endIndex: number = Math.min(startIndex + pageSize - 1, totalItems - 1);
 
-    let pages: number[] = this.numberRange(startPage, endPage + 1);
+    const pages: number[] = this.numberRange(startPage, endPage + 1);
 
-    return new PaginatorHelper(totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages) 
+    return new PaginatorHelper(totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages);
   }
 
   private numberRange(start, end): number[] {
     return new Array(end - start).fill(start).map((d, i) => i + start);
   }
-
 }
