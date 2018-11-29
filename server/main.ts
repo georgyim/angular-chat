@@ -14,13 +14,14 @@ async function bootstrap() {
   const server = express();
   const app = await NestFactory.create(ApplicationModule, server);
 
+  app.useStaticAssets(path.join(__dirname, '../../dist'));
+  app.setBaseViewsDir(path.join(__dirname, '../../dist'));
+  app.setViewEngine('html');
 
   app.use(cors());
   // app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new NotFoundExceptionFilter());
-
-  app.use(express.static(path.join(__dirname, '../../dist')));
 
   await app.listen(parseInt(process.env.PORT) || 3000);
 

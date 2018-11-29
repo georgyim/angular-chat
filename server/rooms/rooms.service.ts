@@ -1,9 +1,9 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserSchema } from '../schemas/user.schema';
 import { RoomSchema } from '../schemas/room.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
-@Component()
+@Injectable()
 export class RoomsService {
   private readonly rooms = [];
 

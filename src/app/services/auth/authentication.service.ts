@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthenticationService {
-  private readonly api = '/api';
+  private readonly api = '/api/';
   public token: string;
   public error$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.storage.getToken() != null ? true : false);

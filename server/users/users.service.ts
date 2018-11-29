@@ -1,9 +1,9 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UsersModule } from './users.module';
 import { UserSchema } from "../schemas/user.schema";
 import { InjectModel } from "@nestjs/mongoose";
 
-@Component()
+@Injectable()
 export class UsersService {
   private readonly users = [];
 

@@ -1,6 +1,6 @@
-import { Middleware, NestMiddleware, ExpressMiddleware } from '@nestjs/common';
+import { Middleware, Injectable, ExpressMiddleware } from '@nestjs/common';
 
-@Middleware()
+@Injectable()
 export class CorsMiddleware implements NestMiddleware {
     resolve(): ExpressMiddleware {
         return (req, res, next) => {

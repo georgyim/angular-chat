@@ -1,8 +1,8 @@
 import * as jwt from 'jsonwebtoken';
-import { Component, Inject, HttpException, HttpStatus, forwardRef } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus, forwardRef } from '@nestjs/common';
 import { UsersService } from './../users/users.service';
 
-@Component()
+@Injectable()
 export class AuthService {
 
   private authorizedUser;
