@@ -6,9 +6,9 @@ import {
   WebSocketServer,
   WsException,
 } from '@nestjs/websockets';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
+
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { RoomSchema } from './schemas/room.schema';

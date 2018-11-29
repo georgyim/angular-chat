@@ -20,7 +20,7 @@ export class ChatService {
     }
 
     getMessage() {
-        return this.socket
+        return this.socket  
             .fromEvent('message')
     }
 

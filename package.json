@@ -40,7 +40,7 @@
     "class-transformer": "^0.1.8",
     "class-validator": "^0.7.3",
     "codelyzer": "^4.1.0",
-    "concurrently": "^3.5.1",
+    "concurrently": "^3.6.1",
     "core-js": "^2.4.1",
     "cors": "^2.8.4",
     "hammerjs": "^2.0.8",
