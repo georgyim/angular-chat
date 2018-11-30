@@ -12,16 +12,21 @@ import { User } from '../../entities/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+
   public loginForm: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.minLength(2), Validators.maxLength(10), Validators.required]),
     password: new FormControl('', [Validators.minLength(2), Validators.maxLength(10), Validators.required]),
   });
-  username: string;
-  password: string;
-  error: string;
-  alert: string;
-  registerSubscription$: Subscription;
-  errorSubscription$: Subscription;
+
+  public user: User = new User();
+
+  public error: string;
+
+  public alert: string;
+
+  public registerSubscription$: Subscription;
+
+  public errorSubscription$: Subscription;
 
   constructor(
     private router: Router,
@@ -38,12 +43,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.authenticationService.login(this.username, this.password);
+    this.authenticationService.login(this.user);
     this.loginErrorHandler();
   }
 
   register() {
-    this.registerSubscription$ = this.authenticationService.register(this.username, this.password)
+    this.registerSubscription$ = this.authenticationService.register(this.user)
       .subscribe((res: User) => {
         // TODO wtf is that lol
         if (res && res['err']) {

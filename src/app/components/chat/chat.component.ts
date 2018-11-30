@@ -10,7 +10,7 @@ import { Message } from '../..//entities/message';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: [ './chat.component.css' ]
 })
 export class ChatComponent implements OnInit {
   public text: string;
@@ -59,7 +59,7 @@ export class ChatComponent implements OnInit {
   getRoomsFromSocket() {
     this.chatService.getRooms()
       .subscribe((res: Room) => {
-        const updatedRooms = [...this.rooms, res];
+        const updatedRooms = [ ...this.rooms, res ];
         this.rooms = updatedRooms;
       });
   }

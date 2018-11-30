@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
-
+import { HttpClient } from '@angular/common/http';
 
 const api = '/api/';
 
 @Injectable()
 export class RoomService {
 
-    constructor(private http: HttpClient) { }
+    public constructor(private http: HttpClient) { }
 
-    getRooms() {
+  /**
+   * Get rooms
+   */
+  public getRooms() {
         return this.http.get(`${api}rooms`);
     }
 
-    getRoom(id) {
+  /**
+   * Get room
+   * @param id
+   */
+  public getRoom(id) {
         return this.http.get(`${api}rooms/room/${id}`);
     }
-
 }

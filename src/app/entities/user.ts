@@ -21,7 +21,7 @@ export class User {
     // TODO delete from backend and here
     public _v: number;
 
-    public constructor(username: string, password: string, _id?: string, _v?: number) {
+    public constructor(username: string = null, password: string =  null, _id?: string, _v?: number) {
             this.username = username;
             this.password = password;
             this._id = _id;

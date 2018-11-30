@@ -1,9 +1,10 @@
 export class Message {
+
     /**
      * Username
      */
     public username: string;
-    
+
     /**
      * Message text
      */

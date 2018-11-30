@@ -2,43 +2,31 @@ import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, Router } from '@angular/router';
 
 import { AuthenticationService } from './authentication.service';
-import { LocalStorageService } from './local-storage.service';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
 
-  private loggedIn = false;
-
-  constructor(
-    private authService: AuthenticationService,
-    private router: Router,
-    private storage: LocalStorageService
-  ) {
-    this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
-      this.loggedIn = loggedIn;
-    });
-
+  constructor(private authService: AuthenticationService, private router: Router) {
   }
 
-  canActivate(): boolean {
+  canActivate(): Observable<boolean> {
     return this.checkIfLoggedIn();
   }
 
-  canActivateChild(): boolean {
+  canActivateChild(): Observable<boolean> {
     return this.checkIfLoggedIn();
   }
 
-  private checkIfLoggedIn(): boolean {
-
-    // if token exist
-    if (this.loggedIn) {
-      return true;
-    } else {
-      this.router.navigate(['/auth']);
-      return false;
-    }
+  private checkIfLoggedIn(): Observable<boolean> {
+    return this.authService.isLoggedIn()
+      .pipe(tap((result: boolean) => {
+        if (!result) {
+          this.router.navigate(['/auth']);
+        }
+      }));
   }
-
 }
 
 

@@ -7,7 +7,7 @@
       <div class="subtitle">
         <span>Username</span>
       </div>
-      <input type="text" formControlName="username" [(ngModel)]='username'>
+      <input type="text" formControlName="username" [(ngModel)]='user.username'>
       <div class="validate-username" *ngIf="loginForm.controls.username.touched &&  loginForm.controls.username.invalid">
         <span>Minlength = 2, maxlength = 10</span>
       </div>
@@ -17,7 +17,7 @@
       <div class="subtitle">
         <span>Password</span>
       </div>
-      <input type="text" formControlName="password" [(ngModel)]="password">
+      <input type="text" formControlName="password" [(ngModel)]="user.password">
       <div class="validate-username" *ngIf="loginForm.controls.password.touched &&  loginForm.controls.password.invalid">
         <span>Minlength = 2, maxlength = 10</span>
       </div>

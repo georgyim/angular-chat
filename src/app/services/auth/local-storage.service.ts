@@ -2,35 +2,41 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class LocalStorageService {
-  private token: string;
+
+  /** Token */
+  public token: string;
+
+  /** Name of token as local storage key */
+  private readonly tokenName: string = 'authToken';
 
   public constructor() {
   }
 
+  /**
+   * Get token from lStorage
+   */
   public getToken(): string {
-    if (!this.token) {
-      this.token = this.getTokenFromStorage();
-      return this.token;
-    } else {
-      return this.token;
-    }
+    return localStorage.getItem(this.tokenName);
   }
 
-  public getTokenFromStorage(): string {
-    if (localStorage.getItem('authToken')) {
-      const token: string = localStorage.getItem('authToken');
-      this.token = token || null;
-      return this.token;
-    }
+  /**
+   * Set token
+   */
+  public setToken(value: any): void {
+    localStorage.setItem(this.tokenName, value);
   }
 
-  public setToken(token: string) {
-    localStorage.setItem('authToken', token);
-    this.token = token;
+  /**
+   * Remove token from lStorage
+   */
+  public removeToken(): void {
+    localStorage.removeItem(this.tokenName);
   }
 
-  public removeTokens(): void {
-    this.token = null;
-    localStorage.removeItem('authToken');
+  /**
+   * Returns true is token was already set
+   */
+  public isTokenSet(): boolean {
+    return Boolean(localStorage.getItem(this.tokenName));
   }
 }
