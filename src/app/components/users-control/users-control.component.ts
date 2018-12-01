@@ -27,8 +27,6 @@ export class UsersControlComponent implements OnInit {
 
   public pager: PaginatorHelper;
 
-  public pagedItems: number[];
-
   public constructor(
     private userService: UsersService,
     private SFSService: SearchFilterSortService,
@@ -57,11 +55,9 @@ export class UsersControlComponent implements OnInit {
     this.userService.deleteUser(id)
       .subscribe((res: CommonResult<null>) => {
         this.filteredUsers.splice(Idx, 1);
-        this.pagedItems.splice(Idx, 1);
         setTimeout(() => this.disabledAnimation = true, 0);
       });
   }
-
 
   public filter(value): void {
     this.filteredUsers = this.SFSService.search(this.users, this.filterField, [ "_id", "password" ]);
@@ -79,7 +75,6 @@ export class UsersControlComponent implements OnInit {
     if (!this.pager || page < 1 || page > this.pager.totalPages) {
       return;
     }
-    this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1).length;
   }
 
   openAddUserModal(user?): void {
@@ -92,7 +87,6 @@ export class UsersControlComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result !== undefined) {
         this.disabledAnimation = false;
-        this.pagedItems.unshift(result);
         setTimeout(() => this.disabledAnimation = true, 0);
       }
     });
