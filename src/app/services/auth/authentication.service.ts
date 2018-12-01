@@ -50,10 +50,11 @@ export class AuthenticationService {
   public logout(): void {
     this.storage.removeToken();
     this.loggedIn$.next(false);
+    this.router.navigate(['/auth']);
   }
 
-  public getProfile(): Observable<Object> {
-    return this.http.get(this.api + 'users/get-profile');
+  public getProfile(): Observable<JwtVerifyAnswer> {
+    return this.http.get<JwtVerifyAnswer>(this.api + 'users/get-profile');
   }
 
   public register(user: User): Observable<User> {
@@ -81,4 +82,10 @@ export class AuthenticationService {
 interface TokenResponse {
   expires_in: string;
   access_token: string;
+}
+
+interface JwtVerifyAnswer {
+  exp: number;
+  iat: number;
+  username: string;
 }

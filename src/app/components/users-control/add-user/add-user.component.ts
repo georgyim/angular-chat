@@ -41,7 +41,7 @@ export class AddUserComponent {
   public addUser() {
     if (!this.validate()) {
       return;
-    };
+    }
 
     this.userService.addUser(this.user)
       .subscribe(res => {
