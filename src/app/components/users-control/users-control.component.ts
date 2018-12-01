@@ -27,6 +27,8 @@ export class UsersControlComponent implements OnInit {
 
   public pager: PaginatorHelper;
 
+  public pagedItems: User[];
+
   public constructor(
     private userService: UsersService,
     private SFSService: SearchFilterSortService,
@@ -75,6 +77,7 @@ export class UsersControlComponent implements OnInit {
     if (!this.pager || page < 1 || page > this.pager.totalPages) {
       return;
     }
+    this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
   openAddUserModal(user?): void {
