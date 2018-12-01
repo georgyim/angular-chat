@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UsersService } from './../../../services/users/users.service';
 import { User } from '../../../entities/user';
+import { CommonResult } from '../../../entities/common-result';
 
 @Component({
   selector: 'app-add-user',
@@ -13,7 +14,7 @@ export class AddUserComponent {
   /**
    * User
    */
-  public user: User;
+  public user: User = new User(null, null);
 
   /**
    * Error
@@ -44,7 +45,7 @@ export class AddUserComponent {
     }
 
     this.userService.addUser(this.user)
-      .subscribe(res => {
+      .subscribe((res: CommonResult<null>) => {
         this.dialogRef.close(res);
       });
   }
@@ -71,6 +72,7 @@ export class AddUserComponent {
       this.error = 'Please fill all fields';
       return false;
     }
+    return true;
   }
 
   // TODO ???

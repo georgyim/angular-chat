@@ -1,5 +1,5 @@
-<input type="text" placeholder="username" [(ngModel)]="username">
-<input type="text" placeholder="password" [(ngModel)]="password">
+<input type="text" placeholder="username" [(ngModel)]="user.username">
+<input type="text" placeholder="password" [(ngModel)]="user.password">
 <button (click)="edit ? editUser() : addUser()" [disabled]="error" [ngClass]="{'disabled': error}">SAVE</button>
 
 
