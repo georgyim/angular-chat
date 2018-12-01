@@ -32,15 +32,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
-    this.authenticationService.isLoggedIn()
-      .subscribe((loggedIn: boolean) => {
-        if (loggedIn) {
-          this.router.navigateByUrl('');
-        }
-      });
-  }
-
   login() {
     this.authenticationService.login(this.user);
     this.loginErrorHandler();

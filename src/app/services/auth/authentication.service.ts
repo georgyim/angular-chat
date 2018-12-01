@@ -27,6 +27,7 @@ export class AuthenticationService {
     this.http.post<TokenResponse>(this.api + 'auth/login', params)
       .subscribe((response: TokenResponse) => {
         this.setTokens(response.access_token);
+        this.router.navigateByUrl('');
       }, () => {
         this.loggedIn$.next(false);
         this.error$.next(true);

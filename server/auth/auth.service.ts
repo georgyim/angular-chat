@@ -9,7 +9,8 @@ export class AuthService {
 
   constructor(
     @Inject(forwardRef(() => UsersService))
-    private readonly usersService: UsersService, ) { }
+    private readonly usersService: UsersService,) {
+  }
 
   async createToken() {
     const expiresIn = '60h',
@@ -31,21 +32,20 @@ export class AuthService {
     }
   }
 
-  async validateLogin(user): Promise<boolean> {
+  validateLogin(user): boolean {
     try {
-      const existedUser = await this.usersService.findOneByUsername(user.username);
+      const existedUser = this.usersService.findOneByUsername(user.username);
       if (existedUser !== null) {
         this.authorizedUser = existedUser;
         return true;
       }
       return false;
-
     } catch (err) {
       return false;
     }
   }
 
-  async checkToken(token): Promise<boolean> {
+  checkToken(token): boolean {
     try {
       const user = jwt.verify(token, 'secret');
       return this.validateLogin(user);
@@ -54,7 +54,7 @@ export class AuthService {
     }
   }
 
-  async validateUser(signedUser): Promise<boolean> {
+  validateUser(signedUser): boolean {
     return true;
   }
 }

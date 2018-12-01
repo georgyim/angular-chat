@@ -85,7 +85,7 @@ export class UsersControlComponent implements OnInit {
     let dialogRef = this.dialog.open(AddUserComponent, config);
 
     dialogRef.afterClosed().subscribe((result: CommonResult<null>) => {
-      if (result.success) {
+      if (result && result.success) {
         this.disabledAnimation = false;
         this.getUsers();
         setTimeout(() => this.disabledAnimation = true, 0);
