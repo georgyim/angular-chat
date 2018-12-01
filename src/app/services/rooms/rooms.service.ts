@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Room } from '../../entities/room';
+import { Observable } from 'rxjs';
 
 const api = '/api/';
 
@@ -11,15 +13,15 @@ export class RoomService {
   /**
    * Get rooms
    */
-  public getRooms() {
-        return this.http.get(`${api}rooms`);
+  public getRooms(): Observable<Room[]> {
+        return this.http.get<Room[]>(`${api}rooms`);
     }
 
   /**
    * Get room
    * @param id
    */
-  public getRoom(id) {
-        return this.http.get(`${api}rooms/room/${id}`);
+  public getRoom(id): Observable<Room> {
+        return this.http.get<Room>(`${api}rooms/room/${id}`);
     }
 }

@@ -1,52 +1,41 @@
-import { error } from 'util';
-
 import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    UseGuards,
-    ReflectMetadata,
-    UseInterceptors,
-    Param,
-    Req
+  Controller,
+  Get,
+  Req
 } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
 import { RoomsService } from './rooms.service';
+import { CommonResult } from '../models/common-result';
 
 @Controller("api/rooms")
 // @UseGuards(RolesGuard)
 export class RoomsController {
-    constructor(
-        private readonly roomsService: RoomsService,
+  constructor(
+    private readonly roomsService: RoomsService,
+  ) {
+  }
 
-    ) { }
-
-
-    @Get()
-    async getAllRooms( @Req() request) {
-        const body = request.body;
-        try {
-            const allRooms = await this.roomsService.findAllRooms();
-            return allRooms.map(elem => {
-                const newElem = { ...elem };
-                delete newElem.messages;
-                return newElem;
-            });
-        } catch (err) {
-            console.log(err);
-        }
+  @Get()
+  async getAllRooms(@Req() request) {
+    try {
+      const allRooms = await this.roomsService.findAllRooms();
+      return allRooms.map(elem => {
+        const newElem = { ...elem };
+        delete newElem.messages;
+        return newElem;
+      });
+    } catch (err) {
+      return new CommonResult(false, 'Server error');
     }
+  }
 
-    @Get('/room/:id')
-    async findRoom( @Req() request) {
-        const params = request.params;
-        try {
-            const room = await this.roomsService.findOneRooms(request.params.id);
-            return room;
-        } catch (err) {
-            return err;
-        }
+  @Get('/room/:id')
+  async findRoom(@Req() request) {
+    try {
+      const params = request.params;
+      return await this.roomsService.findOneRooms(request.params.id);
+    } catch (err) {
+      return new CommonResult(false, 'Server error');
     }
+  }
 }
 

@@ -24,7 +24,7 @@ export class AuthenticationService {
     params = params.append('username', user.username);
     params = params.append('password', user.password);
 
-    this.http.post(this.api + 'auth/login', params)
+    this.http.post<TokenResponse>(this.api + 'auth/login', params)
       .subscribe((response: TokenResponse) => {
         this.setTokens(response.access_token);
       }, () => {
@@ -84,7 +84,7 @@ interface TokenResponse {
   access_token: string;
 }
 
-interface JwtVerifyAnswer {
+export interface JwtVerifyAnswer {
   exp: number;
   iat: number;
   username: string;

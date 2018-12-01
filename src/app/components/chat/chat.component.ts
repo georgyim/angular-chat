@@ -1,6 +1,6 @@
 import { ChatService } from '../../services/chat-sockets/socket.service';
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../services/auth/authentication.service';
+import { AuthenticationService, JwtVerifyAnswer } from '../../services/auth/authentication.service';
 import { RoomService } from './../../services/rooms/rooms.service';
 import { User } from '../../entities/user';
 import { Room } from '../..//entities/room';
@@ -23,7 +23,7 @@ export class ChatComponent implements OnInit {
   public currentRoomId: string;
   public users: User[];
 
-  constructor(
+  public constructor(
     private chatService: ChatService,
     private authService: AuthenticationService,
     private roomService: RoomService,
@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit {
     this.messages.push(new Message('Bugz Bunny', 'Choose the room =)'));
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getProfile();
     this.chatService.getMessage().subscribe((data: Message) => {
       this.messages.push(data);
@@ -43,20 +43,20 @@ export class ChatComponent implements OnInit {
     this.getUsersList();
   }
 
-  send() {
+  public send(): void {
     if (this.text.trim() !== '') {
       this.chatService.sendMessage(this.text, this.name, this.currentRoomId);
       this.text = '';
     }
   }
 
-  addnewroom() {
+  public addnewroom(): void {
     if (this.newRoom.trim() !== '') {
       this.chatService.addRoom(this.newRoom);
     }
   }
 
-  getRoomsFromSocket() {
+  public getRoomsFromSocket(): void {
     this.chatService.getRooms()
       .subscribe((res: Room) => {
         const updatedRooms = [ ...this.rooms, res ];
@@ -65,18 +65,19 @@ export class ChatComponent implements OnInit {
   }
 
 
-  getRooms() {
-    this.roomService.getRooms().subscribe((res: Room[]) => {
+  public getRooms(): void {
+    this.roomService.getRooms()
+      .subscribe((res: Room[]) => {
       this.rooms = res;
     });
   }
 
-  joinRoom(room) {
+  public joinRoom(room): void {
     this.chatService.joinRoom(room);
     this.currentRoomId = room;
   }
 
-  getRoom(id) {
+  public getRoom(id): void {
     this.roomService.getRoom(id)
       .subscribe((res: Room) => {
         this.messages = res.messages;
@@ -84,14 +85,14 @@ export class ChatComponent implements OnInit {
       });
   }
 
-  getProfile() {
+  public getProfile(): void {
     this.authService.getProfile()
-      .subscribe((res: User) => {
+      .subscribe((res: JwtVerifyAnswer) => {
         this.name = res.username;
       });
   }
 
-  getUsersList() {
+  public getUsersList(): void {
     this.chatService.getUsers()
       .subscribe((res: User[]) => {
         this.users = res;

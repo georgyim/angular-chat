@@ -10,8 +10,12 @@ export class Message {
      */
     public text: string;
 
-    public constructor(username: string, text: string) {
+
+    public room: string;
+
+    public constructor(username: string, text: string, room?: string) {
         this.username = username;
         this.text = text;
+        this.room = room;
     }
 }

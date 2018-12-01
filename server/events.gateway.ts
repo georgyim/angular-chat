@@ -2,36 +2,21 @@ import { OnModuleInit } from '@nestjs/common';
 import {
   WebSocketGateway,
   SubscribeMessage,
-  WsResponse,
   WebSocketServer,
-  WsException,
 } from '@nestjs/websockets';
-import { Observable } from 'rxjs';
-
-
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { RoomSchema } from './schemas/room.schema';
 import { Document } from 'mongoose';
-// import { Room } from './events.gateway';
 import * as mongoose from 'mongoose';
 import * as socketioJwt from 'socketio-jwt';
-// var socketioJwt   = require("socketio-jwt");
+
 const ObjectId = mongoose.Types.ObjectId;
-
-// export interface Room extends Document {
-//   // title: { type: String, required: true };
-//   // connections: { type: [{ userId: String, socketId: String }]};
-//   title: String;
-//   connections: String;
-// }
-
 
 @WebSocketGateway()
 export class EventsGateway implements OnModuleInit {
 
-  constructor( @InjectModel(RoomSchema) private RoomModel) {
-
+  constructor(@InjectModel(RoomSchema) private RoomModel) {
   }
 
   @WebSocketServer() server;
@@ -50,7 +35,6 @@ export class EventsGateway implements OnModuleInit {
       const rooms = Object.keys(client.rooms);
     });
     const event = 'rooms';
-    const response = [1, 2, 3, 4, 5];
     return { event, data: '123' };
   }
 
@@ -97,7 +81,7 @@ export class EventsGateway implements OnModuleInit {
     });
     clientList = await p;
     clientList.forEach(client => {
-      userNames.push(this.server.sockets.connected[client].client.request.decoded_token.username);
+      userNames.push(this.server.sockets.connected[ client ].client.request.decoded_token.username);
     });
     return { event: 'usersRoom', data: userNames };
   }

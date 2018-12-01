@@ -4,15 +4,9 @@ import { PaginatorHelper } from './paginator-helper';
 @Injectable()
 export class PaginatorService {
 
-  public paginatorHelper: PaginatorHelper;
-
-  public constructor() { }
-
-
   public getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10): PaginatorHelper {
     const totalPages: number = Math.ceil(totalItems / pageSize);
     let startPage: number, endPage: number;
-
     if (totalPages <= 10) {
       startPage = 1;
       endPage = totalPages;
@@ -28,12 +22,9 @@ export class PaginatorService {
         endPage = currentPage + 4;
       }
     }
-
     const startIndex: number = (currentPage - 1) * pageSize;
     const endIndex: number = Math.min(startIndex + pageSize - 1, totalItems - 1);
-
     const pages: number[] = this.numberRange(startPage, endPage + 1);
-
     return new PaginatorHelper(totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages);
   }
 

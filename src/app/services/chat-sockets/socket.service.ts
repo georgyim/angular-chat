@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SocketOne } from './socket-one.service';
+import { Message } from '../../entities/message';
+import { Observable } from 'rxjs';
+import { Room } from '../../entities/room';
+import { User } from '../../entities/user';
 
 @Injectable()
 export class ChatService {
@@ -7,32 +11,31 @@ export class ChatService {
   public constructor(private socket: SocketOne) {
   }
 
-  public init() {
-    console.log('init socket');
+  public init(): void {
     this.socket.emit('rooms', {room: 'hello allo'});
   }
 
-  public sendMessage(text, name, roomId) {
+  public sendMessage(text, name, roomId): void {
     this.socket.emit('message', {message: text, username: name, room: roomId});
   }
 
-  public getMessage() {
-    return this.socket.fromEvent('message');
+  public getMessage(): Observable<Message> {
+    return this.socket.fromEvent<Message>('message');
   }
 
-  public getRooms() {
-    return this.socket.fromEvent('updatedRooms');
+  public getRooms(): Observable<Room> {
+    return this.socket.fromEvent<Room>('updatedRooms');
   }
 
-  public joinRoom(room) {
+  public joinRoom(room): void {
     this.socket.emit('chatroom', room);
   }
 
-  public addRoom(room) {
+  public addRoom(room): void {
     this.socket.emit('addroom', room);
   }
 
-  public getUsers() {
-    return this.socket.fromEvent('usersRoom');
+  public getUsers(): Observable<User[]> {
+    return this.socket.fromEvent<User[]>('usersRoom');
   }
 }

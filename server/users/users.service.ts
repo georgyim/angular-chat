@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { UsersModule } from './users.module';
 import { UserSchema } from "../schemas/user.schema";
 import { InjectModel } from "@nestjs/mongoose";
 
@@ -7,7 +6,8 @@ import { InjectModel } from "@nestjs/mongoose";
 export class UsersService {
   private readonly users = [];
 
-  constructor(@InjectModel(UserSchema) private readonly userModel) {}
+  constructor(@InjectModel(UserSchema) private readonly userModel) {
+  }
 
   async createUser(user: any): Promise<any> {
     const createdUser = new this.userModel(user);

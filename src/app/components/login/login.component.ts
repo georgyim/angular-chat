@@ -9,13 +9,13 @@ import { User } from '../../entities/user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: [ './login.component.css' ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
   public loginForm: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.minLength(2), Validators.maxLength(10), Validators.required]),
-    password: new FormControl('', [Validators.minLength(2), Validators.maxLength(10), Validators.required]),
+    username: new FormControl('', [ Validators.minLength(2), Validators.maxLength(10), Validators.required ]),
+    password: new FormControl('', [ Validators.minLength(2), Validators.maxLength(10), Validators.required ]),
   });
 
   public user: User = new User();
@@ -24,22 +24,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public alert: string;
 
-  public registerSubscription$: Subscription;
-
   public errorSubscription$: Subscription;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
-    this.authenticationService.isLoggedIn().subscribe((loggedIn: boolean) => {
-      if (loggedIn) {
-        this.router.navigateByUrl('');
-      }
-    });
   }
 
   ngOnInit() {
+    this.authenticationService.isLoggedIn()
+      .subscribe((loggedIn: boolean) => {
+        if (loggedIn) {
+          this.router.navigateByUrl('');
+        }
+      });
   }
 
   login() {
@@ -48,16 +47,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   register() {
-    this.registerSubscription$ = this.authenticationService.register(this.user)
+    this.authenticationService.register(this.user)
       .subscribe((res: User) => {
         // TODO wtf is that lol
-        if (res && res['err']) {
-          this.error = res['err'];
+        if (res && res[ 'err' ]) {
+          this.error = res[ 'err' ];
         } else {
           this.error = null;
           this.alert = 'User succesfully register, now you can login.';
           setTimeout(() => this.alert = null, 3000);
-      }
+        }
       }, err => {
         console.warn(err);
       });
@@ -66,14 +65,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginErrorHandler() {
     this.errorSubscription$ = this.authenticationService.error$
       .subscribe((res) => {
-        res === true ? this.error = 'Auth failed' : '';
+        this.error = res === true ? 'Auth failed' : '';
       });
   }
 
   ngOnDestroy() {
-    if (this.registerSubscription$) {
-      this.registerSubscription$.unsubscribe();
-    }
     if (this.errorSubscription$) {
       this.errorSubscription$.unsubscribe();
     }

@@ -6,7 +6,7 @@ import { User } from '../../../entities/user';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+  styleUrls: [ './add-user.component.css' ]
 })
 export class AddUserComponent {
 
@@ -53,8 +53,9 @@ export class AddUserComponent {
    * Edit User
    */
   public editUser() {
-    if (this.validate()) return;
-
+    if (!this.validate()) {
+      return;
+    }
     this.userService.editUser(this.user)
       .subscribe(res => {
         console.log(res);

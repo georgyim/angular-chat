@@ -11,5 +11,4 @@ export class SocketOne extends Socket {
       }
     });
   }
-
 }

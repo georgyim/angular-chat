@@ -1,6 +1,7 @@
 import { Controller, Post, HttpStatus, HttpCode, Get, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ValidationPipe } from '../common/pipes/validation.pipe';
+import { CommonResult } from '../models/common-result';
 
 @Controller('api/auth/')
 export class AuthController {
@@ -11,10 +12,9 @@ export class AuthController {
   @Post('login')
   public async getToken( @Body(new ValidationPipe()) user) {
     try {
-       const token = await this.authService.getAccessToken(user);
-       return token;
+       return await this.authService.getAccessToken(user);
     } catch (err) {
-      return err;
+      return new CommonResult(false, 'Server error');
     }
   }
 

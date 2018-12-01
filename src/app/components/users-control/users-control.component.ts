@@ -1,21 +1,19 @@
 import { SearchFilterSortService } from './../../services/search-sort-filter/search-sort-filter.service';
-import { SortDirective } from './../../directives/sort/sort.directive';
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './../../services/users/users.service';
-import { SlicePipe } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { PaginatorService } from './../../services/paginator/paginator.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AddUserComponent } from './add-user/add-user.component';
 import { fadeOffAnimation } from './../../common/animation';
-import {User} from '../../entities/user';
-import {PaginatorHelper} from '../../services/paginator/paginator-helper';
+import { User } from '../../entities/user';
+import { PaginatorHelper } from '../../services/paginator/paginator-helper';
+import { CommonResult } from '../../entities/common-result';
 
 @Component({
   selector: 'app-users-control',
   templateUrl: './users-control.component.html',
-  styleUrls: ['./users-control.component.css'],
-  animations: [fadeOffAnimation]
+  styleUrls: [ './users-control.component.css' ],
+  animations: [ fadeOffAnimation ]
 })
 export class UsersControlComponent implements OnInit {
 
@@ -29,14 +27,15 @@ export class UsersControlComponent implements OnInit {
 
   public pager: PaginatorHelper;
 
-  public pagedItems: any[];
+  public pagedItems: number[];
 
   public constructor(
     private userService: UsersService,
     private SFSService: SearchFilterSortService,
     private paginator: PaginatorService,
     public dialog: MatDialog,
-  ) { }
+  ) {
+  }
 
   public ngOnInit() {
     this.getUsers();
@@ -52,11 +51,11 @@ export class UsersControlComponent implements OnInit {
   }
 
 
-  public deleteUser(id, Idx) {
+  public deleteUser(id, Idx): void {
     this.disabledAnimation = false;
     // TODO res type
     this.userService.deleteUser(id)
-      .subscribe((res: any) => {
+      .subscribe((res: CommonResult<null>) => {
         this.filteredUsers.splice(Idx, 1);
         this.pagedItems.splice(Idx, 1);
         setTimeout(() => this.disabledAnimation = true, 0);
@@ -64,31 +63,24 @@ export class UsersControlComponent implements OnInit {
   }
 
 
-  filter(value) {
-    this.filteredUsers = this.SFSService.search(this.users, this.filterField, ["_id", "password"]);
+  public filter(value): void {
+    this.filteredUsers = this.SFSService.search(this.users, this.filterField, [ "_id", "password" ]);
     this.setPage(1);
   }
 
-  sort(value) {
+  public sort(value): void {
     this.filteredUsers = this.SFSService.orderBy(this.filteredUsers, value);
     this.setPage(1);
   }
 
-  setPage(page: number) {
+  setPage(page: number): void {
     this.disabledAnimation = true;
-
     this.pager = this.paginator.getPager(this.filteredUsers.length, page);
-
     if (!this.pager || page < 1 || page > this.pager.totalPages) {
       return;
     }
-
-    this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    console.log('this.pagedItems')
+    this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1).length;
   }
-
-
-
 
   openAddUserModal(user?): void {
     const config = new MatDialogConfig();
