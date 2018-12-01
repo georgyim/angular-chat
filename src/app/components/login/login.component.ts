@@ -11,7 +11,7 @@ import { User } from '../../entities/user';
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.css' ]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnDestroy {
 
   public loginForm: FormGroup = new FormGroup({
     username: new FormControl('', [ Validators.minLength(2), Validators.maxLength(10), Validators.required ]),
