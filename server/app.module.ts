@@ -1,5 +1,5 @@
 import { EventsGateway } from './events.gateway';
-import { Module, MiddlewaresConsumer } from '@nestjs/common';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { MongooseModule } from '@nestjs/mongoose';

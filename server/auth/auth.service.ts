@@ -45,7 +45,7 @@ export class AuthService {
     }
   }
 
-  async checkToken(token): boolean {
+  async checkToken(token): Promise<boolean> {
     try {
       const user = jwt.verify(token, 'secret');
       return this.validateLogin(user);

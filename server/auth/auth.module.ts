@@ -2,7 +2,7 @@ import * as passport from 'passport';
 import {
   Module,
   NestModule,
-  MiddlewaresConsumer,
+  MiddlewareConsumer,
   RequestMethod,
   forwardRef,
 } from '@nestjs/common';
@@ -21,7 +21,7 @@ import { UsersModule } from './../users/users.module';
   exports: [AuthService, JwtStrategy]
 })
 export class AuthModule implements NestModule {
-  public configure(consumer: MiddlewaresConsumer) {
+  public configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(passport.authenticate('jwt', { session: false }))
       .forRoutes(

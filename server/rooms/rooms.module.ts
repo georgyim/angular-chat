@@ -1,5 +1,5 @@
 import { UserSchema } from '../schemas/user.schema';
-import { Module, NestModule, MiddlewaresConsumer, RequestMethod } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { RoomsController } from './rooms.controller';
 import { RoomsService } from './rooms.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -15,7 +15,7 @@ import { EventsGateway } from '../events.gateway';
 })
 
 export class RoomsModule {
-    configure(consumer: MiddlewaresConsumer): void {
+    configure(consumer: MiddlewareConsumer): void {
         consumer.apply(CorsMiddleware).forRoutes(
             { path: '*', method: RequestMethod.ALL },
         );

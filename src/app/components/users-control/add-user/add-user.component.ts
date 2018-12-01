@@ -75,8 +75,10 @@ export class AddUserComponent {
     return true;
   }
 
-  // TODO ???
-  public onNoClick(): void {
+  /**
+   * Close dialog
+   */
+  public closeDialog(): void {
     this.dialogRef.close();
   }
 }
