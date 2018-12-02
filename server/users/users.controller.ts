@@ -13,7 +13,7 @@ import {
   Param,
   Req,
   forwardRef,
-  Inject
+  Inject, HttpException, HttpStatus
 } from "@nestjs/common";
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersService } from "./users.service";
@@ -38,16 +38,17 @@ export class UsersController {
 
   @Post('/create')
   async createUser(@Req() request) {
-    try {
-      const isNewUser = await this.usersService.findOneUsers(request.body.username);
-      if (isNewUser) {
-        return new CommonResult(false, 'User already exist');
-      }
-      const newUser = await this.usersService.createUser(request.body);
-      return new CommonResult(true);
-    } catch (err) {
-      return new CommonResult(false, 'Server error, try later');
-    }
+    // try {
+    //   const isNewUser = await this.usersService.findOneUsers(request.body.username);
+    //   if (isNewUser) {
+    //     return new CommonResult(false, 'User already exist');
+    //   }
+    //   const newUser = await this.usersService.createUser(request.body);
+    //   return new CommonResult(true);
+    // } catch (err) {
+      throw new HttpException(new CommonResult(false, 'Server error, try later'), HttpStatus.BAD_REQUEST);
+      // return new CommonResult(false, 'Server error, try later');
+    // }
   }
 
   @Get('/get-profile')

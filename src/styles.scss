@@ -7,3 +7,15 @@ body {
     background: -webkit-linear-gradient(-45deg, #40d89f 0%,#6cf388 100%);
     background: linear-gradient(135deg, #40d89f 0%,#6cf388 100%);
 }
+
+/* For snotify */
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
+.material {
+@import "~ng-snotify/styles/material";
+}
+.simple {
+@import "~ng-snotify/styles/simple";
+}
+.dark {
+@import "~ng-snotify/styles/dark";
+}
