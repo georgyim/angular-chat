@@ -28,10 +28,10 @@ export class AddUserComponent {
 
   public constructor(
     public dialogRef: MatDialogRef<AddUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: User,
     private userService: UsersService) {
     if (data) {
-      this.user = new User(data.username, data.password, data._id);
+      this.user = data;
       this.edit = true;
     }
   }

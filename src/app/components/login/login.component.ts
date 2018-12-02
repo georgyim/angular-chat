@@ -55,7 +55,7 @@ export class LoginComponent implements OnDestroy {
 
   loginErrorHandler() {
     this.errorSubscription$ = this.authenticationService.error$
-      .subscribe((res) => {
+      .subscribe((res: boolean) => {
         this.error = res === true ? 'Auth failed' : '';
       });
   }

@@ -53,7 +53,6 @@ export class UsersControlComponent implements OnInit {
 
   public deleteUser(id, Idx): void {
     this.disabledAnimation = false;
-    // TODO res type
     this.userService.deleteUser(id)
       .subscribe((res: CommonResult<null>) => {
         this.filteredUsers.splice(Idx, 1);
@@ -61,13 +60,8 @@ export class UsersControlComponent implements OnInit {
       });
   }
 
-  public filter(value): void {
+  public filter(): void {
     this.filteredUsers = this.SFSService.search(this.users, this.filterField, [ "_id", "password" ]);
-    this.setPage(1);
-  }
-
-  public sort(value): void {
-    this.filteredUsers = this.SFSService.orderBy(this.filteredUsers, value);
     this.setPage(1);
   }
 
@@ -80,7 +74,7 @@ export class UsersControlComponent implements OnInit {
     this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
-  openAddUserModal(user?): void {
+  openAddUserModal(user?: User): void {
     const config = new MatDialogConfig();
     if (user) {
       config.data = user;

@@ -18,7 +18,6 @@ export class ChatComponent implements OnInit {
   public newRoom: string;
   public messages: Message[] = [];
   public rooms: Room[];
-  public curRoom: Room;
   public title: string;
   public currentRoomId: string;
   public users: User[];

@@ -1,52 +1,55 @@
 import { SearchFilterSortService } from './../../services/search-sort-filter/search-sort-filter.service';
 import { Directive, ElementRef, ViewContainerRef, HostListener, Renderer2, OnInit, EventEmitter } from '@angular/core';
-import { TemplateRef, Input, Output } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { Input, Output } from '@angular/core';
 
 
 @Directive({
   selector: '[appSort]'
 })
-export class SortDirective implements OnInit {
+export class SortDirective<T> implements OnInit {
 
-  @Input() array;
-  @Input() value;
+  @Input() array: T[];
+
+  @Input() value: string;
+
   @Output() setPage = new EventEmitter<boolean>();
 
-  sortedArray;
-  arrayDirection = 'up';
-  matIcon;
+  public sortedArray;
 
-  @HostListener('click', ['$event'])
+  public arrayDirection: string = SortDirection.UP;
+
+  public matIcon: any;
+
+  @HostListener('click', [ '$event' ])
   click(event) {
-    if (this.arrayDirection === 'up') {
+    if (this.arrayDirection === SortDirection.UP) {
       this.sort(true);
       this.addArrow();
     } else {
       this.sort();
-      this.addArrow('up');
+      this.addArrow(SortDirection.UP);
     }
     this.setPage.emit(true);
   }
 
 
-  constructor(private el: ElementRef,
-    private viewContainer: ViewContainerRef,
-    private renderer: Renderer2,
-    private SFSService: SearchFilterSortService) {
+  public constructor(private el: ElementRef,
+                     private viewContainer: ViewContainerRef,
+                     private renderer: Renderer2,
+                     private SFSService: SearchFilterSortService) {
   }
 
-  ngOnInit() {
-    this.addArrow('up');
+  public ngOnInit(): void {
+    this.addArrow(SortDirection.UP);
   }
 
-  addArrow(value?) {
-    let direction;
-    if (value) {
+  public addArrow(value?: string): void {
+    let direction: string;
+    if (Boolean(value)) {
       direction = 'arrow_upward';
-      this.arrayDirection = 'up';
+      this.arrayDirection = SortDirection.UP;
     } else {
-      this.arrayDirection = 'down';
+      this.arrayDirection = SortDirection.DOWN;
       direction = 'arrow_downward';
     }
 
@@ -60,17 +63,21 @@ export class SortDirective implements OnInit {
     this.renderer.appendChild(this.el.nativeElement, this.matIcon);
   }
 
-  deleteArrow() {
+  public deleteArrow(): void {
     this.renderer.removeChild(this.el.nativeElement, this.matIcon);
   }
 
-  sort(reverse?) {
+  public sort(reverse: boolean = false): void {
     this.deleteArrow();
-    if (reverse) {
-      this.sortedArray = this.SFSService.orderBy(this.array, this.value, true);
-    } else {
-      this.sortedArray = this.SFSService.orderBy(this.array, this.value);
-    }
+    this.sortedArray = this.SFSService.orderBy(this.array, this.value, reverse);
   }
+
+}
+
+enum SortDirection {
+
+  UP = 'up',
+
+  DOWN = 'down'
 
 }
