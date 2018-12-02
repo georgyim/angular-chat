@@ -6,9 +6,9 @@
 
   <table class="users-table">
     <thead>
-      <th appSort [array]="filteredUsers" [value]="'_id'" (setPage)=setPage(1)>ID</th>
-      <th appSort [array]="filteredUsers" [value]="'username'" (setPage)=setPage(1)>username</th>
-      <th appSort [array]="filteredUsers" [value]="'password'" (setPage)=setPage(1)>password</th>
+      <th appSort [array]="pagedItems" [value]="'_id'">ID</th>
+      <th appSort [array]="pagedItems" [value]="'username'">username</th>
+      <th appSort [array]="pagedItems" [value]="'password'">password</th>
       <th>edit</th>
       <th>delete</th>
     </thead>
