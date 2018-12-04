@@ -28,7 +28,7 @@ export class AuthenticationService {
     this.http.post<TokenResponse>(this.api + 'auth/login', params)
       .pipe(catchError(() => {
         this.loggedIn$.next(false);
-        this.snotify.onError(null, 'Login unsuccessful');
+        this.snotify.onError('Login unsuccessful', null);
         return NEVER;
       }))
       .subscribe((response: TokenResponse) => {
@@ -67,7 +67,7 @@ export class AuthenticationService {
     params = params.append('password', user.password);
     return this.http.post<User>(`${this.api}users/create`, params)
       .pipe(catchError(() => {
-        this.snotify.onError(null, 'Register unsuccessful');
+        this.snotify.onError('Register unsuccessful', null);
         return NEVER;
       }));
   }
@@ -75,7 +75,7 @@ export class AuthenticationService {
   public checkToken(): void {
     this.http.get<boolean>(this.api + 'users/check-token')
       .pipe(catchError(() => {
-        this.snotify.onError(null, 'Server error');
+        this.snotify.onError('Server error', null);
         return NEVER;
       }))
       .subscribe((res: boolean) => {

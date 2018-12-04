@@ -58,7 +58,7 @@ export class ChatComponent implements OnInit {
   public getRoomsFromSocket(): void {
     this.chatService.getRooms()
       .subscribe((res: Room) => {
-        const updatedRooms = [ ...this.rooms, res ];
+        const updatedRooms = [ res, ...this.rooms ];
         this.rooms = updatedRooms;
       });
   }
@@ -67,8 +67,8 @@ export class ChatComponent implements OnInit {
   public getRooms(): void {
     this.roomService.getRooms()
       .subscribe((res: Room[]) => {
-      this.rooms = res;
-    });
+        this.rooms = res;
+      });
   }
 
   public joinRoom(room): void {

@@ -24,7 +24,7 @@ export class UsersService {
     body = body.append('password', user.password);
     return this.http.post<CommonResult<null>>(`${api}users/create`, body)
       .pipe(catchError(() => {
-        this.snotify.onError(null, 'Server error');
+        this.snotify.onError('Server error', null);
         return NEVER;
       }));
   }
@@ -32,7 +32,7 @@ export class UsersService {
   public deleteUser(id: string): Observable<CommonResult<null>> {
     return this.http.delete<CommonResult<null>>(`${api}users/delete/${id}`)
       .pipe(catchError(() => {
-        this.snotify.onError(null, 'Server error');
+        this.snotify.onError('Server error', null);
         return NEVER;
       }));
   }
@@ -43,7 +43,7 @@ export class UsersService {
     body = body.append('password', user.password);
     return this.http.put<CommonResult<null>>(`${api}users/edit/${user._id}`, body)
       .pipe(catchError(() => {
-        this.snotify.onError(null, 'Server error');
+        this.snotify.onError('Server error', null);
         return NEVER;
       }));
     ;

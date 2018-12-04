@@ -22,6 +22,8 @@ export class RoomsController {
         const newElem = { ...elem };
         delete newElem.messages;
         return newElem;
+      }).sort((a, b) => {
+        return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0);
       });
     } catch (err) {
       return new CommonResult(false, 'Server error');

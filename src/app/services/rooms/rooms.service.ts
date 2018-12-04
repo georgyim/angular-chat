@@ -19,7 +19,7 @@ export class RoomService {
   public getRooms(): Observable<Room[]> {
     return this.http.get<Room[]>(`${api}rooms`)
       .pipe(catchError(() => {
-        this.snotify.onError(null, 'Server error');
+        this.snotify.onError('Server error', null);
         return NEVER;
       }));
   }
@@ -31,7 +31,7 @@ export class RoomService {
   public getRoom(id): Observable<Room> {
     return this.http.get<Room>(`${api}rooms/room/${id}`)
       .pipe(catchError(() => {
-        this.snotify.onError(null, 'Server error');
+        this.snotify.onError('Server error', null);
         return NEVER;
       }));
     ;

@@ -23,8 +23,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return this.authService.isLoggedIn()
       .pipe(tap((result: boolean) => {
         if (!result) {
-          this.snotify.onWarning(null, 'Sorry, you are not logged in.')
-          this.router.navigate(['/auth']);
+          this.snotify.onWarning('Sorry, you are not logged in.', null)
+          this.router.navigate([ '/auth' ]);
         }
       }));
   }

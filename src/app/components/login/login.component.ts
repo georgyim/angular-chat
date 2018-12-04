@@ -34,7 +34,7 @@ export class LoginComponent {
   register() {
     this.authenticationService.register(this.user)
       .subscribe((res: User) => {
-        this.snotify.onSuccess(null, 'User succesfully register, now you can login.')
+        this.snotify.onSuccess('User succesfully register, now you can login.', null)
       });
   }
 }
