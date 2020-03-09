@@ -3,6 +3,9 @@ import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 
 const getMongoUrl = () => {
   if (process.env.MONGOUSER && process.env.MONGOPASSWORD) {
@@ -11,9 +14,11 @@ const getMongoUrl = () => {
     return 'mongodb://localhost:27017/nest';
   }
 };
-
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../dist'),
+    }),
     MongooseModule.forRoot(getMongoUrl()),
     UsersModule,
     RoomsModule,

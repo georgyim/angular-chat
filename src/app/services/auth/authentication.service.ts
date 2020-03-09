@@ -16,7 +16,7 @@ export class AuthenticationService {
   public loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public constructor(private http: HttpClient, private storage: LocalStorageService, private router: Router,
-                     private snotify: SnotifyHelperService) {
+    private snotify: SnotifyHelperService) {
     this.checkToken();
   }
 
@@ -53,7 +53,7 @@ export class AuthenticationService {
   public logout(): void {
     this.storage.removeToken();
     this.loggedIn$.next(false);
-    this.router.navigate([ '/auth' ]);
+    this.router.navigate(['/auth']);
   }
 
   public getProfile(): Observable<JwtVerifyAnswer> {
@@ -82,7 +82,7 @@ export class AuthenticationService {
           this.loggedIn$.next(res);
         } else {
           this.loggedIn$.next(false);
-          this.router.navigate([ '/auth' ]);
+          this.router.navigate(['/auth']);
         }
       });
   }

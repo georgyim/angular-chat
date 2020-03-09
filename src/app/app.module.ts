@@ -34,12 +34,12 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: 'app/components/login/login.module#LoginModule'
+    loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule)
   },
   {
     path: 'user-control',
     canActivate: [ AuthGuard ],
-    loadChildren: 'app/components/users-control/user-control.module#UserControlModule'
+    loadChildren: () => import('./components/users-control/user-control.module').then(m => m.UserControlModule)
   },
   {
     path: '',
@@ -63,7 +63,7 @@ const routes: Routes = [
     SharedModule.forRoot(),
     UserControlModule,
     ReactiveFormsModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     FormsModule,
     SocketIoModule,
