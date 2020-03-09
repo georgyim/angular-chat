@@ -2,7 +2,7 @@ import { SearchFilterSortService } from './../../services/search-sort-filter/sea
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './../../services/users/users.service';
 import { PaginatorService } from './../../services/paginator/paginator.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddUserComponent } from './add-user/add-user.component';
 import { fadeOffAnimation } from './../../common/animation';
 import { User } from '../../entities/user';
