@@ -10,7 +10,7 @@ import { EventsGateway } from '../events.gateway';
 @Module({
     imports: [MongooseModule.forFeature([{ name: 'Room', schema: RoomSchema }])],
     controllers: [RoomsController],
-    components: [RoomsService, EventsGateway],
+    providers: [RoomsService, EventsGateway],
     exports: [RoomsService]
 })
 

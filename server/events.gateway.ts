@@ -15,8 +15,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 @WebSocketGateway()
 export class EventsGateway implements OnModuleInit {
-
-  constructor(@InjectModel(RoomSchema) private RoomModel) {
+  constructor(@InjectModel('Room') private roomModel) {
   }
 
   @WebSocketServer() server;
@@ -40,7 +39,7 @@ export class EventsGateway implements OnModuleInit {
 
   @SubscribeMessage('message')
   async message(client, data) {
-    const updatedRoom = await this.RoomModel.findOneAndUpdate({ _id: new ObjectId(data.room) },
+    const updatedRoom = await this.roomModel.findOneAndUpdate({ _id: new ObjectId(data.room) },
       { $push: { messages: { username: data.username, text: data.message } } });
     const event = 'message';
     const payload = { text: data.message, username: data.username, room: data.room };
@@ -52,11 +51,11 @@ export class EventsGateway implements OnModuleInit {
   async addroom(client, data) {
     const event = 'rooms';
     const room = data;
-    let newRoom = await this.RoomModel.findOne({ title: room });
+    let newRoom = await this.roomModel.findOne({ title: room });
     if (newRoom) {
       client.emit('rooms', 'hello its voice from room');
     } else {
-      newRoom = await this.RoomModel.create({ title: room });
+      newRoom = await this.roomModel.create({ title: room });
       newRoom = {
         _id: newRoom._id,
         title: newRoom.title
@@ -68,7 +67,7 @@ export class EventsGateway implements OnModuleInit {
   @SubscribeMessage('chatroom')
   async enterRoom(client, data) {
     const event = 'joinroom';
-    const room = await this.RoomModel.findOne({ _id: data });
+    const room = await this.roomModel.findOne({ _id: data });
     client.join(data);
     const idx = client.id;
 

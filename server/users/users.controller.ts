@@ -1,4 +1,3 @@
-import { error } from 'util';
 import * as jwt from 'jsonwebtoken';
 import {
   Controller,

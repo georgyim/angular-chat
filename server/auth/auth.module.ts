@@ -16,7 +16,7 @@ import { UsersModule } from './../users/users.module';
   imports: [RoomsModule, 
     forwardRef(() => UsersModule) 
   ],
-  components: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
   exports: [AuthService, JwtStrategy]
 })

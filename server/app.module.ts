@@ -1,11 +1,8 @@
-import { EventsGateway } from './events.gateway';
-import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { CorsMiddleware } from './middlewares/cors.middleware';
 import { AuthModule } from './auth/auth.module';
-
+import { MongooseModule } from '@nestjs/mongoose';
 
 const getMongoUrl = () => {
   if (process.env.MONGOUSER && process.env.MONGOPASSWORD) {
@@ -21,10 +18,5 @@ const getMongoUrl = () => {
     RoomsModule,
     AuthModule
   ],
-  components: []
 })
-export class ApplicationModule {
-  // configure(consumer: MiddlewaresConsumer): void {
-  //   consumer.apply(CorsMiddleware).forRoutes('*');
-  // }
-}
+export class AppModule {}

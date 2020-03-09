@@ -1,12 +1,11 @@
-import { HttpException } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import {
   PipeTransform,
-  Pipe,
   ArgumentMetadata,
   HttpStatus,
 } from '@nestjs/common';
 
-@Pipe()
+@Injectable()
 export class ParseObjectIdPipe implements PipeTransform<string> {
   async transform(value: string, metadata: ArgumentMetadata) {
 
