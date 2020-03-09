@@ -91,7 +91,6 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4",
-    "save-dev": "0.0.1-security",
     "socketio-jwt": "^4.5.0",
     "supertest": "^3.0.0",
     "ts-node": "~4.1.0",
