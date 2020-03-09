@@ -7,7 +7,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from './common/pipes/validation.pipe';
 import { NotFoundExceptionFilter } from './common/filters/not-found-exception.filter';
 
-const port = process.env.PORT || 3000;
+// tslint:disable-next-line: radix
+const port = parseInt(process.env.PORT) || 3000;
 
 
 // async function bootstrap() {
@@ -31,7 +32,9 @@ const port = process.env.PORT || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // tslint:disable-next-line: radix
-  await app.listen(parseInt(process.env.PORT) || 3000);
+  app.enableCors();
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new NotFoundExceptionFilter());
+  await app.listen(port);
 }
 bootstrap();

@@ -3,7 +3,6 @@ import { Module, MiddlewareConsumer, RequestMethod, forwardRef } from '@nestjs/c
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CorsMiddleware } from '../middlewares/cors.middleware';
 import { AuthModule } from './../auth/auth.module';
 
 @Module({
@@ -17,9 +16,4 @@ import { AuthModule } from './../auth/auth.module';
 })
 
 export class UsersModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(CorsMiddleware).forRoutes(
-      { path: '*', method: RequestMethod.ALL },
-    );
-  }
 }

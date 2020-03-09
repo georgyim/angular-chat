@@ -13,8 +13,9 @@ import { RoomsModule } from './../rooms/rooms.module';
 import { UsersModule } from './../users/users.module';
 
 @Module({
-  imports: [RoomsModule, 
-    forwardRef(() => UsersModule) 
+  imports: [
+    RoomsModule,
+    forwardRef(() => UsersModule)
   ],
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],

@@ -13,7 +13,8 @@ const getMongoUrl = () => {
 };
 
 @Module({
-  imports: [MongooseModule.forRoot(getMongoUrl()),
+  imports: [
+    MongooseModule.forRoot(getMongoUrl()),
     UsersModule,
     RoomsModule,
     AuthModule

@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "start-front-dev": "ng serve --progress=false --proxy-config proxy.conf.json",
     "prestart": "npm run build",
     "start": "node dist/server/main.js",
     "build": "ng build --prod && tsc -p ./server",

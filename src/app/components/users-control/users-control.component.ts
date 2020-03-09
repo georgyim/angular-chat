@@ -27,7 +27,7 @@ export class UsersControlComponent implements OnInit {
 
   public pager: PaginatorHelper;
 
-  public pagedItems: User[];
+  public pagedItems: User[] = [];
 
   public constructor(
     private userService: UsersService,

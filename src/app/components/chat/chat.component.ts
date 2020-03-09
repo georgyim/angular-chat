@@ -17,10 +17,10 @@ export class ChatComponent implements OnInit {
   public name: string;
   public newRoom: string;
   public messages: Message[] = [];
-  public rooms: Room[];
+  public rooms: Room[] = [];
   public title: string;
   public currentRoomId: string;
-  public users: User[];
+  public users: User[] = [];
 
   public constructor(
     private chatService: ChatService,
@@ -50,7 +50,7 @@ export class ChatComponent implements OnInit {
   }
 
   public addnewroom(): void {
-    if (this.newRoom.trim() !== '') {
+    if (this.newRoom && this.newRoom.trim() !== '') {
       this.chatService.addRoom(this.newRoom);
     }
   }
