@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, BehaviorSubject, NEVER } from 'rxjs';
+import { Observable, BehaviorSubject, NEVER, EMPTY } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
 import { User } from '../../entities/user';
@@ -26,10 +26,9 @@ export class AuthenticationService {
     params = params.append('password', user.password);
 
     this.http.post<TokenResponse>(this.api + 'auth/login', params)
-      .pipe(catchError(() => {
+      .pipe(catchError((error) => {
         this.loggedIn$.next(false);
-        this.snotify.onError('Login unsuccessful', null);
-        return NEVER;
+        return EMPTY;
       }))
       .subscribe((response: TokenResponse) => {
         this.setTokens(response.access_token);

@@ -1,4 +1,4 @@
-import { Controller, Post, HttpStatus, HttpCode, Get, Body } from '@nestjs/common';
+import { Controller, Post, HttpStatus, HttpCode, Get, Body, HttpException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ValidationPipe } from '../common/pipes/validation.pipe';
 import { CommonResult } from '../models/common-result';
@@ -14,7 +14,11 @@ export class AuthController {
     try {
        return await this.authService.getAccessToken(user);
     } catch (err) {
-      return new CommonResult(false, 'Server error');
+      if (err instanceof HttpException) {
+        throw err;
+      } else {
+        throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.FORBIDDEN)
+      }
     }
   }
 

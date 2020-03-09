@@ -1,3 +1,4 @@
+import { validate } from 'class-validator';
 import * as jwt from 'jsonwebtoken';
 import { Injectable, Inject, HttpException, HttpStatus, forwardRef } from '@nestjs/common';
 import { UsersService } from './../users/users.service';
@@ -9,7 +10,7 @@ export class AuthService {
 
   constructor(
     @Inject(forwardRef(() => UsersService))
-    private readonly usersService: UsersService,) {
+    private readonly usersService: UsersService, ) {
   }
 
   async createToken() {
@@ -28,13 +29,13 @@ export class AuthService {
     if (validUser) {
       return await this.createToken();
     } else {
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Username or password is wrong', HttpStatus.UNAUTHORIZED);
     }
   }
 
-  validateLogin(user): boolean {
+  async validateLogin(user): Promise<boolean> {
     try {
-      const existedUser = this.usersService.findOneByUsername(user.username);
+      const existedUser = await this.usersService.findOneByUsername(user.username);
       if (existedUser !== null) {
         this.authorizedUser = existedUser;
         return true;
@@ -45,10 +46,10 @@ export class AuthService {
     }
   }
 
-  checkToken(token): boolean {
+  async checkToken(token): Promise<boolean>{
     try {
       const user = jwt.verify(token, 'secret');
-      return this.validateLogin(user);
+      return await this.validateLogin(user);
     } catch (err) {
       return false;
     }

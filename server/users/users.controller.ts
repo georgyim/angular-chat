@@ -64,7 +64,7 @@ export class UsersController {
   async checkToken(@Req() req) {
     try {
       const token: string = req.headers.authorization.substr(7);
-      const result: boolean = this.authSesrvice.checkToken(token);
+      const result: boolean = await this.authSesrvice.checkToken(token);
       return result;
     } catch (err) {
       return new CommonResult(false, 'Unexpected token');
