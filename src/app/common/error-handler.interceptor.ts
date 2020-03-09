@@ -7,10 +7,10 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
 import { CommonResult } from '../entities/common-result';
 import { SnotifyHelperService } from './snotify-helper.service';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
@@ -23,14 +23,16 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     return next.handle(request)
-      .do((event: HttpEvent<any>) => {
-      }, (err: any) => {
-        if (err instanceof HttpErrorResponse) {
-          if (this.checkInstance(err.error)) {
-            this.snotifyHelper.onError(err.error.message, err.error.title || this.defaultTitle);
+      .pipe(
+        tap((event: HttpEvent<any>) => {
+        }, (err: any) => {
+          if (err instanceof HttpErrorResponse) {
+            if (this.checkInstance(err.error)) {
+              this.snotifyHelper.onError(err.error.message, err.error.title || this.defaultTitle);
+            }
           }
-        }
-      });
+        })
+      );
   }
 
   private checkInstance(arg: any): arg is CommonResult<any> {
