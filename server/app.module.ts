@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
+import { Module } from '@nestjs/common';
+import { AngularUniversalModule } from '@nestjs/ng-universal';
+import { join } from 'path';
+import { MongooseModule } from '@nestjs/mongoose';
 import { RoomsModule } from './rooms/rooms.module';
 import { AuthModule } from './auth/auth.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 
 
 const getMongoUrl = () => {
@@ -23,6 +24,6 @@ const getMongoUrl = () => {
     UsersModule,
     RoomsModule,
     AuthModule
-  ],
+  ]
 })
 export class AppModule {}
