@@ -1,8 +1,8 @@
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -11,18 +11,20 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let headers = new HttpHeaders();
-    const authReq = req.clone({ headers: headers });
     if (req.url.includes('login')) {
       return next.handle(req);
     } else {
-      const authToken = this.storageService.getToken();
+      const authToken: string = this.storageService.getToken();
       if (authToken) {
-        headers = headers.set('Authorization', 'Bearer ' + authToken);
-        return next.handle(authReq);
+        req = req.clone({
+          setHeaders: {
+            Authorization: 'Bearer ' + authToken
+          }
+        });
+        return next.handle(req);
       }
-      this.router.navigate([ '/auth' ]);
-      return next.handle(authReq);
+      this.router.navigate(['/auth']);
+      return next.handle(req);
     }
   }
 }

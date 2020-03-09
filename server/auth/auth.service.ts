@@ -1,6 +1,5 @@
-import { validate } from 'class-validator';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
-import { Injectable, Inject, HttpException, HttpStatus, forwardRef } from '@nestjs/common';
 import { UsersService } from './../users/users.service';
 
 @Injectable()
@@ -35,7 +34,7 @@ export class AuthService {
 
   async validateLogin(user): Promise<boolean> {
     try {
-      const existedUser = await this.usersService.findOneByUsername(user.username);
+      const existedUser = await this.usersService.findOneByUsername(user);
       if (existedUser !== null) {
         this.authorizedUser = existedUser;
         return true;

@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Room } from '../../entities/room';
-import { NEVER, Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SnotifyHelperService } from '../../common/snotify-helper.service';
+import { Room } from '../../entities/room';
 
 const api = '/api/';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class RoomService {
 
   public constructor(private http: HttpClient, private snotify: SnotifyHelperService) {
@@ -19,8 +21,7 @@ export class RoomService {
   public getRooms(): Observable<Room[]> {
     return this.http.get<Room[]>(`${api}rooms`)
       .pipe(catchError(() => {
-        this.snotify.onError('Server error', null);
-        return NEVER;
+        return EMPTY;
       }));
   }
 
@@ -28,11 +29,10 @@ export class RoomService {
    * Get room
    * @param id
    */
-  public getRoom(id): Observable<Room> {
+  public getRoom(id: string): Observable<Room> {
     return this.http.get<Room>(`${api}rooms/room/${id}`)
       .pipe(catchError(() => {
-        this.snotify.onError('Server error', null);
-        return NEVER;
+        return EMPTY;
       }));
     ;
   }

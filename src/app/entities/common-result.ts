@@ -1,4 +1,4 @@
-export class CommonResult<T> {
+export class CommonResult<T = null> {
 
   public title: string;
 
@@ -7,7 +7,6 @@ export class CommonResult<T> {
   public success: boolean;
 
   public additionalInfo: T;
-
 
   constructor(success: boolean, message?: string, title?: string, additionalInfo?: T) {
     this.success = success;

@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { Room } from '../../entities/room';
 import { User } from '../../entities/user';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ChatService {
 
   public constructor(private socket: SocketOne) {

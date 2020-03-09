@@ -1,18 +1,20 @@
-import { ChatService } from '../../services/chat-sockets/socket.service';
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, JwtVerifyAnswer } from '../../services/auth/authentication.service';
-import { RoomService } from './../../services/rooms/rooms.service';
-import { User } from '../../entities/user';
-import { Room } from '../..//entities/room';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Message } from '../..//entities/message';
+import { Room } from '../..//entities/room';
+import { User } from '../../entities/user';
+import { AuthenticationService, JwtVerifyAnswer } from '../../services/auth/authentication.service';
+import { ChatService } from '../../services/chat-sockets/socket.service';
+import { RoomService } from './../../services/rooms/rooms.service';
 
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: [ './chat.component.css' ]
+  styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   public text: string;
   public name: string;
   public newRoom: string;
@@ -21,6 +23,8 @@ export class ChatComponent implements OnInit {
   public title: string;
   public currentRoomId: string;
   public users: User[] = [];
+
+  private unsubscribeOnDestroy = new Subject<void>();
 
   public constructor(
     private chatService: ChatService,
@@ -33,17 +37,25 @@ export class ChatComponent implements OnInit {
 
   public ngOnInit() {
     this.getProfile();
-    this.chatService.getMessage().subscribe((data: Message) => {
-      this.messages.push(data);
-    });
+    this.chatService
+      .getMessage()
+      .pipe(takeUntil(this.unsubscribeOnDestroy))
+      .subscribe((data: Message) => {
+        this.messages.push(data);
+      });
     this.getRooms();
     this.chatService.init();
     this.getRoomsFromSocket();
     this.getUsersList();
   }
 
+  public ngOnDestroy() {
+    this.unsubscribeOnDestroy.next();
+    this.unsubscribeOnDestroy.complete();
+  }
+
   public send(): void {
-    if (this.text.trim() !== '') {
+    if (this.text && this.text.trim() !== '') {
       this.chatService.sendMessage(this.text, this.name, this.currentRoomId);
       this.text = '';
     }
@@ -57,8 +69,9 @@ export class ChatComponent implements OnInit {
 
   public getRoomsFromSocket(): void {
     this.chatService.getRooms()
+      .pipe(takeUntil(this.unsubscribeOnDestroy))
       .subscribe((res: Room) => {
-        const updatedRooms = [ res, ...this.rooms ];
+        const updatedRooms = [res, ...this.rooms];
         this.rooms = updatedRooms;
       });
   }
@@ -66,6 +79,7 @@ export class ChatComponent implements OnInit {
 
   public getRooms(): void {
     this.roomService.getRooms()
+      .pipe(takeUntil(this.unsubscribeOnDestroy))
       .subscribe((res: Room[]) => {
         this.rooms = res;
       });
@@ -78,6 +92,7 @@ export class ChatComponent implements OnInit {
 
   public getRoom(id): void {
     this.roomService.getRoom(id)
+      .pipe(takeUntil(this.unsubscribeOnDestroy))
       .subscribe((res: Room) => {
         this.messages = res.messages;
         this.title = res.title;
@@ -86,6 +101,7 @@ export class ChatComponent implements OnInit {
 
   public getProfile(): void {
     this.authService.getProfile()
+      .pipe(takeUntil(this.unsubscribeOnDestroy))
       .subscribe((res: JwtVerifyAnswer) => {
         this.name = res.username;
       });
@@ -93,8 +109,9 @@ export class ChatComponent implements OnInit {
 
   public getUsersList(): void {
     this.chatService.getUsers()
-      .subscribe((res: User[]) => {
-        this.users = res;
+      .pipe(takeUntil(this.unsubscribeOnDestroy))
+      .subscribe((users: User[]) => {
+        this.users = users;
       });
   }
 

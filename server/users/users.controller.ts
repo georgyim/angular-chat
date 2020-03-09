@@ -1,26 +1,9 @@
+import { Controller, Delete, forwardRef, Get, HttpException, HttpStatus, Inject, Param, Post, Put, Req } from "@nestjs/common";
 import * as jwt from 'jsonwebtoken';
-import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Body,
-  UseGuards,
-  ReflectMetadata,
-  UseInterceptors,
-  Param,
-  Req,
-  forwardRef,
-  Inject, HttpException, HttpStatus
-} from "@nestjs/common";
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UsersService } from "./users.service";
-import { InjectModel } from "@nestjs/mongoose";
+import { CommonResult } from '../models/common-result';
 // import { EventsGateway } from './../events.gateway';
 import { AuthService } from './../auth/auth.service';
-import { JwtStrategy } from './../auth/passport/jwt.strategy';
-import { CommonResult } from '../models/common-result';
+import { UsersService } from "./users.service";
 
 @Controller("api/users")
 // @UseGuards(RolesGuard)
@@ -29,8 +12,6 @@ export class UsersController {
     private readonly usersService: UsersService,
     @Inject(forwardRef(() => AuthService))
     private readonly authSesrvice: AuthService,
-    @Inject(forwardRef(() => JwtStrategy))
-    private readonly jwtStrategy: JwtStrategy,
   ) {
   }
 
@@ -43,7 +24,11 @@ export class UsersController {
         return new CommonResult(false, 'User already exist');
       }
       const newUser = await this.usersService.createUser(request.body);
-      return new CommonResult(true);
+      if(newUser) {
+        return new CommonResult(true, 'User succesfully created');
+      } else {
+        throw new Error();
+      }
     } catch (err) {
       throw new HttpException(new CommonResult(false, 'Server error, try later'), HttpStatus.BAD_REQUEST);
     }
@@ -56,7 +41,7 @@ export class UsersController {
       const result: JwtVerifyAnswer = await jwt.verify(token, 'secret');
       return result;
     } catch (err) {
-      return new CommonResult(false, 'Unexpected token');
+      throw new HttpException(new CommonResult(false, 'Unexpected token'), HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -67,7 +52,7 @@ export class UsersController {
       const result: boolean = await this.authSesrvice.checkToken(token);
       return result;
     } catch (err) {
-      return new CommonResult(false, 'Unexpected token');
+      throw new HttpException(new CommonResult(false, 'Unexpected token'), HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -77,7 +62,7 @@ export class UsersController {
     try {
       return await this.usersService.findAllUsers();
     } catch (err) {
-      return new CommonResult(false, 'Server error');
+      throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -87,7 +72,7 @@ export class UsersController {
       await this.usersService.deleteUser(param.id);
       return new CommonResult(true, 'Successfully deleted');
     } catch (err) {
-      return new CommonResult(true, 'Server error');
+      throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -98,7 +83,7 @@ export class UsersController {
         { username: request.body.username, password: request.body.password });
       return new CommonResult(true, 'Successfully edited');
     } catch (err) {
-      return new CommonResult(true, 'Server error');
+      throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.BAD_REQUEST);
     }
   }
 }

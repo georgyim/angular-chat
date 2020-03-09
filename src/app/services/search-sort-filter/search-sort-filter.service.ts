@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchFilterSortService {
 
   constructor(private datePipe: DatePipe) {

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { PaginatorHelper } from './paginator-helper';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PaginatorService {
 
   public getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10): PaginatorHelper {

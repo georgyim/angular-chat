@@ -1,10 +1,6 @@
-import {
-  Controller,
-  Get,
-  Req
-} from "@nestjs/common";
-import { RoomsService } from './rooms.service';
+import { Controller, Get, Req, HttpException, HttpStatus } from "@nestjs/common";
 import { CommonResult } from '../models/common-result';
+import { RoomsService } from './rooms.service';
 
 @Controller("api/rooms")
 // @UseGuards(RolesGuard)
@@ -26,17 +22,16 @@ export class RoomsController {
         return (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0);
       });
     } catch (err) {
-      return new CommonResult(false, 'Server error');
+      throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.BAD_REQUEST);
     }
   }
 
   @Get('/room/:id')
   async findRoom(@Req() request) {
     try {
-      const params = request.params;
       return await this.roomsService.findOneRooms(request.params.id);
     } catch (err) {
-      return new CommonResult(false, 'Server error');
+      throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.BAD_REQUEST);
     }
   }
 }

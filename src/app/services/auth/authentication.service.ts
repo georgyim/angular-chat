@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, BehaviorSubject, NEVER, EMPTY } from 'rxjs';
-import { LocalStorageService } from './local-storage.service';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../entities/user';
-import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, NEVER, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { SnotifyHelperService } from '../../common/snotify-helper.service';
+import { User } from '../../entities/user';
+import { LocalStorageService } from './local-storage.service';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthenticationService {
 
   private readonly api = '/api/';
@@ -20,20 +22,22 @@ export class AuthenticationService {
     this.checkToken();
   }
 
-  public login(user: User): void {
+  public login(user: User): Observable<TokenResponse> {
     let params: HttpParams = new HttpParams();
     params = params.append('username', user.username);
     params = params.append('password', user.password);
 
-    this.http.post<TokenResponse>(this.api + 'auth/login', params)
-      .pipe(catchError((error) => {
-        this.loggedIn$.next(false);
-        return EMPTY;
-      }))
-      .subscribe((response: TokenResponse) => {
-        this.setTokens(response.access_token);
-        this.router.navigateByUrl('');
-      });
+    return this.http.post<TokenResponse>(this.api + 'auth/login', params)
+      .pipe(
+        catchError(() => {
+          this.loggedIn$.next(false);
+          return EMPTY;
+        }),
+        tap((response: TokenResponse) => {
+          this.setTokens(response.access_token);
+          this.router.navigateByUrl('');
+        })
+      )
   }
 
   public setTokens(token: string): void {
@@ -66,24 +70,19 @@ export class AuthenticationService {
     params = params.append('password', user.password);
     return this.http.post<User>(`${this.api}users/create`, params)
       .pipe(catchError(() => {
-        this.snotify.onError('Register unsuccessful', null);
         return NEVER;
       }));
   }
 
-  public checkToken(): void {
+  private checkToken(): void {
+    debugger;
     this.http.get<boolean>(this.api + 'users/check-token')
       .pipe(catchError(() => {
-        this.snotify.onError('Server error', null);
-        return NEVER;
+        return EMPTY;
       }))
-      .subscribe((res: boolean) => {
-        if (res) {
-          this.loggedIn$.next(res);
-        } else {
-          this.loggedIn$.next(false);
-          this.router.navigate(['/auth']);
-        }
+      .subscribe(() => {
+          this.router.navigate(['/chat']);
+          this.loggedIn$.next(true);
       });
   }
 }

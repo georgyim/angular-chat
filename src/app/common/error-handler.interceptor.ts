@@ -1,41 +1,37 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpErrorResponse,
-} from '@angular/common/http';
-
-import { CommonResult } from '../entities/common-result';
+import { Observable, of, throwError, EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { SnotifyHelperService } from './snotify-helper.service';
-import { Observable, EMPTY, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { AuthenticationService } from '../services/auth/authentication.service';
+
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
-  public readonly defaultTitle: string = 'Error';
+  private readonly defaultTitle: string = 'Error';
 
-  constructor(private snotifyHelper: SnotifyHelperService) {
+  constructor(private snotifyHelper: SnotifyHelperService, private authService: AuthenticationService) {
   }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
         catchError((err) => {
-          if (err instanceof HttpErrorResponse) {
-            if (!this.checkInstance(err.error)) {
-              this.snotifyHelper.onError(err.error.message, err.error.title || this.defaultTitle);
-            }
+          // @TODO
+          if (request.url.includes('check-token') && !this.authService.loggedIn$.getValue()) {
+            return throwError(err);
           }
-          return of(err);
+          if (err instanceof HttpErrorResponse && this.checkErrorHaveMessage(err.error)) {
+              this.snotifyHelper.onError(err.error.message, err.error.title || this.defaultTitle);
+          }
+          return throwError(err);
         })
       );
   }
 
-  private checkInstance(arg: any): arg is CommonResult<any> {
-    return Boolean(arg && arg.hasOwnProperty('success') && arg.message);
+  private checkErrorHaveMessage(value: any): boolean {
+    return Boolean(value && value.message);
   }
 }
 

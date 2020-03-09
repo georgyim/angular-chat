@@ -25,15 +25,7 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        SocketOne,
-        ChatService,
-        AuthenticationService,
-        LocalStorageService,
-        RoomService,
-        UsersService,
         DatePipe,
-        SearchFilterSortService,
-        PaginatorService,
       ]
     };
   }

@@ -54,7 +54,7 @@ export class UsersControlComponent implements OnInit {
   public deleteUser(id, Idx): void {
     this.disabledAnimation = false;
     this.userService.deleteUser(id)
-      .subscribe((res: CommonResult<null>) => {
+      .subscribe((res: CommonResult) => {
         this.filteredUsers.splice(Idx, 1);
         setTimeout(() => this.disabledAnimation = true, 0);
       });
@@ -81,7 +81,7 @@ export class UsersControlComponent implements OnInit {
     }
     let dialogRef = this.dialog.open(AddUserComponent, config);
 
-    dialogRef.afterClosed().subscribe((result: CommonResult<null>) => {
+    dialogRef.afterClosed().subscribe((result: CommonResult) => {
       if (result && result.success) {
         this.disabledAnimation = false;
         this.getUsers();

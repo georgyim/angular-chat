@@ -1,6 +1,10 @@
+import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2, ViewContainerRef } from '@angular/core';
 import { SearchFilterSortService } from './../../services/search-sort-filter/search-sort-filter.service';
-import { Directive, ElementRef, ViewContainerRef, HostListener, Renderer2, OnInit, EventEmitter } from '@angular/core';
-import { Input, Output } from '@angular/core';
+
+enum SortDirection {
+  UP = 'up',
+  DOWN = 'down'
+}
 
 
 @Directive({
@@ -14,14 +18,14 @@ export class SortDirective<T> implements OnInit {
 
   @Output() setPage = new EventEmitter<boolean>();
 
-  public sortedArray;
+  public sortedArray: T[];
 
   public arrayDirection: string = SortDirection.UP;
 
-  public matIcon: any;
+  public matIcon: HTMLElement;
 
   @HostListener('click', [ '$event' ])
-  click(event) {
+  click() {
     if (this.arrayDirection === SortDirection.UP) {
       this.sort(true);
       this.addArrow();
@@ -74,10 +78,3 @@ export class SortDirective<T> implements OnInit {
 
 }
 
-enum SortDirection {
-
-  UP = 'up',
-
-  DOWN = 'down'
-
-}

@@ -30,6 +30,7 @@ export class EventsGateway implements OnModuleInit {
 
   @SubscribeMessage('rooms')
   onEvent(client, data): any {
+    console.log('hello test')
     client.join(data.room, () => {
       const rooms = Object.keys(client.rooms);
     });
