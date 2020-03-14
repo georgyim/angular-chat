@@ -1,83 +1,95 @@
-.login-wrapper {
-    display: flex;
-    flex-flow: column;
-    margin: auto;
-    margin-top: 40px;
-    width: 400px;
-    height: 400px;
-    background-color: #F2F5F8;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+.login {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding-top: 15vh;
 }
 
-.title {
-    padding-top: 15px;
-    text-align: center;
-    font-size: 22px;
+.login__container {
+  display: flex;
+  flex-flow: column;
+  padding: 15px 30px;
+  width: 400px;
+  height: 400px;
+  background-color: #F2F5F8;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-.subtitle {
-    margin-bottom: 15px;
-    font-size: 18px;
+.login__title {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 30px;
 }
 
-.login-form {
-    display: flex;
-    flex-flow: column;
-    margin: auto;
-    width: 100%;
+.login__subtitle {
+  margin-bottom: 15px;
+  font-size: 18px;
 }
 
-.username,
-.password {
-    height: 100px;
-    text-align: center;
+.login__form {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
 }
 
-input {
-    height: 30px;
-    width: 80%;
-    padding-left: 15px;
-    outline: none;
-    border: 1px solid #2dacf8;
+.login__username, .login__password {
+  height: 100px;
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-.buttons {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: space-evenly;
-    /* text-align: center; */
+.login__input {
+  height: 40px;
+  width: 100%;
+  padding-left: 15px;
+  outline: none;
+  border: 1px solid #e0dfdf;
 }
 
-.buttons button {
-    background: #2dacf8;
-    height: 35px;
-    width: 80px;
-    border: none;
-    color: white;
-    cursor: pointer;
+.login__input:focus {
+  border: 2px solid #2dacf8;
 }
 
-.validate-username,
-.validate-password {
-    color: red;
-    font-weight: bold;
+.login__buttons {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login__button {
+  background: #2b8cf1;
+  height: 40px;
+  border: none;
+  color: white;
+  padding: 0 30px;
+  cursor: pointer;
+}
+
+.login__validate-message {
+  background: #fa464d;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  color: white;
 }
 
 .disabled {
-    cursor: not-allowed !important;
+  cursor: not-allowed !important;
 }
 
-.alert {
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: bold;
+/* .alert {
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .alert-danger {
-    color: red;
+  color: red;
 }
 
 .alert-success {
-    color: green;
-}
+  color: green;
+} */

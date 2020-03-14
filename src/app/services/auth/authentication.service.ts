@@ -75,7 +75,6 @@ export class AuthenticationService {
   }
 
   private checkToken(): void {
-    debugger;
     this.http.get<boolean>(this.api + 'users/check-token')
       .pipe(catchError(() => {
         return EMPTY;

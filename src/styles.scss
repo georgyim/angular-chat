@@ -1,13 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "assets/reset.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-body {
-    background: #40d89f;
-    background: -moz-linear-gradient(-45deg, #40d89f 0%, #6cf388 100%);
-    background: -webkit-linear-gradient(-45deg, #40d89f 0%,#6cf388 100%);
-    background: linear-gradient(135deg, #40d89f 0%,#6cf388 100%);
-}
-
 /* For snotify */
 @import url('https://fonts.googleapis.com/css?family=Audiowide');
 .material {
@@ -18,4 +11,29 @@ body {
 }
 .dark {
 @import "~ng-snotify/styles/dark";
+}
+
+
+
+@font-face {
+  font-family: "Cabin";
+  src: url("assets/fonts/Cabin/Cabin-Regular.ttf");
+}
+@font-face {
+  font-family: "Cabin";
+  src: url("assets/fonts/Cabin/Cabin-Bold.ttf");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Cabin";
+  src: url("assets/fonts/Cabin/Cabin-Medium.ttf");
+  font-style: medium;
+}
+
+
+body {
+  background: #896be7;
+  height: 100vh;
+  background: linear-gradient(135deg, #896be7 0%, #f2a9bd 100%);
+  font-family: Cabin, Arial, Helvetica, sans-serif !important;
 }
