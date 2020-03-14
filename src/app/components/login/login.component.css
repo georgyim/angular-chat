@@ -17,13 +17,16 @@
 
 .login__title {
   text-align: center;
-  font-size: 22px;
-  margin-bottom: 30px;
+  font-size: 26px;
+  margin-bottom: 50px;
+  color: #474c58;
 }
 
 .login__subtitle {
-  margin-bottom: 15px;
-  font-size: 18px;
+  display: flex;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-size: 14px;
 }
 
 .login__form {
@@ -79,7 +82,6 @@
 .disabled {
   cursor: not-allowed !important;
 }
-
 
 .login__input.ng-pristine.ng-invalid.ng-touched {
   border: 2px solid #fa454d;
