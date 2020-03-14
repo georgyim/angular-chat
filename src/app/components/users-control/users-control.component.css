@@ -1,54 +1,80 @@
 .main-container {
-    display: flex;
-    flex-flow: column;
-    padding-top: 30px;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
 }
 
-.users-table {
-    /* width: 500px; */
-    margin: auto;
+.user-container {
+  width: 1240px;
 }
+
+.users-table-container {
+  min-height: 551px;
+  background: #f2f2fd;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  color: #66666d;
+  border: 1px solid #c1c5cd;
+}
+
+table, th, td {
+  border: 1px inset #e2d5d5;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 th:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
-th,
-td {
-    border: 1px solid white;
-    text-align: center;
-    height: 30px;
-    vertical-align: middle;
-    width: 170px;
+
+th, td {
+  text-align: center;
+  height: 50px;
+  vertical-align: middle;
+  width: 170px;
+  position: relative;
+}
+
+.th .mat-icon, .td .mat-icon {
+  position: absolute;
 }
 
 .disabled {
-    cursor: no-drop;
+  cursor: no-drop;
 }
 
 .fitler-input {
-    margin: auto;
-    padding-bottom: 15px;
+  margin: auto;
+  padding-bottom: 15px;
 }
 
 .fitler-input input {
-    padding-left: 15px;
-    height: 30px;
-    border: 2px solid #19aaff;
-    width: 200px;
+  padding-left: 15px;
+  padding-left: 15px;
+  height: 40px;
+  width: 300px;
+}
+
+.fitler-input input:focus {
+  border: 2px solid #2dacf8;
 }
 
 button {
-    width: 130px;
-    background: #007bff;
-    color: white;
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    margin: auto;
-    margin-top: 15px;
+  background: #2b8cf1;
+  height: 40px;
+  border: none;
+  color: white;
+  padding: 0 30px;
 }
 
 .pagination {
-    margin: auto;
-    margin-top: 72px;
+  margin: auto;
+  margin-top: 72px;
+}
+
+.add-user {
+  cursor: pointer;
 }

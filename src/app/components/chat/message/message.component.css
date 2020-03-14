@@ -1,16 +1,24 @@
 .message-box {
-    display: flex;
-    margin-top: 15px;
-    padding-left: 10px;
-    min-height: 30px;
-    background: #75dc75;
+  display: flex;
+  margin-top: 15px;
+  min-height: 40px;
+  background: #e9e8ed;
+  border-radius: 25px;
 }
-.message-box 
-p.message-text {
-    margin: auto;
-    width:100%;
+
+.message-box span.message-text {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  line-height: 1.5;
+  padding: 10px 25px;
+  color: #71737b;
 }
-.message-underline
-p.message-name {
-    text-align: right;
+
+.message-underline span.message-name {
+  display: inline-flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding-right: 25px;
+  color: #007bff;
 }

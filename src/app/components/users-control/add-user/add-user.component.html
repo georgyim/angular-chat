@@ -1,11 +1,33 @@
-<input type="text" placeholder="username" [(ngModel)]="user.username">
-<input type="text" placeholder="password" [(ngModel)]="user.password">
-<button (click)="edit ? editUser() : addUser()" [disabled]="error" [ngClass]="{'disabled': error}">SAVE</button>
-<button (click)="closeDialog()" class="btn-close">CLOSE</button>
+<div class="add-user">
+  <div class="add-user__fields">
+    <input
+      class="add-user__field add-user__field--username"
+      type="text"
+      placeholder="username"
+      [(ngModel)]="user.username"
+    />
+    <input
+      class="add-user__field add-user__field--password"
+      type="text"
+      placeholder="password"
+      [(ngModel)]="user.password"
+    />
 
+    <ng-container *ngIf="error">
+      <div class="error-message">
+        <span style="font-weight: bold">{{ error }}</span>
+      </div>
+    </ng-container>
+  </div>
 
-<ng-container *ngIf="error">
-    <div class="alert-danger" style="text-align: center; margin-top: 30px;color: #0b0a0c">
-        <span style="font-weight: bold">{{error}}</span>
-    </div>
-</ng-container>
+  <div class="add-user__buttons">
+    <button
+      (click)="edit ? editUser() : addUser()"
+      [disabled]="error"
+      [ngClass]="{ disabled: error }"
+    >
+      SAVE
+    </button>
+    <button (click)="closeDialog()" class="btn-close">CLOSE</button>
+  </div>
+</div>

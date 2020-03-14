@@ -1,35 +1,38 @@
 <div class="main-container">
+ <div class="user-container">
   <div class="fitler-input">
     <input type="text" placeholder="Filter by username" [(ngModel)]="filterField" (ngModelChange)="filter()">
   </div>
 
 
-  <table class="users-table">
-    <thead>
-      <th appSort [array]="pagedItems" [value]="'_id'">ID</th>
-      <th appSort [array]="pagedItems" [value]="'username'">username</th>
-      <th appSort [array]="pagedItems" [value]="'password'">password</th>
-      <th>edit</th>
-      <th>delete</th>
-    </thead>
-    <tbody [@.disabled]="disabledAnimation">
-      <tr *ngFor="let user of pagedItems; let i = index" [@fadeOffAnimation]>
-        <td>{{user._id | slice:0:8}}</td>
-        <td>{{user.username}}</td>
-        <td>{{user.password}}</td>
-        <td>
-          <mat-icon style="cursor: pointer" (click)="openAddUserModal(user)">mode_edit
-          </mat-icon>
-        </td>
-        <td>
-          <mat-icon style="cursor: pointer" (click)="deleteUser(user._id, i)">delete_sweep
-          </mat-icon>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="users-table-container">
+    <table class="users-table">
+      <thead>
+        <th appSort [array]="pagedItems" [value]="'_id'">ID</th>
+        <th appSort [array]="pagedItems" [value]="'username'">username</th>
+        <th appSort [array]="pagedItems" [value]="'password'">password</th>
+        <th>edit</th>
+        <th>delete</th>
+      </thead>
+      <tbody [@.disabled]="disabledAnimation">
+        <tr *ngFor="let user of pagedItems; let i = index" [@fadeOffAnimation]>
+          <td>{{user._id | slice:0:8}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.password}}</td>
+          <td>
+            <mat-icon style="cursor: pointer" (click)="openAddUserModal(user)">mode_edit
+            </mat-icon>
+          </td>
+          <td>
+            <mat-icon style="cursor: pointer" (click)="deleteUser(user._id, i)">delete_sweep
+            </mat-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <button (click)="openAddUserModal()">ADD USER</button>
+  <button class="add-user" (click)="openAddUserModal()">ADD USER</button>
 
   <ul *ngIf="pager && pager.pages && pager.pages.length" class="pagination">
     <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
@@ -48,4 +51,5 @@
       <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
     </li>
   </ul>
+ </div>
 </div>

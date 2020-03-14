@@ -1,34 +1,61 @@
-<div class="chat-container">
-  <div class="rooms">
-    <div class="addroom">
-      <input type="text" [(ngModel)]="newRoom" placeholder="Type a new room" (keyup.enter)="addnewroom()">
-      <button (click)="addnewroom()"> Create</button>
+<div class="chat-component">
+  <div class="chat-container">
+    <div class="title">
+      <h1>Chat</h1>
     </div>
-    <ul>
-      <li *ngFor="let room of rooms" (click)="getRoom(room._id); joinRoom(room._id)">
-        <i class="material-icons room-icon">star_rate</i>
-        <span>{{room.title}}</span>
-      </li>
-    </ul>
-  </div>
-  <div class="chat">
-    <div class="chat__header">
-      <i class="material-icons">label_outline</i>
-      <span>{{title}}</span>
-    </div>
-    <div class="chat__content">
-      <app-message *ngFor="let message of messages" [name]="message.username" [text]="message.text"></app-message>
-    </div>
-    <div class="chat__footer">
-      <div class="text-message">
-        <input type="text" [(ngModel)]="text" placeholder="Type a new message" (keyup.enter)="send()">
+    <div class="chat__wrapper">
+      <div class="rooms">
+        <div class="addroom">
+          <input
+            type="text"
+            [(ngModel)]="newRoom"
+            placeholder="Type a new room"
+            (keyup.enter)="addnewroom()"
+          />
+          <button class="addroom__button" (click)="addnewroom()">Create</button>
+        </div>
+        <ul class="rooms__list">
+          <li
+            *ngFor="let room of rooms"
+            (click)="getRoom(room._id); joinRoom(room._id)"
+          >
+            <i class="material-icons room-icon">star_rate</i>
+            <span>{{ room.title }}</span>
+          </li>
+        </ul>
       </div>
-      <div class="send-message">
-        <button (click)="send()">Send</button>
+      <div class="chat">
+        <div class="chat__header">
+          <i class="material-icons">label_outline</i>
+          <span>{{ title }}</span>
+        </div>
+        <div class="chat__content">
+          <div class="messages">
+            <app-message
+              *ngFor="let message of messages"
+              [name]="message.username"
+              [text]="message.text"
+            ></app-message>
+          </div>
+          <!-- <div class="force-overflow"></div> -->
+        </div>
+        <div class="chat__footer">
+          <div class="text-message">
+            <input
+              type="text"
+              [(ngModel)]="text"
+              placeholder="Type a new message"
+              (keyup.enter)="send()"
+            />
+            <i class="material-icons send-message" (click)="send()">
+              send
+            </i>
+          </div>
+        </div>
+      </div>
+      <div class="users">
+        <app-userlist [users]="users"></app-userlist>
       </div>
     </div>
-  </div>
-  <div class="users">
-    <app-userlist [users]="users"></app-userlist>
   </div>
 </div>

@@ -1,29 +1,53 @@
-button {
-  width: 130px;
-  background: #007bff;
+.add-user {
+  width: 300px;
+}
+
+.add-user__fields {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 35px;
+}
+
+.add-user__field--username {
+  margin-bottom: 15px;
+}
+
+.add-user__field {
+  height: 40px;
+  width: 100%;
+  padding-left: 15px;
+  outline: none;
+  border: 1px solid #e0dfdf;
+}
+
+.add-user__field:focus {
+  border: 2px solid #2dacf8;
+}
+
+.add-user__buttons {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-user__buttons button {
+  background: #2b8cf1;
+  height: 40px;
+  border: none;
   color: white;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  margin: auto;
-  margin-top: 15px;
+  padding: 0 30px;
   cursor: pointer;
 }
 
-input {
-  padding-left: 15px;
-  height: 30px;
-  border: 2px solid #19aaff;
-  width: 200px;
-  border-radius: 8px;
-}
-
-.disabled {
-  background: #b7c7cd;
-  cursor: no-drop;
-}
-
 .btn-close {
-  background: #f7b02d;
+  background: #f6b1bb;
+}
+
+.error-message {
+  color: #0b0a0c;
+  display: flex;
+  justify-content: center;
+  color: #fa464d;
+  margin-top: 2px;
 }
