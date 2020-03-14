@@ -8,8 +8,19 @@
         <div class="login__subtitle">
           <span>Username</span>
         </div>
-        <input class="login__input" type="text" formControlName="username" [(ngModel)]='user.username'>
-        <div class="login__validate-message" *ngIf="loginForm.controls.username.touched &&  loginForm.controls.username.invalid">
+        <input
+          class="login__input"
+          type="text"
+          formControlName="username"
+          [(ngModel)]="user.username"
+        />
+        <div
+          class="login__validate-message"
+          *ngIf="
+            loginForm.controls.username.touched &&
+            loginForm.controls.username.invalid
+          "
+        >
           <span>Minlength = 2, maxlength = 10</span>
         </div>
       </div>
@@ -18,15 +29,40 @@
         <div class="login__subtitle">
           <span>Password</span>
         </div>
-        <input class="login__input" type="text" formControlName="password" [(ngModel)]="user.password">
-        <div class="login__validate-message" *ngIf="loginForm.controls.password.touched &&  loginForm.controls.password.invalid">
+        <input
+          class="login__input"
+          type="text"
+          formControlName="password"
+          [(ngModel)]="user.password"
+        />
+        <div
+          class="login__validate-message"
+          *ngIf="
+            loginForm.controls.password.touched &&
+            loginForm.controls.password.invalid
+          "
+        >
           <span>Minlength = 2, maxlength = 10</span>
         </div>
       </div>
 
       <div class="login__buttons">
-        <button class="login__button" [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()">Login</button>
-        <button  class="login__button" [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="register()">Register</button>
+        <button
+          class="login__button"
+          [disabled]="loginForm.invalid"
+          [class.disabled]="loginForm.invalid"
+          (click)="login()"
+        >
+          Login
+        </button>
+        <button
+          class="login__button"
+          [disabled]="loginForm.invalid"
+          [class.disabled]="loginForm.invalid"
+          (click)="register()"
+        >
+          Register
+        </button>
       </div>
     </form>
   </div>

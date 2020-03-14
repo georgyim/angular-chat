@@ -67,17 +67,22 @@
 }
 
 .login__validate-message {
-  background: #fa464d;
-  height: 30px;
   display: flex;
+  -webkit-box-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
   align-items: center;
-  margin-top: 5px;
-  color: white;
+  color: #fa464d;
+  margin-top: 2px;
 }
 
 .disabled {
   cursor: not-allowed !important;
+}
+
+
+.login__input.ng-pristine.ng-invalid.ng-touched {
+  border: 2px solid #fa454d;
 }
 
 /* .alert {
