@@ -1,3 +1,4 @@
+import { Room } from '../models/room';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable, Inject } from '@nestjs/common';
 
@@ -13,19 +14,19 @@ export class RoomsService {
     return newRoom;
   }
 
-  async findAllRooms(): Promise<any[]> {
+  async findAllRooms(): Promise<Room[]> {
     return await this.roomModel.find().lean().exec();
   }
 
-  async findOneRooms(id: string): Promise<any> {
+  async findOneRooms(id: string): Promise<Room> {
     return await this.roomModel.findOne({ '_id': id }).lean().exec();
   }
 
-  async findOneByRoomname(username: string): Promise<any> {
+  async findOneByRoomname(username: string): Promise<Room> {
     return await this.roomModel.findOne({ 'email': username }).exec();
   }
 
-  async updateRoom(id: string, user: any): Promise<any> {
+  async updateRoom(id: string, user: any): Promise<Room> {
     return await this.roomModel.findOneAndUpdate({ '_id': id }, user).exec();
   }
 

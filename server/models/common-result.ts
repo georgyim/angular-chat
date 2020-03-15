@@ -1,4 +1,4 @@
-export class CommonResult<T> {
+export class CommonResult<T = null> {
 
   public title: string;
 

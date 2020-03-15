@@ -44,7 +44,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.messages.push(data);
       });
     this.getRooms();
-    this.chatService.init();
     this.getRoomsFromSocket();
     this.getUsersList();
   }

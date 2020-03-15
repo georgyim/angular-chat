@@ -17,10 +17,11 @@ export class JwtStrategy extends Strategy {
     passport.use(this);
   }
 
-  public async verify(req, payload, done) {
-    const isValid = await this.authService.validateLogin(payload);
+  public async verify(req, payload, done): Promise<void> {
+    const isValid: boolean = await this.authService.validateLogin(payload);
     if (!isValid) {
-      return done('Unauthorized', false);
+      done('Unauthorized', false);
+      return;
     }
     done(null, payload);
   }

@@ -1,3 +1,4 @@
+import { Room } from '../models/room';
 import { Controller, Get, Req, HttpException, HttpStatus } from "@nestjs/common";
 import { CommonResult } from '../models/common-result';
 import { RoomsService } from './rooms.service';
@@ -11,9 +12,9 @@ export class RoomsController {
   }
 
   @Get()
-  async getAllRooms(@Req() request) {
+  async getAllRooms(@Req() request): Promise<Room[]> {
     try {
-      const allRooms = await this.roomsService.findAllRooms();
+      const allRooms: Room[] = await this.roomsService.findAllRooms();
       return allRooms.map(elem => {
         const newElem = { ...elem };
         delete newElem.messages;
@@ -27,7 +28,7 @@ export class RoomsController {
   }
 
   @Get('/room/:id')
-  async findRoom(@Req() request) {
+  async findRoom(@Req() request): Promise<Room> {
     try {
       return await this.roomsService.findOneRooms(request.params.id);
     } catch (err) {

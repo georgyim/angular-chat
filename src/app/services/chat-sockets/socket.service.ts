@@ -13,10 +13,6 @@ export class ChatService {
   public constructor(private socket: SocketOne) {
   }
 
-  public init(): void {
-    this.socket.emit('rooms', {room: 'hello allo'});
-  }
-
   public sendMessage(text, name, roomId): void {
     this.socket.emit('message', {message: text, username: name, room: roomId});
   }

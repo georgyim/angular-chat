@@ -1,3 +1,4 @@
+import { User } from '../models/user';
 import { Controller, Delete, forwardRef, Get, HttpException, HttpStatus, Inject, Param, Post, Put, Req } from "@nestjs/common";
 import * as jwt from 'jsonwebtoken';
 import { CommonResult } from '../models/common-result';
@@ -17,25 +18,28 @@ export class UsersController {
 
 
   @Post('/create')
-  async createUser(@Req() request) {
+  async createUser(@Req() request): Promise<CommonResult> {
     try {
-      const isNewUser = await this.usersService.findOneUsers(request.body.username);
+      const isNewUser: User = await this.usersService.findOneUsers(request.body.username);
       if (isNewUser) {
-        return new CommonResult(false, 'User already exist');
+        throw new HttpException(new CommonResult(false, 'User already exist'), HttpStatus.BAD_REQUEST);
       }
-      const newUser = await this.usersService.createUser(request.body);
-      if(newUser) {
+      const newUser: User = await this.usersService.createUser(request.body);
+      if (newUser) {
         return new CommonResult(true, 'User succesfully created');
       } else {
         throw new Error();
       }
     } catch (err) {
+      if (err instanceof HttpException) {
+        throw err;
+      }
       throw new HttpException(new CommonResult(false, 'Server error, try later'), HttpStatus.BAD_REQUEST);
     }
   }
 
   @Get('/get-profile')
-  async getProfile(@Req() request) {
+  async getProfile(@Req() request): Promise<JwtVerifyAnswer> {
     try {
       const token: string = request.headers.authorization.substr(7);
       const result: JwtVerifyAnswer = await jwt.verify(token, 'secret');
@@ -46,7 +50,7 @@ export class UsersController {
   }
 
   @Get('/check-token')
-  async checkToken(@Req() req) {
+  async checkToken(@Req() req): Promise<boolean> {
     try {
       const token: string = req.headers.authorization.substr(7);
       const result: boolean = await this.authSesrvice.checkToken(token);
@@ -58,7 +62,7 @@ export class UsersController {
 
 
   @Get('/get-users')
-  async getAllUsers(@Req() request) {
+  async getAllUsers(@Req() request): Promise<User[]> {
     try {
       return await this.usersService.findAllUsers();
     } catch (err) {
@@ -67,7 +71,7 @@ export class UsersController {
   }
 
   @Delete('/delete/:id')
-  async deleteuser(@Param() param) {
+  async deleteuser(@Param() param): Promise<CommonResult> {
     try {
       await this.usersService.deleteUser(param.id);
       return new CommonResult(true, 'Successfully deleted');
@@ -77,7 +81,7 @@ export class UsersController {
   }
 
   @Put('/edit/:id')
-  async editUser(@Req() request, @Param() param) {
+  async editUser(@Req() request, @Param() param): Promise<CommonResult> {
     try {
       await this.usersService.updateUser(param.id,
         { username: request.body.username, password: request.body.password });
