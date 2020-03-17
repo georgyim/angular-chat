@@ -5,8 +5,8 @@ import * as mongoose from 'mongoose';
 import { Server, Socket } from 'socket.io';
 import * as socketioJwt from 'socketio-jwt';
 import { jwtConstants } from './auth/constants';
-import { Room } from './models/Room';
-import { User } from './models/User';
+import { Room } from './models/room';
+import { User } from './models/user';
 
 const ObjectId = mongoose.Types.ObjectId;
 
