@@ -15,9 +15,4 @@ import { EventsGateway } from '../events.gateway';
 })
 
 export class RoomsModule {
-    // configure(consumer: MiddlewareConsumer): void {
-    //     consumer.apply(CorsMiddleware).forRoutes(
-    //         { path: '*', method: RequestMethod.ALL },
-    //     );
-    // }
 }

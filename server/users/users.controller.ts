@@ -1,10 +1,10 @@
-import { User } from '../models/user';
-import { Controller, Delete, forwardRef, Get, HttpException, HttpStatus, Inject, Param, Post, Put, Req } from "@nestjs/common";
-import * as jwt from 'jsonwebtoken';
+import { Controller, Delete, forwardRef, Get, HttpException, HttpStatus, Inject, Param, Post, Put, Req, UseGuards, HttpCode } from "@nestjs/common";
 import { CommonResult } from '../models/common-result';
-// import { EventsGateway } from './../events.gateway';
+import { User } from '../models/user';
 import { AuthService } from './../auth/auth.service';
+import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import { UsersService } from "./users.service";
+import { JwtVerifyAnswer } from "../auth/strategies/jwt.strategy";
 
 @Controller("api/users")
 // @UseGuards(RolesGuard)
@@ -20,7 +20,7 @@ export class UsersController {
   @Post('/create')
   async createUser(@Req() request): Promise<CommonResult> {
     try {
-      const isNewUser: User = await this.usersService.findOneUsers(request.body.username);
+      const isNewUser: User = await this.usersService.findOne(request.body.username);
       if (isNewUser) {
         throw new HttpException(new CommonResult(false, 'User already exist'), HttpStatus.BAD_REQUEST);
       }
@@ -38,29 +38,18 @@ export class UsersController {
     }
   }
 
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
   @Get('/get-profile')
   async getProfile(@Req() request): Promise<JwtVerifyAnswer> {
     try {
-      const token: string = request.headers.authorization.substr(7);
-      const result: JwtVerifyAnswer = await jwt.verify(token, 'secret');
-      return result;
+      return {username: request.user.username};
     } catch (err) {
       throw new HttpException(new CommonResult(false, 'Unexpected token'), HttpStatus.UNAUTHORIZED);
     }
   }
 
-  @Get('/check-token')
-  async checkToken(@Req() req): Promise<boolean> {
-    try {
-      const token: string = req.headers.authorization.substr(7);
-      const result: boolean = await this.authSesrvice.checkToken(token);
-      return result;
-    } catch (err) {
-      throw new HttpException(new CommonResult(false, 'Unexpected token'), HttpStatus.UNAUTHORIZED);
-    }
-  }
-
-
+  @UseGuards(JwtAuthGuard)
   @Get('/get-users')
   async getAllUsers(@Req() request): Promise<User[]> {
     try {
@@ -70,6 +59,7 @@ export class UsersController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/delete/:id')
   async deleteuser(@Param() param): Promise<CommonResult> {
     try {
@@ -80,6 +70,7 @@ export class UsersController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('/edit/:id')
   async editUser(@Req() request, @Param() param): Promise<CommonResult> {
     try {
@@ -90,10 +81,4 @@ export class UsersController {
       throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.BAD_REQUEST);
     }
   }
-}
-
-interface JwtVerifyAnswer {
-  exp: number;
-  iat: number;
-  username: string;
 }

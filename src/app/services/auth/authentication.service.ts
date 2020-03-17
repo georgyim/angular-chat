@@ -15,27 +15,26 @@ export class AuthenticationService {
 
   private readonly api = '/api/';
 
-  public loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(!!this.storage.getToken());
 
   public constructor(private http: HttpClient, private storage: LocalStorageService, private router: Router,
     private snotify: SnotifyHelperService) {
-    this.checkToken();
   }
 
-  public login(user: User): Observable<TokenResponse> {
+  public login(user: User): Observable<AcessToken> {
     let params: HttpParams = new HttpParams();
     params = params.append('username', user.username);
     params = params.append('password', user.password);
 
-    return this.http.post<TokenResponse>(this.api + 'auth/login', params)
+    return this.http.post<AcessToken>(this.api + 'auth/login', params)
       .pipe(
         catchError(() => {
           this.loggedIn$.next(false);
           return EMPTY;
         }),
-        tap((response: TokenResponse) => {
-          this.setTokens(response.access_token);
-          this.router.navigateByUrl('');
+        tap((response: AcessToken) => {
+          this.setTokens(response.value);
+          this.router.navigateByUrl('/chat');
         })
       )
   }
@@ -74,21 +73,12 @@ export class AuthenticationService {
       }));
   }
 
-  private checkToken(): void {
-    this.http.get<boolean>(this.api + 'users/check-token')
-      .pipe(catchError(() => {
-        return EMPTY;
-      }))
-      .subscribe(() => {
-          this.router.navigate(['/chat']);
-          this.loggedIn$.next(true);
-      });
-  }
+
 }
 
-interface TokenResponse {
-  expires_in: string;
-  access_token: string;
+export interface AcessToken {
+  expireTime: string;
+  value: string;
 }
 
 export interface JwtVerifyAnswer {

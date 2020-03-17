@@ -10,7 +10,13 @@ export class SocketOne extends Socket {
   public constructor(private locatStorageService: LocalStorageService) {
     super({
       url: '', options: {
-        'query': 'token=' + (locatStorageService.getItem('authToken'))
+        transportOptions: {
+          polling: {
+            extraHeaders: {
+              Authorization: 'Bearer ' + locatStorageService.getItem('authToken')
+            }
+          }
+        }
       }
     });
   }

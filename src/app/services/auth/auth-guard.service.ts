@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of, pipe } from 'rxjs';
 import { SnotifyHelperService } from '../../common/snotify-helper.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
 
-  constructor(private authService: AuthenticationService, private router: Router, private snotify: SnotifyHelperService) {
+  constructor(private authService: AuthenticationService, private router: Router, private snotify: SnotifyHelperService,
+    private storage: LocalStorageService) {
   }
 
   canActivate(): Observable<boolean> {

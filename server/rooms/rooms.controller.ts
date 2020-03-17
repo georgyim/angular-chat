@@ -1,7 +1,9 @@
 import { Room } from '../models/room';
-import { Controller, Get, Req, HttpException, HttpStatus } from "@nestjs/common";
+import { Controller, Get, Req, HttpException, HttpStatus, UseGuards } from "@nestjs/common";
 import { CommonResult } from '../models/common-result';
 import { RoomsService } from './rooms.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ExtractJwt } from 'passport-jwt';
 
 @Controller("api/rooms")
 // @UseGuards(RolesGuard)
@@ -11,6 +13,7 @@ export class RoomsController {
   ) {
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async getAllRooms(@Req() request): Promise<Room[]> {
     try {
@@ -27,6 +30,7 @@ export class RoomsController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/room/:id')
   async findRoom(@Req() request): Promise<Room> {
     try {

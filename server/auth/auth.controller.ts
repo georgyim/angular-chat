@@ -1,7 +1,9 @@
-import { Controller, Post, HttpStatus, HttpCode, Get, Body, HttpException } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { Controller, Post, HttpStatus, HttpCode, Get, Body, HttpException, UseGuards } from '@nestjs/common';
+import { AuthService, AcessToken } from './auth.service';
 import { ValidationPipe } from '../common/pipes/validation.pipe';
 import { CommonResult } from '../models/common-result';
+import { User } from '../models/user';
 
 @Controller('api/auth/')
 export class AuthController {
@@ -9,21 +11,18 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  public async getToken( @Body(new ValidationPipe()) user) {
+  public async login( @Body(new ValidationPipe()) user: User): Promise<AcessToken> {
     try {
-       return await this.authService.getAccessToken(user);
+       return await this.authService.login(user);
     } catch (err) {
       if (err instanceof HttpException) {
         throw err;
       } else {
-        throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.FORBIDDEN)
+        throw new HttpException(new CommonResult(false, 'Server error'), HttpStatus.FORBIDDEN);
       }
     }
   }
 
-  @Get('authorized')
-  public async authorized() {
-    console.log('Authorized route...');
-  }
 }

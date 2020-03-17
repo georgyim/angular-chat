@@ -1,60 +1,39 @@
+import { jwtConstants } from './constants';
 import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import * as jwt from 'jsonwebtoken';
 import { UsersService } from './../users/users.service';
-
+import { User } from '../models/user';
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
 
-  private authorizedUser;
-
   constructor(
     @Inject(forwardRef(() => UsersService))
-    private readonly usersService: UsersService, ) {
+    private readonly usersService: UsersService,
+    private jwtService: JwtService) {
   }
 
-  async createToken() {
-    const expiresIn = '60h',
-      secretOrKey = 'secret';
-    const user = { username: this.authorizedUser.username };
-    const token = jwt.sign(user, secretOrKey, { expiresIn });
+  public async validateUser(user: User): Promise<User> {
+    try {
+      const existedUser: User = await this.usersService.findOneByUsernameAndPassword(user);
+      return existedUser || null;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  public async login(user: User): Promise<AcessToken> {
+    const payload = { username: user.username, sub: user._id };
     return {
-      expires_in: expiresIn,
-      access_token: token,
+      expireTime: jwtConstants.expireTokenTime,
+      value: this.jwtService.sign(payload),
     };
   }
 
-  async getAccessToken(user) {
-    const validUser = await this.validateLogin(user);
-    if (validUser) {
-      return await this.createToken();
-    } else {
-      throw new HttpException('Username or password is wrong', HttpStatus.UNAUTHORIZED);
-    }
-  }
 
-  async validateLogin(user): Promise<boolean> {
-    try {
-      const existedUser = await this.usersService.findOneByUsername(user);
-      if (existedUser !== null) {
-        this.authorizedUser = existedUser;
-        return true;
-      }
-      return false;
-    } catch (err) {
-      return false;
-    }
-  }
 
-  async checkToken(token): Promise<boolean>{
-    try {
-      const user = jwt.verify(token, 'secret');
-      return await this.validateLogin(user);
-    } catch (err) {
-      return false;
-    }
-  }
+}
 
-  validateUser(signedUser): boolean {
-    return true;
-  }
+export interface AcessToken {
+  expireTime: string;
+  value: string;
 }

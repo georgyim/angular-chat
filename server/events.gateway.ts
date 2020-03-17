@@ -1,19 +1,12 @@
-import { User } from './models/User';
-import { Room } from './models/Room';
 import { OnModuleInit } from '@nestjs/common';
-import {
-  WebSocketGateway,
-  SubscribeMessage,
-  WebSocketServer,
-} from '@nestjs/websockets';
-import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { RoomSchema } from './schemas/room.schema';
-import { Document } from 'mongoose';
+import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import * as mongoose from 'mongoose';
+import { Server, Socket } from 'socket.io';
 import * as socketioJwt from 'socketio-jwt';
-import { Socket, Server } from 'socket.io';
-import { resolve } from 'dns';
+import { jwtConstants } from './auth/constants';
+import { Room } from './models/Room';
+import { User } from './models/User';
 
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -22,11 +15,12 @@ export class EventsGateway implements OnModuleInit {
   constructor(@InjectModel('Room') private roomModel) {
   }
 
-  @WebSocketServer() server: Server;
+  @WebSocketServer()
+  server: Server;
 
   onModuleInit(): void {
     this.server.use(socketioJwt.authorize({
-      secret: 'secret',
+      secret: jwtConstants.secret,
       handshake: true
     }));
   }
@@ -53,7 +47,7 @@ export class EventsGateway implements OnModuleInit {
     }
   }
 
-  @SubscribeMessage('chatroom')
+  @SubscribeMessage('joinRoom')
   async enterRoom(client: Socket, data: string): Promise<GatewayEventInterface<User[]>> {
     try {
       client.join(data);

@@ -13,24 +13,24 @@ export class ChatService {
   public constructor(private socket: SocketOne) {
   }
 
-  public sendMessage(text, name, roomId): void {
+  public sendMessage(text: string, name: string, roomId: string): void {
     this.socket.emit('message', {message: text, username: name, room: roomId});
   }
 
   public getMessage(): Observable<Message> {
-    return this.socket.fromEvent<Message>('message');
+    return this.socket.fromEvent<Message>('send<M>essage');
+  }
+
+  public joinRoom(roomId: string): void {
+    this.socket.emit('joinRoom', roomId);
   }
 
   public getRooms(): Observable<Room> {
     return this.socket.fromEvent<Room>('updatedRooms');
   }
 
-  public joinRoom(room): void {
-    this.socket.emit('chatroom', room);
-  }
-
-  public addRoom(room): void {
-    this.socket.emit('addroom', room);
+  public addRoom(roomName: string): void {
+    this.socket.emit('addroom', roomName);
   }
 
   public getUsers(): Observable<User[]> {

@@ -1,3 +1,4 @@
+import { ContainerComponent } from './components/container/container.component';
 // Core
 
 import { NgModule } from '@angular/core';
@@ -10,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Modules
 import { SharedModule } from './shared/shared.module';
-import { UserControlModule } from './components/users-control/user-control.module';
+// import { UserControlModule } from './components/users-control/user-control.module';
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 
 // Other
@@ -24,29 +25,35 @@ import { AuthGuard } from './services/auth/auth-guard.service';
 import { UserlistComponent } from './components/chat/userlist/userlist.component';
 import { ErrorHandlerInterceptor } from './common/error-handler.interceptor';
 import { SnotifyHelperService } from './common/snotify-helper.service';
+import { LoginComponent } from './components/login/login.component';
 
 // App routes
 const routes: Routes = [
   {
-    path: 'chat',
-    component: ChatComponent,
-    canActivate: [ AuthGuard ]
-  },
-  {
     path: 'auth',
-    loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule)
-  },
-  {
-    path: 'user-control',
-    canActivate: [ AuthGuard ],
-    loadChildren: () => import('./components/users-control/user-control.module').then(m => m.UserControlModule)
+    component: LoginComponent
   },
   {
     path: '',
-    component: ChatComponent,
-    canActivate: [ AuthGuard ],
-    pathMatch: 'full'
-  }
+    component: ContainerComponent,
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: 'chat',
+        component: ChatComponent,
+      },
+      {
+        path: 'user-control',
+        loadChildren: () => import('./components/users-control/user-control.module').then(m => m.UserControlModule)
+      },
+      {
+        path: '',
+        redirectTo: 'chat',
+        pathMatch: 'full'
+      },
+    ]
+  },
+
 ];
 
 @NgModule({
@@ -57,11 +64,13 @@ const routes: Routes = [
     ChatComponent,
     MessageComponent,
     UserlistComponent,
+    ContainerComponent,
+    LoginComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     SharedModule.forRoot(),
-    UserControlModule,
+    // UserControlModule,
     ReactiveFormsModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
@@ -72,7 +81,7 @@ const routes: Routes = [
   ],
   providers: [
     AuthGuard,
-    { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
+    { provide: 'SnotifyToastConfig', useValue: ToastDefaults },
     SnotifyService,
     SnotifyHelperService,
     {
@@ -86,7 +95,7 @@ const routes: Routes = [
       multi: true
     },
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 
 export class AppModule {

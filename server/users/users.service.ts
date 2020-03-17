@@ -18,12 +18,12 @@ export class UsersService {
     return await this.userModel.find().exec();
   }
 
-  async findOneUsers(username: string): Promise<User> {
+  async findOne(username: string): Promise<User> {
     return await this.userModel.findOne({ 'username': username }).exec();
   }
 
-  async findOneByUsername(username): Promise<User> {
-    return await this.userModel.findOne({ 'username': username.username, 'password': username.password }).exec();
+  async findOneByUsernameAndPassword(user: User): Promise<User> {
+    return await this.userModel.findOne({ 'username': user.username, 'password': user.password }).exec();
   }
 
   async updateUser(id: string, user: any): Promise<User> {

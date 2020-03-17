@@ -1,32 +1,26 @@
-import * as passport from 'passport';
-import {
-  Module,
-  NestModule,
-  MiddlewareConsumer,
-  RequestMethod,
-  forwardRef,
-} from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { JwtStrategy } from './passport/jwt.strategy';
-import { AuthController } from './auth.controller';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { forwardRef, Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { RoomsModule } from './../rooms/rooms.module';
 import { UsersModule } from './../users/users.module';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { jwtConstants } from './constants';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [
     RoomsModule,
-    forwardRef(() => UsersModule)
+    forwardRef(() => UsersModule),
+    PassportModule.register({ defaultStrategy: 'local' }),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: jwtConstants.expireTokenTime},
+    }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy ],
   controllers: [AuthController],
-  exports: [AuthService, JwtStrategy]
+  exports: [AuthService ]
 })
-export class AuthModule implements NestModule {
-  public configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(passport.authenticate('jwt', { session: false }))
-      .forRoutes(
-        { path: '/rooms/*', method: RequestMethod.ALL }
-      );
-  }
-}
+export class AuthModule {}
