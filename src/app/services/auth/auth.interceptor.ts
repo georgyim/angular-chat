@@ -1,30 +1,36 @@
-import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from './authentication.service';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  public constructor(private storageService: LocalStorageService, private router: Router) {
+  public constructor(private storageService: LocalStorageService, private router: Router, private authService: AuthenticationService) {
   }
 
-  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.includes('login')) {
-      return next.handle(req);
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.url.includes('login')) {
+      return next.handle(request);
     } else {
       const authToken: string = this.storageService.getToken();
       if (authToken) {
-        req = req.clone({
-          setHeaders: {
-            Authorization: 'Bearer ' + authToken
-          }
-        });
-        return next.handle(req);
+        request = this.addToken(request, authToken);
+      } else {
+        this.router.navigate(['/auth']);
       }
-      this.router.navigate(['/auth']);
-      return next.handle(req);
+      return next.handle(request)
     }
   }
+
+  private addToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
+    return request.clone({
+      setHeaders: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+  }
+
 }

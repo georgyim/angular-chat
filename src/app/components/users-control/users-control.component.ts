@@ -12,8 +12,8 @@ import { CommonResult } from '../../entities/common-result';
 @Component({
   selector: 'app-users-control',
   templateUrl: './users-control.component.html',
-  styleUrls: [ './users-control.component.css' ],
-  animations: [ fadeOffAnimation ]
+  styleUrls: ['./users-control.component.css'],
+  animations: [fadeOffAnimation]
 })
 export class UsersControlComponent implements OnInit {
 
@@ -51,17 +51,18 @@ export class UsersControlComponent implements OnInit {
   }
 
 
-  public deleteUser(id, Idx): void {
+  public deleteUser(userForDelete: User): void {
     this.disabledAnimation = false;
-    this.userService.deleteUser(id)
+    this.userService.deleteUser(userForDelete._id)
       .subscribe((res: CommonResult) => {
-        this.filteredUsers.splice(Idx, 1);
+        this.filteredUsers = this.filteredUsers.filter((user: User) => user._id !== userForDelete._id);
+        this.setPage(this.pager.currentPage)
         setTimeout(() => this.disabledAnimation = true, 0);
       });
   }
 
   public filter(): void {
-    this.filteredUsers = this.SFSService.search(this.users, this.filterField, [ "_id", "password" ]);
+    this.filteredUsers = this.SFSService.search(this.users, this.filterField, ["_id", "password"]);
     this.setPage(1);
   }
 

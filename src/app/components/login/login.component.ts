@@ -1,3 +1,4 @@
+import { UsersService } from '../../services/users/users.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnotifyHelperService } from '../../common/snotify-helper.service';
@@ -20,7 +21,8 @@ export class LoginComponent {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private snotify: SnotifyHelperService
+    private snotify: SnotifyHelperService,
+    private userService: UsersService
   ) {
   }
 
@@ -30,7 +32,7 @@ export class LoginComponent {
   }
 
   register() {
-    this.authenticationService.register(this.user)
+    this.userService.createUser(this.user)
       .subscribe((res: User) => {
         this.snotify.onSuccess('User succesfully register, now you can login.', null)
       });

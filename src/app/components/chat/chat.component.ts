@@ -4,9 +4,9 @@ import { takeUntil } from 'rxjs/operators';
 import { Message } from '../..//entities/message';
 import { Room } from '../..//entities/room';
 import { User } from '../../entities/user';
-import { AuthenticationService, JwtVerifyAnswer } from '../../services/auth/authentication.service';
 import { ChatService } from '../../services/chat-sockets/socket.service';
 import { RoomService } from './../../services/rooms/rooms.service';
+import { UsersService } from '../../services/users/users.service';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   public constructor(
     private chatService: ChatService,
-    private authService: AuthenticationService,
+    private userService: UsersService,
     private roomService: RoomService,
   ) {
     this.title = 'Eat a carrot )';
@@ -99,9 +99,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   public getProfile(): void {
-    this.authService.getProfile()
+    this.userService.getProfile()
       .pipe(takeUntil(this.unsubscribeOnDestroy))
-      .subscribe((res: JwtVerifyAnswer) => {
+      .subscribe((res: User) => {
         this.name = res.username;
       });
   }

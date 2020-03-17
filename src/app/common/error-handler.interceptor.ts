@@ -18,10 +18,6 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         catchError((err) => {
-          // @TODO
-          if (request.url.includes('check-token') && !this.authService.loggedIn$.getValue()) {
-            return throwError(err);
-          }
           if (err instanceof HttpErrorResponse && this.checkErrorHaveMessage(err.error)) {
               this.snotifyHelper.onError(err.error.message, err.error.title || this.defaultTitle);
           }

@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Controller, Post, HttpStatus, HttpCode, Get, Body, HttpException, UseGuards } from '@nestjs/common';
 import { AuthService, AcessToken } from './auth.service';
@@ -13,9 +14,9 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  public async login( @Body(new ValidationPipe()) user: User): Promise<AcessToken> {
+  public async login(@Body(new ValidationPipe()) user: User): Promise<AcessToken> {
     try {
-       return await this.authService.login(user);
+      return await this.authService.login(user);
     } catch (err) {
       if (err instanceof HttpException) {
         throw err;

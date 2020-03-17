@@ -44,8 +44,8 @@ export class AddUserComponent {
       return;
     }
 
-    this.userService.addUser(this.user)
-      .subscribe((res: CommonResult) => {
+    this.userService.createUser(this.user)
+      .subscribe((res: User) => {
         this.dialogRef.close(res);
       });
   }
