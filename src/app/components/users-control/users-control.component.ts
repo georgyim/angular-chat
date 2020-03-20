@@ -23,7 +23,7 @@ export class UsersControlComponent implements OnInit {
 
   public filterField: any;
 
-  public disabledAnimation: boolean = true;
+  public disabledAnimation: boolean = false;
 
   public pager: PaginatorHelper;
 
@@ -57,7 +57,6 @@ export class UsersControlComponent implements OnInit {
       .subscribe((res: CommonResult) => {
         this.filteredUsers = this.filteredUsers.filter((user: User) => user._id !== userForDelete._id);
         this.setPage(this.pager.currentPage)
-        setTimeout(() => this.disabledAnimation = true, 0);
       });
   }
 
@@ -67,12 +66,12 @@ export class UsersControlComponent implements OnInit {
   }
 
   setPage(page: number): void {
-    this.disabledAnimation = true;
-    this.pager = this.paginator.getPager(this.filteredUsers.length, page);
-    if (!this.pager || page < 1 || page > this.pager.totalPages) {
-      return;
+    if (this.pager && page !== this.pager.currentPage) {
+      this.disabledAnimation = true;
     }
+    this.pager = this.paginator.getPager(this.filteredUsers.length, page);
     this.pagedItems = this.filteredUsers.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    setTimeout(() => this.disabledAnimation = false, 0);
   }
 
   openAddUserModal(user?: User): void {

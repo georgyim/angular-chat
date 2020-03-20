@@ -7,7 +7,7 @@ import { CommonResult } from '../../../entities/common-result';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: [ './add-user.component.css' ]
+  styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent {
 
@@ -59,7 +59,7 @@ export class AddUserComponent {
     }
     this.userService.editUser(this.user)
       .subscribe(res => {
-        console.log(res);
+        this.dialogRef.close(res);
       });
   }
 
@@ -68,7 +68,7 @@ export class AddUserComponent {
    * returns true if valid
    */
   public validate(): boolean {
-    if (!this.user || this.user.checkFieldsIsEmpty()) {
+    if (!this.user || User.checkFieldsIsEmpty(this.user)) {
       this.error = 'Please fill all fields';
       return false;
     }
