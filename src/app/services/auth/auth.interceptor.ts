@@ -1,7 +1,8 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { LocalStorageService } from './local-storage.service';
 
@@ -16,12 +17,20 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(request);
     } else {
       const authToken: string = this.storageService.getToken();
-      if (authToken) {
+      if (authToken ) {
         request = this.addToken(request, authToken);
       } else {
         this.router.navigate(['/auth']);
       }
       return next.handle(request)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401 ) {
+            this.router.navigate(['/auth']);
+          }
+          return throwError(error);
+        })
+      )
     }
   }
 
