@@ -67,7 +67,7 @@
     "@types/node": "^12.11.1",
     "@types/socket.io": "^2.1.4",
     "@types/supertest": "^2.0.8",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.11.0",
     "codelyzer": "^5.1.2",
     "concurrently": "^5.1.0",
@@ -108,7 +108,7 @@
     "@types/express": "^4.17.0",
     "@types/passport-jwt": "^3.0.3",
     "@types/passport-local": "^1.0.33",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "ts-loader": "^6.2.1",
     "webpack-cli": "^3.1.0"
   }
