@@ -49,7 +49,7 @@
     "@angular/router": "9.0.5",
     "@nestjs/cli": "^6.13.2",
     "@nestjs/common": "^6.10.14",
-    "@nestjs/core": "^6.10.14",
+    "@nestjs/core": "^9.0.5",
     "@nestjs/jwt": "^7.0.0",
     "@nestjs/mongoose": "^6.3.1",
     "@nestjs/ng-universal": "^3.0.1",
